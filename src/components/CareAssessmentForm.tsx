@@ -73,15 +73,25 @@ interface FormErrors {
   [key: string]: string;
 }
 
+interface MapboxFeature {
+  address?: string;
+  text: string;
+  place_name: string;
+  context: Array<{
+    id: string;
+    text: string;
+  }>;
+}
+
 interface MapboxSuggestion {
   id: string;
   place_name: string;
   text: string;
-  center: [number, number];
-  properties: {
-    address?: string;
-    category?: string;
-  };
+  address?: string;
+  context: Array<{
+    id: string;
+    text: string;
+  }>;
 }
 
 const CareAssessmentForm: React.FC = () => {
@@ -145,8 +155,6 @@ const CareAssessmentForm: React.FC = () => {
   const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
   const [showNextOfKinAddressSuggestions, setShowNextOfKinAddressSuggestions] = useState(false);
   const [focusedField, setFocusedField] = useState<string>('');
-
-  const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZ2JvdGFpIiwiYSI6ImNsdzR3dGx1MjFoN3kycnBkNnk2NmtzMzcifQ.PM3HV7M2AeADvNW6rcuuFA';
 
   // Options  
   const dayOptions = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -220,7 +228,7 @@ const CareAssessmentForm: React.FC = () => {
   const careVisitDurationOptions = ['30 minutes', '1 hour', '2 hours'];
   const careVisitFrequencyOptions = ['Daily', 'Weekly', 'Monthly'];
 
-  // Address search
+  // Address search using proper Mapbox API structure
   const searchAddresses = async (query: string, isNextOfKin: boolean = false) => {
     if (query.length < 3) {
       if (isNextOfKin) {
@@ -234,18 +242,24 @@ const CareAssessmentForm: React.FC = () => {
     }
 
     try {
+      const mapboxToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+      if (!mapboxToken) {
+        console.error('Mapbox access token not found in environment variables');
+        return;
+      }
+
       const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${MAPBOX_ACCESS_TOKEN}&country=GB&types=address,place&limit=5`
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?country=GB&types=address&access_token=${mapboxToken}&limit=5`
       );
       
       if (response.ok) {
         const data = await response.json();
-        const suggestions: MapboxSuggestion[] = data.features.map((feature: any) => ({
-          id: feature.id,
+        const suggestions: MapboxSuggestion[] = data.features.map((feature: MapboxFeature) => ({
+          id: feature.place_name,
           place_name: feature.place_name,
           text: feature.text,
-          center: feature.center,
-          properties: feature.properties
+          address: feature.address,
+          context: feature.context
         }));
         
         if (isNextOfKin) {
@@ -262,59 +276,30 @@ const CareAssessmentForm: React.FC = () => {
   };
 
   const selectAddress = (suggestion: MapboxSuggestion, isNextOfKin: boolean = false) => {
-    const addressParts = suggestion.place_name.split(', ');
+    // Extract address components using proper Mapbox structure
+    const firstLineAddress = suggestion.address && suggestion.text 
+      ? `${suggestion.address} ${suggestion.text}` 
+      : suggestion.text;
     
-    // Extract street address (first part)
-    const streetAddress = addressParts[0];
-    
-    // UK regions to identify
-    const ukRegions = ['Northern Ireland', 'England', 'Scotland', 'Wales'];
-    
-    // Find the region in the address parts
+    // Extract components from context array
     let region = '';
     let city = '';
     let postcode = '';
     
-    // Look for UK regions
-    for (const part of addressParts) {
-      if (ukRegions.some(ukRegion => part.includes(ukRegion))) {
-        region = part;
-        break;
+    suggestion.context.forEach(item => {
+      if (item.id.startsWith('region.')) {
+        region = item.text;
+      } else if (item.id.startsWith('place.') || item.id.startsWith('locality.')) {
+        city = item.text;
+      } else if (item.id.startsWith('postcode.')) {
+        postcode = item.text;
       }
-    }
-    
-    // Extract postcode using UK postcode pattern
-    const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$/i;
-    for (const part of addressParts) {
-      if (postcodePattern.test(part.trim())) {
-        postcode = part.trim();
-        break;
-      }
-    }
-    
-    // Extract city (usually the part before the region or postcode)
-    for (let i = 1; i < addressParts.length; i++) {
-      const part = addressParts[i].trim();
-      if (!ukRegions.some(ukRegion => part.includes(ukRegion)) && 
-          !postcodePattern.test(part) && 
-          !part.includes('United Kingdom')) {
-        city = part;
-        break;
-      }
-    }
-    
-    // If no specific region found, use the second-to-last meaningful part
-    if (!region && addressParts.length > 2) {
-      const potentialRegion = addressParts[addressParts.length - 2];
-      if (!potentialRegion.includes('United Kingdom') && !postcodePattern.test(potentialRegion)) {
-        region = potentialRegion;
-      }
-    }
+    });
     
     if (isNextOfKin) {
       setFormData(prev => ({
         ...prev,
-        nextOfKinAddress: streetAddress,
+        nextOfKinAddress: firstLineAddress,
         nextOfKinRegion: region,
         nextOfKinCity: city,
         nextOfKinPostcode: postcode
@@ -324,7 +309,7 @@ const CareAssessmentForm: React.FC = () => {
     } else {
       setFormData(prev => ({
         ...prev,
-        address: streetAddress,
+        address: firstLineAddress,
         region: region,
         city: city,
         postcode: postcode
@@ -647,22 +632,6 @@ const CareAssessmentForm: React.FC = () => {
     return getFieldDescription(field);
   };
 
-  const shouldShowWarning = (field: string, value: string) => {
-    if (typeof value !== 'string') return false;
-    
-    // Show warning when there are validation issues
-    if (field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') {
-      return value.length > 0 && value.length < 3;
-    }
-    if (field === 'phoneNumber' || field === 'nextOfKinPhone') {
-      return value.length > 0 && !isValidPhone(value);
-    }
-    if (field === 'nextOfKinEmail') {
-      return value.length > 0 && !isValidEmail(value);
-    }
-    return false;
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative">
       <div className="absolute inset-0 overflow-hidden opacity-30">
@@ -846,7 +815,7 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.region}
                     onChange={(e) => handleInputChange('region', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-                    placeholder="Enter region (e.g., England, Scotland)"
+                    placeholder="e.g., England, Scotland, Wales, Northern Ireland"
                   />
                   {errors.region && <p className="text-yellow-400 text-sm mt-1">{errors.region}</p>}
                 </div>
@@ -1121,7 +1090,7 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.nextOfKinRegion}
                     onChange={(e) => handleInputChange('nextOfKinRegion', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-                    placeholder="Enter region (e.g., England, Scotland)"
+                    placeholder="e.g., England, Scotland, Wales, Northern Ireland"
                   />
                   {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinRegion}</p>}
                 </div>
@@ -1394,6 +1363,22 @@ const CareAssessmentForm: React.FC = () => {
       </div>
     </div>
   );
+};
+
+const shouldShowWarning = (field: string, value: string) => {
+  if (typeof value !== 'string') return false;
+  
+  // Show warning when there are validation issues
+  if (field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') {
+    return value.length > 0 && value.length < 3;
+  }
+  if (field === 'phoneNumber' || field === 'nextOfKinPhone') {
+    return value.length > 0 && !isValidPhone(value);
+  }
+  if (field === 'nextOfKinEmail') {
+    return value.length > 0 && !isValidEmail(value);
+  }
+  return false;
 };
 
 export default CareAssessmentForm;
