@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { User, Heart, FileText, Send, Calendar, Phone, MapPin, Mail } from 'lucide-react';
 
-// Validation helpers
+// Validation helpers - moved outside component to be accessible by getFieldValidationState
 const isValidName = (name: string) => /^[A-Za-z\s]{3,}$/.test(name);
-const isValidNameInput = (name: string) => /^[A-Za-z\s]*$/.test(name);
 const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 const isValidPhone = (phone: string) => /^0\d{10}$/.test(phone.replace(/\s/g, ''));
 
@@ -148,7 +147,6 @@ const CareAssessmentForm: React.FC = () => {
   const [showNextOfKinAddressSuggestions, setShowNextOfKinAddressSuggestions] = useState(false);
   const [focusedField, setFocusedField] = useState<string>('');
 
-  // Use environment variable for Mapbox token with fallback
   const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiZ2JvdGFpIiwiYSI6ImNsdzR3dGx1MjFoN3kycnBkNnk2NmtzMzcifQ.PM3HV7M2AeADvNW6rcuuFA';
 
   // Options  
@@ -160,106 +158,10 @@ const CareAssessmentForm: React.FC = () => {
     { value: '10', label: 'October' }, { value: '11', label: 'November' }, { value: '12', label: 'December' },
   ];
   
-  // Consolidated validation and hint display logic
-  const getFieldValidationState = (field: string, value: string | boolean) => {
-    if (typeof value !== 'string') return { isValid: true, message: '', showHint: false };
-    
-    const isFocused = focusedField === field;
-    const hasValue = value.length > 0;
-    
-    switch (field) {
-      case 'firstName':
-      case 'lastName':
-      case 'nextOfKinFirstName':
-      case 'nextOfKinLastName':
-        if (hasValue && !isValidName(value)) {
-          return {
-            isValid: false,
-            message: hasValue && value.length < 3 ? 'Minimum 3 characters' : 'Enter letters only (A-Z), minimum 3 characters',
-            showHint: true
-          };
-        }
-        if (isFocused && !hasValue) {
-          return {
-            isValid: true,
-            message: 'Enter letters only (A-Z), minimum 3 characters',
-            showHint: true
-          };
-        }
-        break;
-        
-      case 'phoneNumber':
-      case 'nextOfKinPhone':
-        if (hasValue && !isValidPhone(value)) {
-          return {
-            isValid: false,
-            message: 'Enter a valid 11-digit UK phone number',
-            showHint: true
-          };
-        }
-        if (isFocused && !hasValue) {
-          return {
-            isValid: true,
-            message: 'Enter a valid 11-digit UK phone number',
-            showHint: true
-          };
-        }
-        break;
-        
-      case 'nextOfKinEmail':
-        if (hasValue && !isValidEmail(value)) {
-          return {
-            isValid: false,
-            message: 'Enter a valid email address',
-            showHint: true
-          };
-        }
-        if (isFocused && !hasValue) {
-          return {
-            isValid: true,
-            message: 'Enter a valid email address',
-            showHint: true
-          };
-        }
-        break;
-    }
-    
-    return { isValid: true, message: '', showHint: false };
-  };
-
-  // Reusable date warning function
-  const getDateWarning = (dateObj: DateObject, fieldName: string = 'date') => {
-    const { day, month, year } = dateObj;
-    const hasDay = !!day;
-    const hasMonth = !!month;
-    const hasYear = !!year;
-    
-    if (!hasDay && !hasMonth && !hasYear) {
-      return '';
-    }
-    
-    const missing = [];
-    if (!hasDay) missing.push('day');
-    if (!hasMonth) missing.push('month');
-    if (!hasYear) missing.push('year');
-    
-    if (missing.length === 0) {
-      return '';
-    }
-    
-    if (missing.length === 1) {
-      return `Please choose a ${missing[0]}`;
-    } else if (missing.length === 2) {
-      return `Please choose a ${missing[0]} & a ${missing[1]}`;
-    } else {
-      return 'Please choose a day, month & year';
-    }
-  };
-
-  // Standardized textarea list management
-  const updateTextareaList = (currentText: string, option: string, checked: boolean) => {
+  // Unified function to update textarea lists (for mobility and allergies)
+  const updateTextareaList = (currentText: string, option: string, checked: boolean): string => {
     if (checked) {
-      // Add the option if it's not already there
+      // Add the option if not already present
       if (!currentText.includes(option)) {
         return currentText ? `${currentText}, ${option}` : option;
       }
@@ -348,35 +250,71 @@ const CareAssessmentForm: React.FC = () => {
     // Extract street address (first part)
     const streetAddress = addressParts[0];
     
-    // Extract region - look for UK regions (Northern Ireland, England, Scotland, Wales, etc.)
+    // Find UK regions and extract the appropriate city/region
+    const ukRegions = ['Northern Ireland', 'England', 'Scotland', 'Wales'];
     let region = '';
-    const ukRegions = ['Northern Ireland', 'England', 'Scotland', 'Wales', 'United Kingdom'];
+    let city = '';
+    let postcode = '';
     
-    // Find the region in the address parts
-    for (const part of addressParts) {
-      if (ukRegions.some(ukRegion => part.includes(ukRegion))) {
-        region = part;
+    // Look for UK regions in the address parts
+    for (let i = 0; i < addressParts.length; i++) {
+      const part = addressParts[i];
+      
+      // Check if this part contains a UK region
+      const foundRegion = ukRegions.find(ukRegion => part.includes(ukRegion));
+      if (foundRegion) {
+        region = foundRegion;
+        // The city is typically the part before the region (if it exists and isn't the street address)
+        if (i > 1) {
+          city = addressParts[i - 1];
+        } else if (i > 0 && addressParts[i - 1] !== streetAddress) {
+          city = addressParts[i - 1];
+        }
         break;
       }
     }
     
-    // If no specific region found, use the last part before "United Kingdom" or second to last part
+    // If no specific region found, try to extract from the address structure
     if (!region && addressParts.length > 2) {
-      region = addressParts[addressParts.length - 2];
+      // Look for postcode pattern (usually the last or second to last part)
+      const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$/i;
+      
+      for (let i = addressParts.length - 1; i >= 0; i--) {
+        if (postcodePattern.test(addressParts[i].trim())) {
+          postcode = addressParts[i].trim();
+          // City is typically before the postcode
+          if (i > 1) {
+            city = addressParts[i - 1];
+          }
+          break;
+        }
+      }
+      
+      // If we still don't have a city, use the second to last part (before UK)
+      if (!city && addressParts.length > 2) {
+        city = addressParts[addressParts.length - 2];
+      }
     }
     
-    // Format address as "street address, region"
-    const formattedAddress = region ? `${streetAddress}, ${region}` : streetAddress;
+    // If we found a region, use it as the city; otherwise use the extracted city
+    const finalCity = region || city;
     
-    // Extract city and postcode for separate fields
-    const city = addressParts.length > 2 ? addressParts[addressParts.length - 3] : '';
-    const postcode = addressParts.length > 1 ? addressParts[addressParts.length - 2] : '';
+    // Extract postcode if not already found
+    if (!postcode) {
+      const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$/i;
+      for (const part of addressParts) {
+        if (postcodePattern.test(part.trim())) {
+          postcode = part.trim();
+          break;
+        }
+      }
+    }
     
     if (isNextOfKin) {
       setFormData(prev => ({
         ...prev,
-        nextOfKinAddress: formattedAddress,
-        nextOfKinCity: city,
+        nextOfKinAddress: streetAddress,
+        nextOfKinCity: finalCity,
         nextOfKinPostcode: postcode
       }));
       setShowNextOfKinAddressSuggestions(false);
@@ -384,8 +322,8 @@ const CareAssessmentForm: React.FC = () => {
     } else {
       setFormData(prev => ({
         ...prev,
-        address: formattedAddress,
-        city: city,
+        address: streetAddress,
+        city: finalCity,
         postcode: postcode
       }));
       setShowAddressSuggestions(false);
@@ -601,6 +539,81 @@ const CareAssessmentForm: React.FC = () => {
     }
   };
 
+  // Unified function to get field validation state and messages
+  const getFieldValidationState = (field: string, value: string) => {
+    const isFocused = focusedField === field;
+    const hasValue = value.length > 0;
+    const isValid = (() => {
+      switch (field) {
+        case 'firstName':
+        case 'lastName':
+        case 'nextOfKinFirstName':
+        case 'nextOfKinLastName':
+          return isValidName(value);
+        case 'phoneNumber':
+        case 'nextOfKinPhone':
+          return isValidPhone(value);
+        case 'nextOfKinEmail':
+          return isValidEmail(value);
+        default:
+          return true;
+      }
+    })();
+
+    const getHintMessage = () => {
+      switch (field) {
+        case 'firstName':
+        case 'lastName':
+        case 'nextOfKinFirstName':
+        case 'nextOfKinLastName':
+          return 'Enter letters only (A-Z), minimum 3 characters';
+        case 'phoneNumber':
+        case 'nextOfKinPhone':
+          return 'Enter a valid 11-digit UK phone number';
+        case 'nextOfKinEmail':
+          return 'Enter a valid email address';
+        default:
+          return '';
+      }
+    };
+
+    return {
+      showHint: isFocused && hasValue && !isValid,
+      hintMessage: getHintMessage(),
+      isValid,
+      hasValue
+    };
+  };
+
+  // Unified function for date warnings
+  const getDateWarning = (dateObj: DateObject) => {
+    const { day, month, year } = dateObj;
+    const hasDay = !!day;
+    const hasMonth = !!month;
+    const hasYear = !!year;
+    
+    if (!hasDay && !hasMonth && !hasYear) {
+      return '';
+    }
+    
+    const missing = [];
+    if (!hasDay) missing.push('day');
+    if (!hasMonth) missing.push('month');
+    if (!hasYear) missing.push('year');
+    
+    if (missing.length === 0) {
+      return '';
+    }
+    
+    if (missing.length === 1) {
+      return `Please choose a ${missing[0]}`;
+    } else if (missing.length === 2) {
+      return `Please choose a ${missing[0]} & a ${missing[1]}`;
+    } else {
+      return 'Please choose a day, month & year';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative">
       <div className="absolute inset-0 overflow-hidden opacity-30">
@@ -645,11 +658,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="Enter first name"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('firstName', formData.firstName);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'} ${!validationState.isValid ? 'bg-yellow-400/10 p-2 rounded' : ''}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('firstName', formData.firstName);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
@@ -669,11 +680,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="Enter last name"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('lastName', formData.lastName);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'} ${!validationState.isValid ? 'bg-yellow-400/10 p-2 rounded' : ''}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('lastName', formData.lastName);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
@@ -736,11 +745,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="01234567890"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('phoneNumber', formData.phoneNumber);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('phoneNumber', formData.phoneNumber);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.phoneNumber && <p className="text-red-400 text-sm mt-1">{errors.phoneNumber}</p>}
@@ -796,14 +803,14 @@ const CareAssessmentForm: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-slate-200 mb-2">
-                    City <span className="text-red-400">*</span>
+                    City/Region <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.city}
                     onChange={(e) => handleInputChange('city', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-                    placeholder="Enter city"
+                    placeholder="Enter city or region"
                   />
                   {errors.city && <p className="text-red-400 text-sm mt-1">{errors.city}</p>}
                 </div>
@@ -939,11 +946,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="Enter first name"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('nextOfKinFirstName', formData.nextOfKinFirstName);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'} ${!validationState.isValid ? 'bg-yellow-400/10 p-2 rounded' : ''}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('nextOfKinFirstName', formData.nextOfKinFirstName);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.nextOfKinFirstName && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinFirstName}</p>}
@@ -963,11 +968,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="Enter last name"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('nextOfKinLastName', formData.nextOfKinLastName);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'} ${!validationState.isValid ? 'bg-yellow-400/10 p-2 rounded' : ''}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('nextOfKinLastName', formData.nextOfKinLastName);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.nextOfKinLastName && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinLastName}</p>}
@@ -1005,11 +1008,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="01234567890"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('nextOfKinPhone', formData.nextOfKinPhone);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('nextOfKinPhone', formData.nextOfKinPhone);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.nextOfKinPhone && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinPhone}</p>}
@@ -1030,11 +1031,9 @@ const CareAssessmentForm: React.FC = () => {
                     placeholder="Enter email address"
                   />
                   {(() => {
-                    const validationState = getFieldValidationState('nextOfKinEmail', formData.nextOfKinEmail);
-                    return validationState.showHint && (
-                      <p className={`text-sm mt-1 ${validationState.isValid ? 'text-slate-300' : 'text-yellow-400'}`}>
-                        {validationState.message}
-                      </p>
+                    const validation = getFieldValidationState('nextOfKinEmail', formData.nextOfKinEmail);
+                    return validation.showHint && (
+                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
                     );
                   })()}
                   {errors.nextOfKinEmail && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinEmail}</p>}
@@ -1073,14 +1072,14 @@ const CareAssessmentForm: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-slate-200 mb-2">
-                    City <span className="text-red-400">*</span>
+                    City/Region <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.nextOfKinCity}
                     onChange={(e) => handleInputChange('nextOfKinCity', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-                    placeholder="Enter city"
+                    placeholder="Enter city or region"
                   />
                   {errors.nextOfKinCity && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinCity}</p>}
                 </div>
