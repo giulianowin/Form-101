@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { User, Heart, FileText, Send, Calendar, Phone, MapPin, Mail } from 'lucide-react';
 
-// Validation helpers - moved outside component to be accessible by getFieldValidationState
+// Validation helpers - moved outside component to be accessible by shouldShowWarning
 const isValidName = (name: string) => /^[A-Za-z\s]{3,}$/.test(name);
+const isValidNameInput = (name: string) => /^[A-Za-z\s]*$/.test(name);
 const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 const isValidPhone = (phone: string) => /^0\d{10}$/.test(phone.replace(/\s/g, ''));
 
@@ -18,6 +19,7 @@ interface FormData {
   phoneNumber: string;
   gender: string;
   address: string;
+  region: string;
   city: string;
   postcode: string;
   clientStartDate: {
@@ -35,6 +37,7 @@ interface FormData {
   nextOfKinPhone: string;
   nextOfKinEmail: string;
   nextOfKinAddress: string;
+  nextOfKinRegion: string;
   nextOfKinCity: string;
   nextOfKinPostcode: string;
   
@@ -81,12 +84,6 @@ interface MapboxSuggestion {
   };
 }
 
-interface DateObject {
-  day: string;
-  month: string;
-  year: string;
-}
-
 const CareAssessmentForm: React.FC = () => {
   const [mobilityOptions, setMobilityOptions] = useState<MobilityOptions>({
     'Stairlift': false,
@@ -112,6 +109,7 @@ const CareAssessmentForm: React.FC = () => {
     phoneNumber: '0',
     gender: '',
     address: '',
+    region: '',
     city: '',
     postcode: '',
     clientStartDate: { day: '', month: '', year: '' },
@@ -123,6 +121,7 @@ const CareAssessmentForm: React.FC = () => {
     nextOfKinPhone: '0',
     nextOfKinEmail: '',
     nextOfKinAddress: '',
+    nextOfKinRegion: '',
     nextOfKinCity: '',
     nextOfKinPostcode: '',
     medicalHistory: '',
@@ -147,7 +146,7 @@ const CareAssessmentForm: React.FC = () => {
   const [showNextOfKinAddressSuggestions, setShowNextOfKinAddressSuggestions] = useState(false);
   const [focusedField, setFocusedField] = useState<string>('');
 
-  const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiZ2JvdGFpIiwiYSI6ImNsdzR3dGx1MjFoN3kycnBkNnk2NmtzMzcifQ.PM3HV7M2AeADvNW6rcuuFA';
+  const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZ2JvdGFpIiwiYSI6ImNsdzR3dGx1MjFoN3kycnBkNnk2NmtzMzcifQ.PM3HV7M2AeADvNW6rcuuFA';
 
   // Options  
   const dayOptions = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -158,33 +157,51 @@ const CareAssessmentForm: React.FC = () => {
     { value: '10', label: 'October' }, { value: '11', label: 'November' }, { value: '12', label: 'December' },
   ];
   
-  // Unified function to update textarea lists (for mobility and allergies)
-  const updateTextareaList = (currentText: string, option: string, checked: boolean): string => {
-    if (checked) {
-      // Add the option if not already present
-      if (!currentText.includes(option)) {
-        return currentText ? `${currentText}, ${option}` : option;
-      }
-      return currentText;
-    } else {
-      // Remove the option
-      return currentText
-        .split(', ')
-        .filter(item => item.trim() !== option)
-        .join(', ');
-    }
-  };
-
   const handleMobilityOptionChange = (option: string, checked: boolean) => {
     setMobilityOptions(prev => ({ ...prev, [option]: checked }));
-    const updatedText = updateTextareaList(formData.mobilitySupport, option, checked);
+    
+    const currentText = formData.mobilitySupport;
+    let updatedText = currentText;
+    
+    if (checked) {
+      // Add the option to the text if it's not already there
+      if (!currentText.includes(option)) {
+        updatedText = currentText ? `${currentText}, ${option}` : option;
+      }
+    } else {
+      // Remove the option from the text
+      const optionPattern = new RegExp(`(^|, )${option.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(, |$)`, 'g');
+      updatedText = currentText.replace(optionPattern, (match, before, after) => {
+        if (before === ', ' && after === ', ') return ', ';
+        if (before === ', ' && after === '') return '';
+        if (before === '' && after === ', ') return '';
+        return '';
+      }).trim();
+    }
+    
     handleInputChange('mobilitySupport', updatedText);
   };
 
   const handleAllergyOptionChange = (option: string, checked: boolean) => {
     setAllergyOptions(prev => ({ ...prev, [option]: checked }));
-    const updatedText = updateTextareaList(formData.allergies, option, checked);
-    handleInputChange('allergies', updatedText);
+
+    const currentText = formData.allergies;
+    let newText = currentText;
+
+    if (checked) {
+      // Add the option if it's not already there
+      if (!currentText.includes(option)) {
+        newText = currentText ? `${currentText}, ${option}` : option;
+      }
+    } else {
+      // Remove the option
+      newText = currentText
+        .split(', ')
+        .filter(item => item.trim() !== option)
+        .join(', ');
+    }
+
+    handleInputChange('allergies', newText);
   };
 
   const currentYear = new Date().getFullYear();
@@ -250,63 +267,47 @@ const CareAssessmentForm: React.FC = () => {
     // Extract street address (first part)
     const streetAddress = addressParts[0];
     
-    // Find UK regions and extract the appropriate city/region
+    // UK regions to identify
     const ukRegions = ['Northern Ireland', 'England', 'Scotland', 'Wales'];
+    
+    // Find the region in the address parts
     let region = '';
     let city = '';
     let postcode = '';
     
-    // Look for UK regions in the address parts
-    for (let i = 0; i < addressParts.length; i++) {
-      const part = addressParts[i];
-      
-      // Check if this part contains a UK region
-      const foundRegion = ukRegions.find(ukRegion => part.includes(ukRegion));
-      if (foundRegion) {
-        region = foundRegion;
-        // The city is typically the part before the region (if it exists and isn't the street address)
-        if (i > 1) {
-          city = addressParts[i - 1];
-        } else if (i > 0 && addressParts[i - 1] !== streetAddress) {
-          city = addressParts[i - 1];
-        }
+    // Look for UK regions
+    for (const part of addressParts) {
+      if (ukRegions.some(ukRegion => part.includes(ukRegion))) {
+        region = part;
         break;
       }
     }
     
-    // If no specific region found, try to extract from the address structure
-    if (!region && addressParts.length > 2) {
-      // Look for postcode pattern (usually the last or second to last part)
-      const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$/i;
-      
-      for (let i = addressParts.length - 1; i >= 0; i--) {
-        if (postcodePattern.test(addressParts[i].trim())) {
-          postcode = addressParts[i].trim();
-          // City is typically before the postcode
-          if (i > 1) {
-            city = addressParts[i - 1];
-          }
-          break;
-        }
-      }
-      
-      // If we still don't have a city, use the second to last part (before UK)
-      if (!city && addressParts.length > 2) {
-        city = addressParts[addressParts.length - 2];
+    // Extract postcode using UK postcode pattern
+    const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$/i;
+    for (const part of addressParts) {
+      if (postcodePattern.test(part.trim())) {
+        postcode = part.trim();
+        break;
       }
     }
     
-    // If we found a region, use it as the city; otherwise use the extracted city
-    const finalCity = region || city;
+    // Extract city (usually the part before the region or postcode)
+    for (let i = 1; i < addressParts.length; i++) {
+      const part = addressParts[i].trim();
+      if (!ukRegions.some(ukRegion => part.includes(ukRegion)) && 
+          !postcodePattern.test(part) && 
+          !part.includes('United Kingdom')) {
+        city = part;
+        break;
+      }
+    }
     
-    // Extract postcode if not already found
-    if (!postcode) {
-      const postcodePattern = /^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$/i;
-      for (const part of addressParts) {
-        if (postcodePattern.test(part.trim())) {
-          postcode = part.trim();
-          break;
-        }
+    // If no specific region found, use the second-to-last meaningful part
+    if (!region && addressParts.length > 2) {
+      const potentialRegion = addressParts[addressParts.length - 2];
+      if (!potentialRegion.includes('United Kingdom') && !postcodePattern.test(potentialRegion)) {
+        region = potentialRegion;
       }
     }
     
@@ -314,7 +315,8 @@ const CareAssessmentForm: React.FC = () => {
       setFormData(prev => ({
         ...prev,
         nextOfKinAddress: streetAddress,
-        nextOfKinCity: finalCity,
+        nextOfKinRegion: region,
+        nextOfKinCity: city,
         nextOfKinPostcode: postcode
       }));
       setShowNextOfKinAddressSuggestions(false);
@@ -323,7 +325,8 @@ const CareAssessmentForm: React.FC = () => {
       setFormData(prev => ({
         ...prev,
         address: streetAddress,
-        city: finalCity,
+        region: region,
+        city: city,
         postcode: postcode
       }));
       setShowAddressSuggestions(false);
@@ -367,6 +370,7 @@ const CareAssessmentForm: React.FC = () => {
 
     if (!formData.gender.trim()) newErrors.gender = 'Gender is required';
     if (!formData.address.trim()) newErrors.address = 'Address is required';
+    if (!formData.region.trim()) newErrors.region = 'Region is required';
     if (!formData.city.trim()) newErrors.city = 'City is required';
     if (!formData.postcode.trim()) newErrors.postcode = 'Postcode is required';
     
@@ -400,6 +404,7 @@ const CareAssessmentForm: React.FC = () => {
     }
 
     if (!formData.nextOfKinAddress.trim()) newErrors.nextOfKinAddress = 'Next of kin address is required';
+    if (!formData.nextOfKinRegion.trim()) newErrors.nextOfKinRegion = 'Next of kin region is required';
     if (!formData.nextOfKinCity.trim()) newErrors.nextOfKinCity = 'Next of kin city is required';
     if (!formData.nextOfKinPostcode.trim()) newErrors.nextOfKinPostcode = 'Next of kin postcode is required';
 
@@ -420,6 +425,13 @@ const CareAssessmentForm: React.FC = () => {
     if (field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') {
       if (typeof value === 'string') {
         value = value.replace(/[^A-Za-z\s]/g, '');
+      }
+    }
+    
+    // For name fields, only allow A-Z letters and spaces
+    if ((field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') && typeof value === 'string') {
+      if (!isValidNameInput(value)) {
+        return; // Don't update if invalid characters
       }
     }
     
@@ -477,6 +489,7 @@ const CareAssessmentForm: React.FC = () => {
           phoneNumber: formData.phoneNumber,
           gender: formData.gender,
           address: formData.address,
+          region: formData.region,
           city: formData.city,
           postcode: formData.postcode,
           clientStartDate: formData.clientStartDate.day && formData.clientStartDate.month && formData.clientStartDate.year 
@@ -491,6 +504,7 @@ const CareAssessmentForm: React.FC = () => {
           phoneNumber: formData.nextOfKinPhone,
           email: formData.nextOfKinEmail,
           address: formData.nextOfKinAddress,
+          region: formData.nextOfKinRegion,
           city: formData.nextOfKinCity,
           postcode: formData.nextOfKinPostcode,
         },
@@ -539,55 +553,24 @@ const CareAssessmentForm: React.FC = () => {
     }
   };
 
-  // Unified function to get field validation state and messages
-  const getFieldValidationState = (field: string, value: string) => {
-    const isFocused = focusedField === field;
-    const hasValue = value.length > 0;
-    const isValid = (() => {
-      switch (field) {
-        case 'firstName':
-        case 'lastName':
-        case 'nextOfKinFirstName':
-        case 'nextOfKinLastName':
-          return isValidName(value);
-        case 'phoneNumber':
-        case 'nextOfKinPhone':
-          return isValidPhone(value);
-        case 'nextOfKinEmail':
-          return isValidEmail(value);
-        default:
-          return true;
-      }
-    })();
-
-    const getHintMessage = () => {
-      switch (field) {
-        case 'firstName':
-        case 'lastName':
-        case 'nextOfKinFirstName':
-        case 'nextOfKinLastName':
-          return 'Enter letters only (A-Z), minimum 3 characters';
-        case 'phoneNumber':
-        case 'nextOfKinPhone':
-          return 'Enter a valid 11-digit UK phone number';
-        case 'nextOfKinEmail':
-          return 'Enter a valid email address';
-        default:
-          return '';
-      }
-    };
-
-    return {
-      showHint: isFocused && hasValue && !isValid,
-      hintMessage: getHintMessage(),
-      isValid,
-      hasValue
-    };
+  const shouldShowDescription = (field: string, value: string) => {
+    if (typeof value !== 'string') return false;
+    
+    // Show description when user is typing but hasn't reached 3 valid characters yet
+    if (field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') {
+      return value.length > 0 && value.length < 3;
+    }
+    if (field === 'phoneNumber' || field === 'nextOfKinPhone') {
+      return value.length > 0 && !isValidPhone(value);
+    }
+    if (field === 'nextOfKinEmail') {
+      return value.length > 0 && !isValidEmail(value);
+    }
+    return false;
   };
 
-  // Unified function for date warnings
-  const getDateWarning = (dateObj: DateObject) => {
-    const { day, month, year } = dateObj;
+  const getDateOfBirthWarning = () => {
+    const { day, month, year } = formData.dateOfBirth;
     const hasDay = !!day;
     const hasMonth = !!month;
     const hasYear = !!year;
@@ -612,6 +595,72 @@ const CareAssessmentForm: React.FC = () => {
     } else {
       return 'Please choose a day, month & year';
     }
+  };
+
+  const getClientStartDateWarning = () => {
+    const { day, month, year } = formData.clientStartDate;
+    const hasDay = !!day;
+    const hasMonth = !!month;
+    const hasYear = !!year;
+    
+    if (!hasDay && !hasMonth && !hasYear) {
+      return '';
+    }
+    
+    const missing = [];
+    if (!hasDay) missing.push('day');
+    if (!hasMonth) missing.push('month');
+    if (!hasYear) missing.push('year');
+    
+    if (missing.length === 0) {
+      return '';
+    }
+    
+    if (missing.length === 1) {
+      return `Please choose a ${missing[0]}`;
+    } else if (missing.length === 2) {
+      return `Please choose a ${missing[0]} & a ${missing[1]}`;
+    } else {
+      return 'Please choose a day, month & year';
+    }
+  };
+
+  const getFieldDescription = (field: string) => {
+    const descriptions = {
+      firstName: 'Enter letters only (A-Z), minimum 3 characters',
+      lastName: 'Enter letters only (A-Z), minimum 3 characters', 
+      nextOfKinFirstName: 'Enter letters only (A-Z), minimum 3 characters',
+      nextOfKinLastName: 'Enter letters only (A-Z), minimum 3 characters',
+      phoneNumber: 'Enter a valid 11-digit UK phone number',
+      nextOfKinPhone: 'Enter a valid 11-digit UK phone number',
+      nextOfKinEmail: 'Enter a valid email address'
+    };
+    return descriptions[field as keyof typeof descriptions];
+  };
+
+  const getDescriptionForField = (field: string, value: string) => {
+    if (!shouldShowDescription(field, value)) return null;
+    
+    if (field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') {
+      return 'Minimum 3 characters';
+    }
+    return getFieldDescription(field);
+  };
+
+  const shouldShowWarning = (field: string, value: string) => {
+    if (typeof value !== 'string') return false;
+    
+    // Show warning when there are validation issues
+    if (field === 'firstName' || field === 'lastName' || field === 'nextOfKinFirstName' || field === 'nextOfKinLastName') {
+      return value.length > 0 && value.length < 3;
+    }
+    if (field === 'phoneNumber' || field === 'nextOfKinPhone') {
+      return value.length > 0 && !isValidPhone(value);
+    }
+    if (field === 'nextOfKinEmail') {
+      return value.length > 0 && !isValidEmail(value);
+    }
+    return false;
   };
 
   return (
@@ -652,18 +701,13 @@ const CareAssessmentForm: React.FC = () => {
                     type="text"
                     value={formData.firstName}
                     onChange={(e) => handleInputChange('firstName', e.target.value)}
-                    onFocus={() => setFocusedField('firstName')}
-                    onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter first name"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('firstName', formData.firstName);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
+                  {getDescriptionForField('firstName', formData.firstName) && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('firstName', formData.firstName)}</p>
+                  )}
+                  {errors.firstName && <p className="text-yellow-400 text-sm mt-1">{errors.firstName}</p>}
                 </div>
 
                 <div>
@@ -674,18 +718,13 @@ const CareAssessmentForm: React.FC = () => {
                     type="text"
                     value={formData.lastName}
                     onChange={(e) => handleInputChange('lastName', e.target.value)}
-                    onFocus={() => setFocusedField('lastName')}
-                    onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter last name"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('lastName', formData.lastName);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
+                  {getDescriptionForField('lastName', formData.lastName) && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('lastName', formData.lastName)}</p>
+                  )}
+                  {errors.lastName && <p className="text-yellow-400 text-sm mt-1">{errors.lastName}</p>}
                 </div>
 
                 <div className="md:col-span-2">
@@ -724,10 +763,10 @@ const CareAssessmentForm: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  {getDateWarning(formData.dateOfBirth) && (
-                    <p className="text-yellow-400 text-sm mt-1 bg-yellow-400/10 p-2 rounded">{getDateWarning(formData.dateOfBirth)}</p>
+                  {getDateOfBirthWarning() && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDateOfBirthWarning()}</p>
                   )}
-                  {errors.dateOfBirth && <p className="text-red-400 text-sm mt-1">{errors.dateOfBirth}</p>}
+                  {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1">{errors.dateOfBirth}</p>}
                 </div>
 
                 <div>
@@ -744,13 +783,10 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="01234567890"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('phoneNumber', formData.phoneNumber);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.phoneNumber && <p className="text-red-400 text-sm mt-1">{errors.phoneNumber}</p>}
+                  {focusedField === 'phoneNumber' && getFieldDescription('phoneNumber') && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
+                  )}
+                  {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1">{errors.phoneNumber}</p>}
                 </div>
 
                 <div>
@@ -767,7 +803,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={gender} value={gender} className="bg-slate-800">{gender}</option>
                     ))}
                   </select>
-                  {errors.gender && <p className="text-red-400 text-sm mt-1">{errors.gender}</p>}
+                  {errors.gender && <p className="text-yellow-400 text-sm mt-1">{errors.gender}</p>}
                 </div>
 
                 <div className="relative">
@@ -784,7 +820,7 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Start typing your address..."
                   />
-                  {errors.address && <p className="text-red-400 text-sm mt-1">{errors.address}</p>}
+                  {errors.address && <p className="text-yellow-400 text-sm mt-1">{errors.address}</p>}
                   {showAddressSuggestions && addressSuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-slate-800/95 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
                       {addressSuggestions.map((suggestion) => (
@@ -803,16 +839,30 @@ const CareAssessmentForm: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-slate-200 mb-2">
-                    City/Region <span className="text-red-400">*</span>
+                    Region <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.region}
+                    onChange={(e) => handleInputChange('region', e.target.value)}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    placeholder="Enter region (e.g., England, Scotland)"
+                  />
+                  {errors.region && <p className="text-yellow-400 text-sm mt-1">{errors.region}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    City <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.city}
                     onChange={(e) => handleInputChange('city', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-                    placeholder="Enter city or region"
+                    placeholder="Enter city"
                   />
-                  {errors.city && <p className="text-red-400 text-sm mt-1">{errors.city}</p>}
+                  {errors.city && <p className="text-yellow-400 text-sm mt-1">{errors.city}</p>}
                 </div>
 
                 <div>
@@ -826,7 +876,7 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter postcode"
                   />
-                  {errors.postcode && <p className="text-red-400 text-sm mt-1">{errors.postcode}</p>}
+                  {errors.postcode && <p className="text-yellow-400 text-sm mt-1">{errors.postcode}</p>}
                 </div>
 
                 <div className="md:col-span-2">
@@ -866,10 +916,10 @@ const CareAssessmentForm: React.FC = () => {
                       ))}
                     </select>
                   </div>
-                  {getDateWarning(formData.clientStartDate) && (
-                    <p className="text-yellow-400 text-sm mt-1 bg-yellow-400/10 p-2 rounded">{getDateWarning(formData.clientStartDate)}</p>
+                  {getClientStartDateWarning() && (
+                    <p className="text-yellow-400 text-sm mt-1">{getClientStartDateWarning()}</p>
                   )}
-                  {errors.clientStartDate && <p className="text-red-400 text-sm mt-1">{errors.clientStartDate}</p>}
+                  {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1">{errors.clientStartDate}</p>}
                 </div>
 
                 <div className="md:col-span-2">
@@ -902,7 +952,7 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none"
                     placeholder="Select common allergies above or describe other allergies here. Write 'None' if no allergies"
                   />
-                  {errors.allergies && <p className="text-red-400 text-sm mt-1">{errors.allergies}</p>}
+                  {errors.allergies && <p className="text-yellow-400 text-sm mt-1">{errors.allergies}</p>}
                 </div>
 
                 <div className="md:col-span-2">
@@ -919,7 +969,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={service} value={service} className="bg-slate-800">{service}</option>
                     ))}
                   </select>
-                  {errors.serviceRequired && <p className="text-red-400 text-sm mt-1">{errors.serviceRequired}</p>}
+                  {errors.serviceRequired && <p className="text-yellow-400 text-sm mt-1">{errors.serviceRequired}</p>}
                 </div>
               </div>
             </div>
@@ -945,13 +995,13 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter first name"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('nextOfKinFirstName', formData.nextOfKinFirstName);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.nextOfKinFirstName && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinFirstName}</p>}
+                  {shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
+                    <p className="text-yellow-400 text-sm mt-1">Minimum 3 characters</p>
+                  )}
+                  {focusedField === 'nextOfKinFirstName' && getFieldDescription('nextOfKinFirstName') && !shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName)}</p>
+                  )}
+                  {errors.nextOfKinFirstName && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinFirstName}</p>}
                 </div>
 
                 <div>
@@ -967,13 +1017,13 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter last name"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('nextOfKinLastName', formData.nextOfKinLastName);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.nextOfKinLastName && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinLastName}</p>}
+                  {shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
+                    <p className="text-yellow-400 text-sm mt-1">Minimum 3 characters</p>
+                  )}
+                  {focusedField === 'nextOfKinLastName' && getFieldDescription('nextOfKinLastName') && !shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName)}</p>
+                  )}
+                  {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinLastName}</p>}
                 </div>
 
                 <div>
@@ -990,7 +1040,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={relationship} value={relationship} className="bg-slate-800">{relationship}</option>
                     ))}
                   </select>
-                  {errors.relationshipToClient && <p className="text-red-400 text-sm mt-1">{errors.relationshipToClient}</p>}
+                  {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1">{errors.relationshipToClient}</p>}
                 </div>
 
                 <div>
@@ -1007,13 +1057,10 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="01234567890"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('nextOfKinPhone', formData.nextOfKinPhone);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.nextOfKinPhone && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinPhone}</p>}
+                  {focusedField === 'nextOfKinPhone' && getFieldDescription('nextOfKinPhone') && (
+                    <p className="text-yellow-400 text-sm mt-1">{getFieldDescription('nextOfKinPhone')}</p>
+                  )}
+                  {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinPhone}</p>}
                 </div>
 
                 <div>
@@ -1025,18 +1072,13 @@ const CareAssessmentForm: React.FC = () => {
                     type="email"
                     value={formData.nextOfKinEmail}
                     onChange={(e) => handleInputChange('nextOfKinEmail', e.target.value)}
-                    onFocus={() => setFocusedField('nextOfKinEmail')}
-                    onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter email address"
                   />
-                  {(() => {
-                    const validation = getFieldValidationState('nextOfKinEmail', formData.nextOfKinEmail);
-                    return validation.showHint && (
-                      <p className="text-yellow-400 text-sm mt-1">{validation.hintMessage}</p>
-                    );
-                  })()}
-                  {errors.nextOfKinEmail && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinEmail}</p>}
+                  {getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail) && (
+                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail)}</p>
+                  )}
+                  {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinEmail}</p>}
                 </div>
 
                 <div className="relative">
@@ -1067,21 +1109,35 @@ const CareAssessmentForm: React.FC = () => {
                       ))}
                     </div>
                   )}
-                  {errors.nextOfKinAddress && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinAddress}</p>}
+                  {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinAddress}</p>}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-slate-200 mb-2">
-                    City/Region <span className="text-red-400">*</span>
+                    Region <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.nextOfKinRegion}
+                    onChange={(e) => handleInputChange('nextOfKinRegion', e.target.value)}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    placeholder="Enter region (e.g., England, Scotland)"
+                  />
+                  {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinRegion}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                    City <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.nextOfKinCity}
                     onChange={(e) => handleInputChange('nextOfKinCity', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-                    placeholder="Enter city or region"
+                    placeholder="Enter city"
                   />
-                  {errors.nextOfKinCity && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinCity}</p>}
+                  {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinCity}</p>}
                 </div>
 
                 <div>
@@ -1095,7 +1151,7 @@ const CareAssessmentForm: React.FC = () => {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
                     placeholder="Enter postcode"
                   />
-                  {errors.nextOfKinPostcode && <p className="text-red-400 text-sm mt-1">{errors.nextOfKinPostcode}</p>}
+                  {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinPostcode}</p>}
                 </div>
               </div>
             </div>
@@ -1223,7 +1279,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={option} value={option} className="bg-slate-800">{option}</option>
                     ))}
                   </select>
-                  {errors.dnarInPlace && <p className="text-red-400 text-sm mt-1">{errors.dnarInPlace}</p>}
+                  {errors.dnarInPlace && <p className="text-yellow-400 text-sm mt-1">{errors.dnarInPlace}</p>}
                 </div>
 
                 <div>
@@ -1240,7 +1296,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={frequency} value={frequency} className="bg-slate-800">{frequency}</option>
                     ))}
                   </select>
-                  {errors.careVisitFrequency && <p className="text-red-400 text-sm mt-1">{errors.careVisitFrequency}</p>}
+                  {errors.careVisitFrequency && <p className="text-yellow-400 text-sm mt-1">{errors.careVisitFrequency}</p>}
                 </div>
 
                 <div>
@@ -1257,7 +1313,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={duration} value={duration} className="bg-slate-800">{duration}</option>
                     ))}
                   </select>
-                  {errors.careVisitDuration && <p className="text-red-400 text-sm mt-1">{errors.careVisitDuration}</p>}
+                  {errors.careVisitDuration && <p className="text-yellow-400 text-sm mt-1">{errors.careVisitDuration}</p>}
                 </div>
 
                 <div>
@@ -1274,7 +1330,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={option} value={option} className="bg-slate-800">{option}</option>
                     ))}
                   </select>
-                  {errors.requiresHelpWithAppointments && <p className="text-red-400 text-sm mt-1">{errors.requiresHelpWithAppointments}</p>}
+                  {errors.requiresHelpWithAppointments && <p className="text-yellow-400 text-sm mt-1">{errors.requiresHelpWithAppointments}</p>}
                 </div>
 
                 <div>
@@ -1291,7 +1347,7 @@ const CareAssessmentForm: React.FC = () => {
                       <option key={option} value={option} className="bg-slate-800">{option}</option>
                     ))}
                   </select>
-                  {errors.wantsCompanyToAppointments && <p className="text-red-400 text-sm mt-1">{errors.wantsCompanyToAppointments}</p>}
+                  {errors.wantsCompanyToAppointments && <p className="text-yellow-400 text-sm mt-1">{errors.wantsCompanyToAppointments}</p>}
                 </div>
               </div>
             </div>
@@ -1310,7 +1366,7 @@ const CareAssessmentForm: React.FC = () => {
                   I consent to the processing of my personal data for the purpose of this care assessment and service provision. <span className="text-red-400">*</span>
                 </label>
               </div>
-              {errors.consent && <p className="text-red-400 text-sm mt-1">{errors.consent}</p>}
+              {errors.consent && <p className="text-yellow-400 text-sm mt-1">{errors.consent}</p>}
             </div>
 
             {/* Submit Button */}
