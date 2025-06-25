@@ -217,25 +217,12 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           />
           {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.address}</p>}
           {showAddressSuggestions && addressSuggestions.length > 0 && (
-            <div 
-              className="absolute z-50 w-full mt-1 rounded-lg border shadow-2xl max-h-60 overflow-y-auto"
-              style={{ 
-                backgroundColor: '#1e293b', 
-                borderColor: '#475569',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)'
-              }}
-            >
+            <div className="absolute z-50 w-full mt-1 bg-slate-800 border border-slate-600 rounded-lg max-h-60 overflow-y-auto">
               {addressSuggestions.map((suggestion) => (
                 <div
                   key={suggestion.id}
                   onClick={() => selectAddress(suggestion, false)}
-                  className="px-4 py-3 cursor-pointer text-white border-b last:border-b-0 transition-colors duration-150"
-                  style={{ 
-                    borderBottomColor: '#64748b',
-                    '&:hover': { backgroundColor: '#2563eb' }
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  className="px-4 py-3 hover:bg-blue-600 cursor-pointer text-white border-b border-slate-600 last:border-b-0"
                 >
                   <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
                   <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
