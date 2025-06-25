@@ -217,12 +217,12 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           />
           {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.address}</p>}
           {showAddressSuggestions && addressSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-slate-800 rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
+            <div className="absolute z-50 w-full mt-1 bg-slate-900 rounded-lg border border-slate-600 shadow-2xl max-h-60 overflow-y-auto backdrop-blur-none">
               {addressSuggestions.map((suggestion) => (
                 <div
                   key={suggestion.id}
                   onClick={() => selectAddress(suggestion, false)}
-                  className="px-4 py-3 hover:bg-blue-500/30 cursor-pointer text-white border-b border-white/10 last:border-b-0"
+                  className="px-4 py-3 hover:bg-blue-600 cursor-pointer text-white border-b border-slate-700 last:border-b-0 transition-colors duration-150"
                 >
                   <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
                   <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
@@ -242,7 +242,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             readOnly
             className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
-            placeholder="e.g., England, Scotland, Wales, Northern Ireland"
+            placeholder="Auto-filled from address selection"
           />
           {errors.region && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.region}</p>}
         </div>
@@ -257,7 +257,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             readOnly
             className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
-            placeholder="Enter city"
+            placeholder="Auto-filled from address selection"
           />
           {errors.city && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.city}</p>}
         </div>
@@ -272,7 +272,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             readOnly
             className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
-            placeholder="Enter postcode"
+            placeholder="Auto-filled from address selection"
           />
           {errors.postcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.postcode}</p>}
         </div>
