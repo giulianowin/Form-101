@@ -653,13 +653,13 @@ const CareAssessmentForm: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>Care Assessment Form</h1>
-          <p className="text-slate-300 text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>Please complete the required fields to help us provide the best care service for you</p>
+          <h1 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>Care Assessment Form</h1>
+          <p className="text-slate-300 text-lg" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>Please complete the required fields to help us provide the best care service for you</p>
         </div>
 
         {submitSuccess && (
           <div className="mb-8 p-4 bg-green-500/20 border border-green-500/50 rounded-lg backdrop-blur-sm">
-            <p className="text-green-300 text-center font-medium" style={{ fontFamily: 'Montserrat, sans-serif' }}>Form submitted successfully! We will be in touch soon.</p>
+            <p className="text-green-300 text-center font-medium" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>Form submitted successfully! We will be in touch soon.</p>
           </div>
         )}
 
@@ -740,7 +740,7 @@ const CareAssessmentForm: React.FC = () => {
               type="submit"
               disabled={isSubmitting}
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               {isSubmitting ? (
                 <>

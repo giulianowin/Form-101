@@ -62,6 +62,7 @@ const CircularCheckbox: React.FC<CircularCheckboxProps> = ({
           ${darkTheme ? 'text-slate-200' : 'text-gray-700'}
         `}
         style={{ fontFamily: 'Montserrat, sans-serif' }}
+        style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
       >
         {label}
       </label>
