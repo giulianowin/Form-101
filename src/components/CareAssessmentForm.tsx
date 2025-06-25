@@ -98,6 +98,7 @@ interface MapboxSuggestion {
 
 const CareAssessmentForm: React.FC = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [lastManualNavigation, setLastManualNavigation] = useState<number | null>(null);
   const sectionNames = ['Client Details', 'Next of Kin Details', 'Medical Background', 'Consent'];
 
   const [mobilityOptions, setMobilityOptions] = useState<MobilityOptions>({
@@ -690,6 +691,23 @@ const CareAssessmentForm: React.FC = () => {
   const visibleSections = getVisibleSections();
   const maxVisibleSection = Math.max(...visibleSections);
   
+  // Auto-advance to next section when requirements are met, but respect manual navigation
+  React.useEffect(() => {
+    // Only auto-advance if user hasn't manually navigated recently
+    const shouldAutoAdvance = lastManualNavigation === null || 
+      (Date.now() - (lastManualNavigation || 0)) > 1000; // 1 second delay
+    
+    if (shouldAutoAdvance && maxVisibleSection > currentSectionIndex) {
+      setCurrentSectionIndex(maxVisibleSection);
+    }
+  }, [maxVisibleSection, currentSectionIndex, lastManualNavigation]);
+
+  // Handle manual back navigation
+  const handleBackNavigation = () => {
+    setLastManualNavigation(Date.now());
+    setCurrentSectionIndex(currentSectionIndex - 1);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
@@ -717,7 +735,7 @@ const CareAssessmentForm: React.FC = () => {
             <div className="mb-6">
               <button
                 type="button"
-                onClick={() => setCurrentSectionIndex(currentSectionIndex - 1)}
+                onClick={handleBackNavigation}
                 disabled={isSubmitting}
                 className="inline-flex items-center px-4 py-2 text-white bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
