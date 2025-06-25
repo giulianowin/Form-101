@@ -165,15 +165,15 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             placeholder="Start typing your address..."
           />
           {showNextOfKinAddressSuggestions && nextOfKinAddressSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-slate-900 rounded-lg border border-slate-600 shadow-2xl max-h-60 overflow-y-auto backdrop-blur-none">
+            <div className="absolute z-50 w-full mt-1 bg-gray-900 rounded-lg border border-gray-700 shadow-2xl max-h-60 overflow-y-auto" style={{ backgroundColor: '#0f172a' }}>
               {nextOfKinAddressSuggestions.map((suggestion) => (
                 <div
                   key={suggestion.id}
                   onClick={() => selectAddress(suggestion, true)}
-                  className="px-4 py-3 hover:bg-blue-600 cursor-pointer text-white border-b border-slate-700 last:border-b-0 transition-colors duration-150"
+                  className="px-4 py-3 hover:bg-blue-600 cursor-pointer text-white border-b border-gray-600 last:border-b-0 transition-colors duration-150"
                 >
                   <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
-                  <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
+                  <div className="text-sm text-gray-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
                 </div>
               ))}
             </div>
