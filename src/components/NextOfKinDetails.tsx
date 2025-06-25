@@ -61,7 +61,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onChange={(e) => handleInputChange('nextOfKinFirstName', e.target.value)}
             onFocus={() => setFocusedField('nextOfKinFirstName')}
             onBlur={() => setFocusedField('')}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter first name"
           />
@@ -84,7 +84,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onChange={(e) => handleInputChange('nextOfKinLastName', e.target.value)}
             onFocus={() => setFocusedField('nextOfKinLastName')}
             onBlur={() => setFocusedField('')}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter last name"
           />
@@ -108,7 +108,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
           <select
             value={formData.relationshipToClient}
             onChange={(e) => handleInputChange('relationshipToClient', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
@@ -134,7 +134,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onChange={(e) => handlePhoneChange('nextOfKinPhone', e.target.value)}
             onFocus={() => setFocusedField('nextOfKinPhone')}
             onBlur={() => setFocusedField('')}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="01234567890"
           />
@@ -153,7 +153,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             type="email"
             value={formData.nextOfKinEmail}
             onChange={(e) => handleInputChange('nextOfKinEmail', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter email address"
           />
@@ -179,7 +179,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             value={formData.nextOfKinAddress}
             onChange={(e) => handleAddressChange('nextOfKinAddress', e.target.value, true)}
             onFocus={() => formData.nextOfKinAddress && setShowNextOfKinAddressSuggestions(true)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Start typing your address..."
           />
@@ -203,7 +203,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             type="text"
             value={formData.nextOfKinRegion}
             readOnly
-            className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinRegion}</p>}
@@ -217,7 +217,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             type="text"
             value={formData.nextOfKinCity}
             readOnly
-            className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinCity}</p>}
@@ -231,7 +231,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             type="text"
             value={formData.nextOfKinPostcode}
             readOnly
-            className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPostcode}</p>}

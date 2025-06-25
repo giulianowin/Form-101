@@ -82,7 +82,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('medicalHistory', e.target.value)}
             disabled={medicalHistoryNA}
             rows={4}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide details of medical history"
           />
@@ -107,7 +107,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('currentDiagnosis', e.target.value)}
             disabled={currentDiagnosisNA}
             rows={3}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide current diagnosis details"
           />
@@ -132,7 +132,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('hospitalAdmissionHistory', e.target.value)}
             disabled={hospitalHistoryNA}
             rows={3}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide hospital admission history"
           />
@@ -176,7 +176,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('mobilitySupport', e.target.value)}
             disabled={mobilitySupportNA}
             rows={3}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select from options above or provide additional details about mobility support needs..."
           />
@@ -219,7 +219,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('skinIntegrityNeeds', e.target.value)}
             disabled={skinIntegrityNA}
             rows={4}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select options above or add additional details..."
           />
@@ -235,7 +235,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.dnarInPlace}
             onChange={(e) => handleInputChange('dnarInPlace', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
@@ -257,7 +257,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.careVisitFrequency}
             onChange={(e) => handleInputChange('careVisitFrequency', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Optional</option>
@@ -275,7 +275,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.careVisitDuration}
             onChange={(e) => handleInputChange('careVisitDuration', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Optional</option>
@@ -298,7 +298,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.requiresHelpWithAppointments}
             onChange={(e) => handleInputChange('requiresHelpWithAppointments', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
@@ -316,7 +316,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.wantsCompanyToAppointments}
             onChange={(e) => handleInputChange('wantsCompanyToAppointments', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
