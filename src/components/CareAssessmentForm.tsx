@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import ServiceUserDetails from './ServiceUserDetails';
 import NextOfKinDetails from './NextOfKinDetails';
 import MedicalBackground from './MedicalBackground';
 import ConsentSection from './ConsentSection';
 import ProgressIndicator from './ProgressIndicator';
+import FormNavigation from './FormNavigation';
 import { isValidName, isValidNameInput, isValidEmail, isValidPhone } from '../utils/validation';
 import { getRequiredFieldsStatus } from '../utils/formValidationHelpers';
 
@@ -161,20 +162,6 @@ const CareAssessmentForm: React.FC = () => {
   const [showNextOfKinAddressSuggestions, setShowNextOfKinAddressSuggestions] = useState(false);
   const [focusedField, setFocusedField] = useState<string>('');
   const [noAllergies, setNoAllergies] = useState(false);
-
-  // Progressive form logic
-  useEffect(() => {
-    const fieldsStatus = getRequiredFieldsStatus(formData, errors);
-    
-    // Auto-advance to next section when current section is complete
-    if (currentSectionIndex === 0 && fieldsStatus.isClientDetailsComplete) {
-      setCurrentSectionIndex(1);
-    } else if (currentSectionIndex === 1 && fieldsStatus.isNextOfKinDetailsComplete) {
-      setCurrentSectionIndex(2);
-    } else if (currentSectionIndex === 2 && fieldsStatus.isMedicalBackgroundComplete) {
-      setCurrentSectionIndex(3);
-    }
-  }, [formData, errors, currentSectionIndex]);
 
   // Options
   const dayOptions = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -668,8 +655,37 @@ const CareAssessmentForm: React.FC = () => {
     return false;
   };
 
-  // Get progress data
+  // Navigation functions
+  const handleNext = () => {
+    if (currentSectionIndex < sectionNames.length - 1) {
+      setCurrentSectionIndex(currentSectionIndex + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentSectionIndex > 0) {
+      setCurrentSectionIndex(currentSectionIndex - 1);
+    }
+  };
+
+  // Get progress data and validation status
   const fieldsStatus = getRequiredFieldsStatus(formData, errors);
+  
+  // Determine if user can proceed to next section
+  const canProceedToNext = () => {
+    switch (currentSectionIndex) {
+      case 0:
+        return fieldsStatus.isClientDetailsComplete;
+      case 1:
+        return fieldsStatus.isNextOfKinDetailsComplete;
+      case 2:
+        return fieldsStatus.isMedicalBackgroundComplete;
+      case 3:
+        return fieldsStatus.isConsentComplete;
+      default:
+        return false;
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -693,9 +709,9 @@ const CareAssessmentForm: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Conditionally render sections based on current section index */}
-          {currentSectionIndex >= 0 && (
-            <div className={currentSectionIndex === 0 ? '' : 'opacity-0 h-0 overflow-hidden'}>
+          {/* Render only the current section */}
+          {currentSectionIndex === 0 && (
+            <div className="animate-fade-in">
               <ServiceUserDetails
                 formData={formData}
                 handleInputChange={handleInputChange}
@@ -728,8 +744,8 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex >= 1 && (
-            <div className={currentSectionIndex === 1 ? 'animate-fade-in' : currentSectionIndex > 1 ? '' : 'opacity-0 h-0 overflow-hidden'}>
+          {currentSectionIndex === 1 && (
+            <div className="animate-fade-in">
               <NextOfKinDetails
                 formData={formData}
                 handleInputChange={handleInputChange}
@@ -751,8 +767,8 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex >= 2 && (
-            <div className={currentSectionIndex === 2 ? 'animate-fade-in' : currentSectionIndex > 2 ? '' : 'opacity-0 h-0 overflow-hidden'}>
+          {currentSectionIndex === 2 && (
+            <div className="animate-fade-in">
               <MedicalBackground
                 formData={formData}
                 handleInputChange={handleInputChange}
@@ -770,14 +786,27 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex >= 3 && (
-            <div className={currentSectionIndex === 3 ? 'animate-fade-in' : 'opacity-0 h-0 overflow-hidden'}>
+          {currentSectionIndex === 3 && (
+            <div className="animate-fade-in">
               <ConsentSection
                 formData={formData}
                 handleInputChange={handleInputChange}
                 errors={errors}
               />
             </div>
+          )}
+
+          {/* Form Navigation - show on all sections except when submitting */}
+          {!isSubmitting && (
+            <FormNavigation
+              currentSectionIndex={currentSectionIndex}
+              totalSections={sectionNames.length}
+              sectionNames={sectionNames}
+              onNext={handleNext}
+              onBack={handleBack}
+              canProceed={canProceedToNext()}
+              isSubmitting={isSubmitting}
+            />
           )}
 
           {/* Submit Button - only visible on final section */}

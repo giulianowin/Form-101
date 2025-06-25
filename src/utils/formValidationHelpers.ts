@@ -179,7 +179,7 @@ interface RequiredFieldsStatus {
 
 export const getRequiredFieldsStatus = (formData: FormData, errors: FormErrors): RequiredFieldsStatus => {
   let completedRequiredFields = 0;
-  const totalRequiredFields = 24; // 11 + 9 + 3 + 1
+  const totalRequiredFields = 24; // Updated count: 11 + 9 + 3 + 1
 
   // Client Details validation (11 required fields)
   const clientDetailsFields = [
@@ -198,7 +198,6 @@ export const getRequiredFieldsStatus = (formData: FormData, errors: FormErrors):
 
   const completedClientFields = clientDetailsFields.filter(field => field.isValid()).length;
   const isClientDetailsComplete = completedClientFields === clientDetailsFields.length;
-  completedRequiredFields += completedClientFields;
 
   // Next of Kin Details validation (9 required fields)
   const nextOfKinFields = [
@@ -215,7 +214,6 @@ export const getRequiredFieldsStatus = (formData: FormData, errors: FormErrors):
 
   const completedNextOfKinFields = nextOfKinFields.filter(field => field.isValid()).length;
   const isNextOfKinDetailsComplete = completedNextOfKinFields === nextOfKinFields.length;
-  completedRequiredFields += completedNextOfKinFields;
 
   // Medical Background validation (3 required fields)
   const medicalFields = [
@@ -226,13 +224,12 @@ export const getRequiredFieldsStatus = (formData: FormData, errors: FormErrors):
 
   const completedMedicalFields = medicalFields.filter(field => field.isValid()).length;
   const isMedicalBackgroundComplete = completedMedicalFields === medicalFields.length;
-  completedRequiredFields += completedMedicalFields;
 
   // Consent validation (1 required field)
   const isConsentComplete = formData.consent && !errors.consent;
-  if (isConsentComplete) {
-    completedRequiredFields += 1;
-  }
+
+  // Calculate total completed fields
+  completedRequiredFields = completedClientFields + completedNextOfKinFields + completedMedicalFields + (isConsentComplete ? 1 : 0);
 
   return {
     totalRequiredFields,
