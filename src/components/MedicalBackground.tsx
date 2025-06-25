@@ -64,7 +64,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
       
       {/* Medical History Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Medical History
           </label>
@@ -89,7 +89,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Current Diagnosis Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Current Diagnosis
           </label>
@@ -114,7 +114,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Hospital Admission History Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Hospital Admission History
           </label>
@@ -139,7 +139,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Mobility Support Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Mobility Support
@@ -184,7 +184,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Skin Integrity Needs Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Skin Integrity Needs
@@ -227,7 +227,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* DNAR in Place Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             DNAR in Place <span className="text-red-400">*</span>
@@ -248,7 +248,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Care Visit Frequency and Duration Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -289,7 +289,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Appointment Assistance Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>

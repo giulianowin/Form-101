@@ -84,7 +84,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
       
       {/* Name Fields Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -125,7 +125,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Date of Birth Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Date of Birth <span className="text-red-400">*</span>
           </label>
@@ -171,7 +171,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Phone and Gender Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -215,7 +215,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Address Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -289,7 +289,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Client Start Date Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <Calendar className="w-4 h-4 inline mr-1" />
             Client Start Date <span className="text-slate-400 text-xs">(Optional)</span>
@@ -336,7 +336,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Allergies Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Allergies <span className="text-red-400">*</span>
           </label>
@@ -380,7 +380,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Service Required Box */}
-      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             What service would you require? <span className="text-red-400">*</span>
           </label>
