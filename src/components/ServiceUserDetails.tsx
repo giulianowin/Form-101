@@ -217,7 +217,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           />
           {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.address}</p>}
           {showAddressSuggestions && addressSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-slate-800/95 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
+            <div className="absolute z-50 w-full mt-1 bg-slate-800 rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
               {addressSuggestions.map((suggestion) => (
                 <div
                   key={suggestion.id}

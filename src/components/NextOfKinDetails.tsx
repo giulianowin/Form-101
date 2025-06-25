@@ -165,7 +165,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             placeholder="Start typing your address..."
           />
           {showNextOfKinAddressSuggestions && nextOfKinAddressSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-slate-800/95 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
+            <div className="absolute z-50 w-full mt-1 bg-slate-800 rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
               {nextOfKinAddressSuggestions.map((suggestion) => (
                 <div
                   key={suggestion.id}
