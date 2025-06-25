@@ -187,7 +187,7 @@ const CareAssessmentForm: React.FC = () => {
 
     return (
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-900">
+        <label className="block text-sm font-medium text-gray-200">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
         <div className="relative">
@@ -232,7 +232,7 @@ const CareAssessmentForm: React.FC = () => {
 
     return (
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-900">
+        <label className="block text-sm font-medium text-gray-200">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
         <div className="relative">
@@ -277,7 +277,7 @@ const CareAssessmentForm: React.FC = () => {
 
     return (
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-900">
+        <label className="block text-sm font-medium text-gray-200">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
         <div className="relative">
@@ -355,14 +355,14 @@ const CareAssessmentForm: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Section 1: Service User Details */}
           {currentSection >= 1 && (
-            <div className={`bg-white rounded-lg shadow-lg p-8 transition-all duration-500 ${
+            <div className={`bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500 ${
               currentSection === 1 ? 'ring-2 ring-purple-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
                 <User className="w-6 h-6 text-purple-600" />
-                <h2 className="text-2xl font-semibold text-gray-900">Service User Details</h2>
+                <h2 className="text-2xl font-semibold text-white">Service User Details</h2>
                 {isSectionComplete(1) && (
-                  <div className="ml-auto bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="ml-auto bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                     ✓ Complete
                   </div>
                 )}
@@ -408,14 +408,14 @@ const CareAssessmentForm: React.FC = () => {
 
           {/* Section 2: Next of Kin Details */}
           {currentSection >= 2 && (
-            <div className={`bg-white rounded-lg shadow-lg p-8 transition-all duration-500 ${
+            <div className={`bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500 ${
               currentSection === 2 ? 'ring-2 ring-purple-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
                 <Users className="w-6 h-6 text-purple-600" />
-                <h2 className="text-2xl font-semibold text-gray-900">Next of Kin Details</h2>
+                <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
                 {isSectionComplete(2) && (
-                  <div className="ml-auto bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="ml-auto bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                     ✓ Complete
                   </div>
                 )}
@@ -447,14 +447,14 @@ const CareAssessmentForm: React.FC = () => {
 
           {/* Section 3: Medical Background Information */}
           {currentSection >= 3 && (
-            <div className={`bg-white rounded-lg shadow-lg p-8 transition-all duration-500 ${
+            <div className={`bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500 ${
               currentSection === 3 ? 'ring-2 ring-purple-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
                 <Heart className="w-6 h-6 text-purple-600" />
-                <h2 className="text-2xl font-semibold text-gray-900">Medical Background Information</h2>
+                <h2 className="text-2xl font-semibold text-white">Medical Background Information</h2>
                 {isSectionComplete(3) && (
-                  <div className="ml-auto bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="ml-auto bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                     ✓ Complete
                   </div>
                 )}
@@ -502,7 +502,7 @@ const CareAssessmentForm: React.FC = () => {
 
           {/* Consent and Submit */}
           {currentSection >= 3 && isSectionComplete(3) && (
-            <div className="bg-white rounded-lg shadow-lg p-8 transition-all duration-500">
+            <div className="bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500">
               <div className="space-y-6">
                 <div className="flex items-start space-x-3">
                   <input
@@ -513,7 +513,7 @@ const CareAssessmentForm: React.FC = () => {
                     className="mt-1 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                     required
                   />
-                  <label htmlFor="consent" className="text-sm text-gray-700">
+                  <label htmlFor="consent" className="text-sm text-purple-100">
                     I consent to the processing of this personal information for the purpose of care assessment and service provision. 
                     I understand that this information will be used to determine appropriate care arrangements and may be shared with relevant healthcare professionals and care providers.
                   </label>
