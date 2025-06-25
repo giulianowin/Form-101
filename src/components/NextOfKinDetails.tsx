@@ -49,7 +49,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
       </div>
       
       {/* Name Fields Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border-4 border-gray-600/40 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>  
@@ -100,7 +100,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
       </div>
 
       {/* Relationship Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border-4 border-gray-600/40 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Relationship to Client <span className="text-red-400">*</span>
@@ -121,7 +121,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
       </div>
 
       {/* Contact Information Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border-4 border-gray-600/40 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -166,7 +166,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
       </div>
 
       {/* Address Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border-4 border-gray-600/40 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>

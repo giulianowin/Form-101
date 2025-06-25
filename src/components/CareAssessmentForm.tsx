@@ -755,6 +755,7 @@ const CareAssessmentForm: React.FC = () => {
                 onClick={handleBackNavigation}
                 disabled={isSubmitting}
                 className="inline-flex items-center px-4 py-2 text-white bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-4 py-2 text-white bg-white/10 border-2 border-gray-500/30 rounded-lg hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 <ChevronLeft className="w-4 h-4 mr-2" />
@@ -768,6 +769,7 @@ const CareAssessmentForm: React.FC = () => {
                   onClick={handleNextSectionNavigation}
                   disabled={isSubmitting}
                   className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                  className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-purple-800 to-purple-500 hover:from-purple-900 hover:to-purple-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
                 >
                   Next Section
@@ -785,6 +787,7 @@ const CareAssessmentForm: React.FC = () => {
                 onClick={handleNextSectionNavigation}
                 disabled={isSubmitting}
                 className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-purple-800 to-purple-500 hover:from-purple-900 hover:to-purple-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 Next Section
@@ -887,6 +890,7 @@ const CareAssessmentForm: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
+                className="bg-gradient-to-r from-purple-800 to-purple-500 hover:from-purple-900 hover:to-purple-600 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
                 style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 {isSubmitting ? (

@@ -15,7 +15,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   const percentage = Math.round((completedFields / totalFields) * 100);
 
   return (
-    <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 border-4 border-gray-600/40 shadow-2xl mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-3">
           <div className="relative">

@@ -13,7 +13,7 @@ const ConsentSection: React.FC<ConsentSectionProps> = ({
   errors,
 }) => {
   return (
-    <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 border-4 border-gray-600/40 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="space-y-4">
         <div className="text-slate-200 text-sm leading-relaxed" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <p className="font-semibold mb-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>I understand and Consent that my information will be:</p>
