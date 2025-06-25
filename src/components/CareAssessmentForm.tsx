@@ -187,18 +187,18 @@ const CareAssessmentForm: React.FC = () => {
 
     return (
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-200">
-          {label} {required && <span className="text-red-500">*</span>}
+        <label className="block text-sm font-medium text-white">
+          {label} {required && <span className="text-red-400">*</span>}
         </label>
         <div className="relative">
           <input
             type={type}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors text-white ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors bg-gray-800/50 text-white ${
               showWarning 
                 ? 'border-yellow-400 bg-yellow-900/20' 
-                : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                : 'border-purple-600/30 hover:border-purple-500/50'
             }`}
             required={required}
           />
@@ -209,7 +209,7 @@ const CareAssessmentForm: React.FC = () => {
           )}
         </div>
         {showWarning && (
-          <p className="text-sm text-yellow-600 flex items-center gap-1">
+          <p className="text-sm text-yellow-400 flex items-center gap-1">
             <AlertCircle className="h-4 w-4" />
             This field is required
           </p>
@@ -232,18 +232,18 @@ const CareAssessmentForm: React.FC = () => {
 
     return (
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-200">
-          {label} {required && <span className="text-red-500">*</span>}
+        <label className="block text-sm font-medium text-white">
+          {label} {required && <span className="text-red-400">*</span>}
         </label>
         <div className="relative">
           <textarea
             value={value}
             onChange={(e) => onChange(e.target.value)}
             rows={rows}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical text-white ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical bg-gray-800/50 text-white ${
               showWarning 
                 ? 'border-yellow-400 bg-yellow-900/20' 
-                : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                : 'border-purple-600/30 hover:border-purple-500/50'
             }`}
             required={required}
           />
@@ -254,7 +254,7 @@ const CareAssessmentForm: React.FC = () => {
           )}
         </div>
         {showWarning && (
-          <p className="text-sm text-yellow-600 flex items-center gap-1">
+          <p className="text-sm text-yellow-400 flex items-center gap-1">
             <AlertCircle className="h-4 w-4" />
             This field is required
           </p>
@@ -277,23 +277,23 @@ const CareAssessmentForm: React.FC = () => {
 
     return (
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-200">
-          {label} {required && <span className="text-red-500">*</span>}
+        <label className="block text-sm font-medium text-white">
+          {label} {required && <span className="text-red-400">*</span>}
         </label>
         <div className="relative">
           <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors text-white ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors bg-gray-800/50 text-white ${
               showWarning 
                 ? 'border-yellow-400 bg-yellow-900/20' 
-                : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                : 'border-purple-600/30 hover:border-purple-500/50'
             }`}
             required={required}
           >
             <option value="">Select...</option>
             {options.map((option) => (
-              <option key={option} value={option}>
+              <option key={option} value={option} className="bg-gray-800 text-white">
                 {option}
               </option>
             ))}
@@ -305,7 +305,7 @@ const CareAssessmentForm: React.FC = () => {
           )}
         </div>
         {showWarning && (
-          <p className="text-sm text-yellow-600 flex items-center gap-1">
+          <p className="text-sm text-yellow-400 flex items-center gap-1">
             <AlertCircle className="h-4 w-4" />
             This field is required
           </p>
@@ -355,11 +355,11 @@ const CareAssessmentForm: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Section 1: Service User Details */}
           {currentSection >= 1 && (
-            <div className={`bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500 ${
+            <div className={`bg-gradient-to-br from-purple-900/60 via-purple-800/50 to-indigo-900/60 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-xl p-8 transition-all duration-500 ${
               currentSection === 1 ? 'ring-2 ring-purple-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
-                <User className="w-6 h-6 text-purple-600" />
+                <User className="w-6 h-6 text-purple-400" />
                 <h2 className="text-2xl font-semibold text-white">Service User Details</h2>
                 {isSectionComplete(1) && (
                   <div className="ml-auto bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -396,7 +396,7 @@ const CareAssessmentForm: React.FC = () => {
                 {renderInput('Postcode', serviceUserDetails.postcode, 
                   (value) => setServiceUserDetails({...serviceUserDetails, postcode: value}), 'text', 1, 'postcode')}
                 
-                {renderSelect('Service Required', serviceUserDetails.serviceRequired,
+                {renderSelect('What service would you require?', serviceUserDetails.serviceRequired,
                   (value) => setServiceUserDetails({...serviceUserDetails, serviceRequired: value}),
                   ['Personal Care', 'Domestic Support', 'Companionship', 'Respite Care', 'Other'], 1, 'serviceRequired')}
                 
@@ -408,11 +408,11 @@ const CareAssessmentForm: React.FC = () => {
 
           {/* Section 2: Next of Kin Details */}
           {currentSection >= 2 && (
-            <div className={`bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500 ${
+            <div className={`bg-gradient-to-br from-purple-900/60 via-purple-800/50 to-indigo-900/60 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-xl p-8 transition-all duration-500 ${
               currentSection === 2 ? 'ring-2 ring-purple-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
-                <Users className="w-6 h-6 text-purple-600" />
+                <Users className="w-6 h-6 text-purple-400" />
                 <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
                 {isSectionComplete(2) && (
                   <div className="ml-auto bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -447,11 +447,11 @@ const CareAssessmentForm: React.FC = () => {
 
           {/* Section 3: Medical Background Information */}
           {currentSection >= 3 && (
-            <div className={`bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500 ${
+            <div className={`bg-gradient-to-br from-purple-900/60 via-purple-800/50 to-indigo-900/60 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-xl p-8 transition-all duration-500 ${
               currentSection === 3 ? 'ring-2 ring-purple-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
-                <Heart className="w-6 h-6 text-purple-600" />
+                <Heart className="w-6 h-6 text-purple-400" />
                 <h2 className="text-2xl font-semibold text-white">Medical Background Information</h2>
                 {isSectionComplete(3) && (
                   <div className="ml-auto bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -502,7 +502,7 @@ const CareAssessmentForm: React.FC = () => {
 
           {/* Consent and Submit */}
           {currentSection >= 3 && isSectionComplete(3) && (
-            <div className="bg-gradient-to-br from-purple-900/80 via-purple-800/70 to-indigo-900/80 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-lg p-8 transition-all duration-500">
+            <div className="bg-gradient-to-br from-purple-900/60 via-purple-800/50 to-indigo-900/60 backdrop-blur-sm border border-purple-600/30 rounded-lg shadow-xl p-8 transition-all duration-500">
               <div className="space-y-6">
                 <div className="flex items-start space-x-3">
                   <input
@@ -531,8 +531,8 @@ const CareAssessmentForm: React.FC = () => {
                 {submitMessage && (
                   <div className={`p-4 rounded-lg text-center font-medium ${
                     submitMessage.includes('successfully') 
-                      ? 'bg-purple-900 text-purple-200' 
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-purple-600/20 text-purple-200 border border-purple-500/30' 
+                      : 'bg-red-600/20 text-red-200 border border-red-500/30'
                   }`}>
                     {submitMessage}
                   </div>
