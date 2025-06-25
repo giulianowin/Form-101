@@ -690,13 +690,6 @@ const CareAssessmentForm: React.FC = () => {
   const visibleSections = getVisibleSections();
   const maxVisibleSection = Math.max(...visibleSections);
   
-  // Auto-advance to the highest available section when current becomes complete
-  React.useEffect(() => {
-    if (maxVisibleSection > currentSectionIndex) {
-      setCurrentSectionIndex(maxVisibleSection);
-    }
-  }, [maxVisibleSection, currentSectionIndex]);
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
