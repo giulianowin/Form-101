@@ -1,9 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Apply Montserrat Semi Bold globally for the form */
-body {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-}
