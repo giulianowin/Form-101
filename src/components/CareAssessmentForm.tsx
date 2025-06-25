@@ -736,7 +736,7 @@ const CareAssessmentForm: React.FC = () => {
           )}
 
           {/* Render sections based on visibility and current selection */}
-          {(currentSectionIndex === 0 || (currentSectionIndex > 0 && visibleSections.includes(0))) && currentSectionIndex === 0 && (
+          {currentSectionIndex === 0 && (
             <div className="animate-fade-in">
               <ServiceUserDetails
                 formData={formData}
@@ -770,7 +770,7 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {(currentSectionIndex === 1 || (currentSectionIndex > 1 && visibleSections.includes(1))) && currentSectionIndex === 1 && (
+          {currentSectionIndex === 1 && (
             <div className="animate-fade-in">
               <NextOfKinDetails
                 formData={formData}
@@ -793,7 +793,7 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {(currentSectionIndex === 2 || (currentSectionIndex > 2 && visibleSections.includes(2))) && currentSectionIndex === 2 && (
+          {currentSectionIndex === 2 && (
             <div className="animate-fade-in">
               <MedicalBackground
                 formData={formData}
@@ -812,7 +812,7 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex === 3 && visibleSections.includes(3) && (
+          {currentSectionIndex === 3 && (
             <div className="animate-fade-in">
               <ConsentSection
                 formData={formData}
