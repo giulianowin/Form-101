@@ -73,15 +73,15 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}>
       <div className="flex items-center mb-6">
         <User className="w-6 h-6 text-blue-400 mr-3" />
-        <h2 className="text-2xl font-semibold text-white">Client Details</h2>
+        <h2 className="text-2xl text-white" style={{ fontWeight: 600 }}>Client Details</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             First Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -98,7 +98,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Last Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -115,7 +115,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Date of Birth <span className="text-red-400">*</span>
           </label>
           <div className="grid grid-cols-3 gap-4">
@@ -157,7 +157,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             <Phone className="w-4 h-4 inline mr-1" />
             Phone Number <span className="text-red-400">*</span>
           </label>
@@ -177,7 +177,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Gender <span className="text-red-400">*</span>
           </label>
           <select
@@ -194,7 +194,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             <MapPin className="w-4 h-4 inline mr-1" />
             First Line of Address <span className="text-red-400">*</span>
           </label>
@@ -225,7 +225,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Region <span className="text-red-400">*</span>
           </label>
           <input
@@ -239,7 +239,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             City <span className="text-red-400">*</span>
           </label>
           <input
@@ -253,7 +253,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Postcode <span className="text-red-400">*</span>
           </label>
           <input
@@ -267,7 +267,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             <Calendar className="w-4 h-4 inline mr-1" />
             Client Start Date <span className="text-slate-400 text-xs">(Optional)</span>
           </label>
@@ -310,7 +310,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Allergies <span className="text-red-400">*</span>
           </label>
           
@@ -352,7 +352,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             What service would you require? <span className="text-red-400">*</span>
           </label>
           <select

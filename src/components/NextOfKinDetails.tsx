@@ -38,15 +38,15 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   setFocusedField,
 }) => {
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}>
       <div className="flex items-center mb-6">
         <Heart className="w-6 h-6 text-pink-400 mr-3" />
-        <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
+        <h2 className="text-2xl text-white" style={{ fontWeight: 600 }}>Next of Kin Details</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">  
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>  
             First Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -68,7 +68,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Last Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -90,7 +90,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Relationship to Client <span className="text-red-400">*</span>
           </label>
           <select
@@ -107,7 +107,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             <Phone className="w-4 h-4 inline mr-1" />
             Phone Number <span className="text-red-400">*</span>
           </label>
@@ -127,7 +127,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             <Mail className="w-4 h-4 inline mr-1" />
             Email Address <span className="text-red-400">*</span>
           </label>
@@ -145,7 +145,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             <MapPin className="w-4 h-4 inline mr-1" />
             First Line of Address <span className="text-red-400">*</span>
           </label>
@@ -176,7 +176,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Region <span className="text-red-400">*</span>
           </label>
           <input
@@ -190,7 +190,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             City <span className="text-red-400">*</span>
           </label>
           <input
@@ -204,7 +204,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Postcode <span className="text-red-400">*</span>
           </label>
           <input

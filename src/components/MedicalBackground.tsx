@@ -57,15 +57,15 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}>
       <div className="flex items-center mb-6">
         <FileText className="w-6 h-6 text-green-400 mr-3" />
-        <h2 className="text-2xl font-semibold text-white">Client Medical Background</h2>
+        <h2 className="text-2xl text-white" style={{ fontWeight: 600 }}>Client Medical Background</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Medical History
           </label>
           <div className="mb-2">
@@ -88,7 +88,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Current Diagnosis
           </label>
           <div className="mb-2">
@@ -111,7 +111,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Hospital Admission History
           </label>
           <div className="mb-2">
@@ -134,7 +134,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Mobility Support
           </label>
           
@@ -175,7 +175,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Skin Integrity Needs
           </label>
           
@@ -214,7 +214,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             DNAR in Place <span className="text-red-400">*</span>
           </label>
           <select
@@ -231,7 +231,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Care Visit Frequency <span className="text-slate-400 text-xs">(Optional)</span>
           </label>
           <select
@@ -248,7 +248,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Care Visit Duration <span className="text-slate-400 text-xs">(Optional)</span>
           </label>
           <select
@@ -265,7 +265,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Requires Help with Appointments <span className="text-red-400">*</span>
           </label>
           <select
@@ -282,7 +282,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm text-slate-200 mb-2" style={{ fontWeight: 600 }}>
             Wants Company to Appointments <span className="text-red-400">*</span>
           </label>
           <select
