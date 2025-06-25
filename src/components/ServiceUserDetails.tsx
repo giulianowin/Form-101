@@ -1,6 +1,7 @@
 import React from 'react';
 import { User, Phone, MapPin, Calendar } from 'lucide-react';
 import CircularCheckbox from './CircularCheckbox';
+import AddressDropdown from './AddressDropdown';
 import {
   getDescriptionForField,
   getDateOfBirthWarning,
@@ -71,6 +72,9 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       handleInputChange('allergies', '');
     }
   };
+
+  // Create ref for address input
+  const addressInputRef = React.useRef<HTMLInputElement>(null);
 
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -206,31 +210,26 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             First Line of Address <span className="text-red-400">*</span>
           </label>
           <input
+            ref={addressInputRef}
             type="text"
             value={formData.address}
             onChange={(e) => handleAddressChange('address', e.target.value, false)}
             onFocus={() => formData.address && setShowAddressSuggestions(true)}
-            onBlur={() => setTimeout(() => setShowAddressSuggestions(false), 200)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Start typing your address..."
           />
           {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.address}</p>}
-          {showAddressSuggestions && addressSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-slate-800 border border-slate-600 rounded-lg max-h-60 overflow-y-auto">
-              {addressSuggestions.map((suggestion) => (
-                <div
-                  key={suggestion.id}
-                  onClick={() => selectAddress(suggestion, false)}
-                  className="px-4 py-3 hover:bg-blue-600 cursor-pointer text-white border-b border-slate-600 last:border-b-0"
-                >
-                  <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
-                  <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
+
+        {/* Address Dropdown Portal */}
+        <AddressDropdown
+          isVisible={showAddressSuggestions}
+          suggestions={addressSuggestions}
+          onSelectAddress={(suggestion) => selectAddress(suggestion, false)}
+          inputRef={addressInputRef}
+          onClose={() => setShowAddressSuggestions(false)}
+        />
 
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>

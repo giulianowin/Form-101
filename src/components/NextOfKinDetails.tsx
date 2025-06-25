@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heart, Phone, Mail, MapPin } from 'lucide-react';
+import AddressDropdown from './AddressDropdown';
 import {
   getDescriptionForField,
   shouldShowWarning,
@@ -37,6 +38,9 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   setShowNextOfKinAddressSuggestions,
   setFocusedField,
 }) => {
+  // Create ref for next of kin address input
+  const nextOfKinAddressInputRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
@@ -155,31 +159,26 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             First Line of Address <span className="text-red-400">*</span>
           </label>
           <input
+            ref={nextOfKinAddressInputRef}
             type="text"
             value={formData.nextOfKinAddress}
             onChange={(e) => handleAddressChange('nextOfKinAddress', e.target.value, true)}
             onFocus={() => formData.nextOfKinAddress && setShowNextOfKinAddressSuggestions(true)}
-            onBlur={() => setTimeout(() => setShowNextOfKinAddressSuggestions(false), 200)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Start typing your address..."
           />
-          {showNextOfKinAddressSuggestions && nextOfKinAddressSuggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-slate-800 border border-slate-600 rounded-lg max-h-60 overflow-y-auto">
-              {nextOfKinAddressSuggestions.map((suggestion) => (
-                <div
-                  key={suggestion.id}
-                  onClick={() => selectAddress(suggestion, true)}
-                  className="px-4 py-3 hover:bg-blue-600 cursor-pointer text-white border-b border-slate-600 last:border-b-0"
-                >
-                  <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
-                  <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
-                </div>
-              ))}
-            </div>
-          )}
           {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinAddress}</p>}
         </div>
+
+        {/* Next of Kin Address Dropdown Portal */}
+        <AddressDropdown
+          isVisible={showNextOfKinAddressSuggestions}
+          suggestions={nextOfKinAddressSuggestions}
+          onSelectAddress={(suggestion) => selectAddress(suggestion, true)}
+          inputRef={nextOfKinAddressInputRef}
+          onClose={() => setShowNextOfKinAddressSuggestions(false)}
+        />
 
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
