@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, ChevronLeft, ChevronRight } from 'lucide-react';
 import ServiceUserDetails from './ServiceUserDetails';
 import NextOfKinDetails from './NextOfKinDetails';
@@ -692,6 +692,14 @@ const CareAssessmentForm: React.FC = () => {
   const visibleSections = getVisibleSections();
   const maxVisibleSection = Math.max(...visibleSections);
   
+  // Scroll to top whenever section changes
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [currentSectionIndex]);
+
   // Auto-advance to next section when requirements are met, but respect manual navigation
   React.useEffect(() => {
     // Only auto-advance if user hasn't manually navigated recently
