@@ -234,13 +234,13 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
 
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Region <span className="text-red-400">*</span>
+            Region <span className="text-red-400">*</span> <span className="text-slate-400 text-xs">(Auto-filled)</span>
           </label>
           <input
             type="text"
             value={formData.region}
-            onChange={(e) => handleInputChange('region', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            readOnly
+            className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="e.g., England, Scotland, Wales, Northern Ireland"
           />
@@ -249,13 +249,13 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
 
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            City <span className="text-red-400">*</span>
+            City <span className="text-red-400">*</span> <span className="text-slate-400 text-xs">(Auto-filled)</span>
           </label>
           <input
             type="text"
             value={formData.city}
-            onChange={(e) => handleInputChange('city', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            readOnly
+            className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter city"
           />
@@ -264,13 +264,13 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
 
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Postcode <span className="text-red-400">*</span>
+            Postcode <span className="text-red-400">*</span> <span className="text-slate-400 text-xs">(Auto-filled)</span>
           </label>
           <input
             type="text"
             value={formData.postcode}
-            onChange={(e) => handleInputChange('postcode', e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            readOnly
+            className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter postcode"
           />

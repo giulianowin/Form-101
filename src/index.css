@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fix potential rendering issues */
+* {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* Optimize blur effects to prevent pixel corruption */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -15,4 +29,32 @@
 
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+/* Optimize animations to prevent visual artifacts */
+@keyframes pulse-heart {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes ping-heart {
+  75%, 100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-heart {
+  animation: pulse-heart 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-ping-heart {
+  animation: ping-heart 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }

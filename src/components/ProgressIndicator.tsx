@@ -20,11 +20,11 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
         <div className="flex items-center space-x-3">
           <div className="relative">
             <Heart 
-              className="w-6 h-6 text-green-400 animate-pulse" 
+              className="w-6 h-6 text-green-400 animate-pulse-heart" 
               fill="currentColor"
             />
-            <div className="absolute inset-0 w-6 h-6 text-green-400 animate-ping opacity-75">
-              <Heart fill="currentColor" />
+            <div className="absolute inset-0 w-6 h-6 text-green-400 animate-ping-heart opacity-75">
+              <Heart className="w-6 h-6" fill="currentColor" />
             </div>
           </div>
           <div>
