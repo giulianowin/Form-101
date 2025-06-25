@@ -70,13 +70,6 @@ interface AllergyOptions {
   [key: string]: boolean;
 }
 
-interface NAOptions {
-  medicalHistoryNA: boolean;
-  currentDiagnosisNA: boolean;
-  hospitalAdmissionHistoryNA: boolean;
-  noAllergy: boolean;
-}
-
 interface FormErrors {
   [key: string]: string;
 }
@@ -119,12 +112,14 @@ const CareAssessmentForm: React.FC = () => {
     'Hay Fever allergy': false,
     'Bee Sting Allergy': false,
   });
-  const [naOptions, setNAOptions] = useState<NAOptions>({
-    medicalHistoryNA: false,
-    currentDiagnosisNA: false,
-    hospitalAdmissionHistoryNA: false,
-    noAllergy: false,
-  });
+
+  // N/A state variables
+  const [noAllergyChecked, setNoAllergyChecked] = useState(false);
+  const [medicalHistoryNA, setMedicalHistoryNA] = useState(false);
+  const [currentDiagnosisNA, setCurrentDiagnosisNA] = useState(false);
+  const [hospitalAdmissionHistoryNA, setHospitalAdmissionHistoryNA] = useState(false);
+  const [mobilitySupportNA, setMobilitySupportNA] = useState(false);
+  const [skinIntegrityNeedsNA, setSkinIntegrityNeedsNA] = useState(false);
 
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
@@ -179,7 +174,89 @@ const CareAssessmentForm: React.FC = () => {
     { value: '10', label: 'October' }, { value: '11', label: 'November' }, { value: '12', label: 'December' },
   ];
   
+  // Handle "No Allergy" checkbox
+  const handleNoAllergyChange = (checked: boolean) => {
+    setNoAllergyChecked(checked);
+    if (checked) {
+      // Clear and disable allergy options and text area
+      setAllergyOptions({
+        'Peanut Allergy': false,
+        'Hay Fever allergy': false,
+        'Bee Sting Allergy': false,
+      });
+      handleInputChange('allergies', 'No allergies');
+    } else {
+      // Clear the allergies field when unchecking "No Allergy"
+      handleInputChange('allergies', '');
+    }
+  };
+
+  // Handle N/A for medical history
+  const handleMedicalHistoryNA = (checked: boolean) => {
+    setMedicalHistoryNA(checked);
+    if (checked) {
+      handleInputChange('medicalHistory', 'N/A');
+    } else {
+      handleInputChange('medicalHistory', '');
+    }
+  };
+
+  // Handle N/A for current diagnosis
+  const handleCurrentDiagnosisNA = (checked: boolean) => {
+    setCurrentDiagnosisNA(checked);
+    if (checked) {
+      handleInputChange('currentDiagnosis', 'N/A');
+    } else {
+      handleInputChange('currentDiagnosis', '');
+    }
+  };
+
+  // Handle N/A for hospital admission history
+  const handleHospitalAdmissionHistoryNA = (checked: boolean) => {
+    setHospitalAdmissionHistoryNA(checked);
+    if (checked) {
+      handleInputChange('hospitalAdmissionHistory', 'N/A');
+    } else {
+      handleInputChange('hospitalAdmissionHistory', '');
+    }
+  };
+
+  // Handle N/A for mobility support
+  const handleMobilitySupportNA = (checked: boolean) => {
+    setMobilitySupportNA(checked);
+    if (checked) {
+      // Clear and disable mobility options and text area
+      setMobilityOptions({
+        'Stairlift': false,
+        'Walking Stick': false,
+        'Assistance to stand': false,
+        'Assistance with walking': false,
+      });
+      handleInputChange('mobilitySupport', 'N/A');
+    } else {
+      handleInputChange('mobilitySupport', '');
+    }
+  };
+
+  // Handle N/A for skin integrity needs
+  const handleSkinIntegrityNeedsNA = (checked: boolean) => {
+    setSkinIntegrityNeedsNA(checked);
+    if (checked) {
+      // Clear and disable skin integrity options and text area
+      setSkinIntegrityOptions({
+        'Requires regular moisturizing / cream application': false,
+        'Requires wound dressing / care': false,
+        'Prone to rashes or skin irritation': false,
+      });
+      handleInputChange('skinIntegrityNeeds', 'N/A');
+    } else {
+      handleInputChange('skinIntegrityNeeds', '');
+    }
+  };
+
   const handleMobilityOptionChange = (option: string, checked: boolean) => {
+    if (mobilitySupportNA) return; // Don't allow changes when N/A is selected
+    
     setMobilityOptions(prev => ({ ...prev, [option]: checked }));
     
     const currentText = formData.mobilitySupport;
@@ -205,6 +282,8 @@ const CareAssessmentForm: React.FC = () => {
   };
 
   const handleAllergyOptionChange = (option: string, checked: boolean) => {
+    if (noAllergyChecked) return; // Don't allow changes when "No Allergy" is selected
+
     setAllergyOptions(prev => ({ ...prev, [option]: checked }));
 
     const currentText = formData.allergies;
@@ -224,29 +303,6 @@ const CareAssessmentForm: React.FC = () => {
     }
 
     handleInputChange('allergies', newText);
-  };
-
-  const handleNAOptionChange = (field: keyof NAOptions, checked: boolean) => {
-    setNAOptions(prev => ({ ...prev, [field]: checked }));
-    
-    // Clear the corresponding text field when N/A is checked
-    if (checked) {
-      if (field === 'medicalHistoryNA') {
-        handleInputChange('medicalHistory', '');
-      } else if (field === 'currentDiagnosisNA') {
-        handleInputChange('currentDiagnosis', '');
-      } else if (field === 'hospitalAdmissionHistoryNA') {
-        handleInputChange('hospitalAdmissionHistory', '');
-      } else if (field === 'noAllergy') {
-        // Clear allergies and uncheck all allergy options
-        handleInputChange('allergies', '');
-        setAllergyOptions({
-          'Peanut Allergy': false,
-          'Hay Fever allergy': false,
-          'Bee Sting Allergy': false,
-        });
-      }
-    }
   };
 
   const currentYear = new Date().getFullYear();
@@ -357,6 +413,8 @@ const CareAssessmentForm: React.FC = () => {
   };
 
   const handleSkinIntegrityOptionChange = (option: string, checked: boolean) => {
+    if (skinIntegrityNeedsNA) return; // Don't allow changes when N/A is selected
+
     setSkinIntegrityOptions(prev => ({ ...prev, [option]: checked }));
 
     const currentText = formData.skinIntegrityNeeds;
@@ -680,13 +738,13 @@ const CareAssessmentForm: React.FC = () => {
       <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-4">Care Assessment Form</h1>
-            <p className="text-slate-300 text-lg">Please complete the required fields to help us provide the best care service for you</p>
+            <h1 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>Care Assessment Form</h1>
+            <p className="text-slate-300 text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>Please complete the required fields to help us provide the best care service for you</p>
           </div>
 
           {submitSuccess && (
             <div className="mb-8 p-4 bg-green-500/20 border border-green-500/50 rounded-lg backdrop-blur-sm">
-              <p className="text-green-300 text-center font-medium">Form submitted successfully! We will be in touch soon.</p>
+              <p className="text-green-300 text-center font-bold" style={{ fontFamily: 'Montserrat, sans-serif' }}>Form submitted successfully! We will be in touch soon.</p>
             </div>
           )}
 
@@ -695,12 +753,12 @@ const CareAssessmentForm: React.FC = () => {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
               <div className="flex items-center mb-6">
                 <User className="w-6 h-6 text-blue-400 mr-3" />
-                <h2 className="text-2xl font-semibold text-white">Client Details</h2>
+                <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>Client Details</h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     First Name <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -708,16 +766,17 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.firstName}
                     onChange={(e) => handleInputChange('firstName', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter first name"
                   />
                   {getDescriptionForField('firstName', formData.firstName) && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('firstName', formData.firstName)}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
                   )}
-                  {errors.firstName && <p className="text-yellow-400 text-sm mt-1">{errors.firstName}</p>}
+                  {errors.firstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.firstName}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Last Name <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -725,16 +784,17 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.lastName}
                     onChange={(e) => handleInputChange('lastName', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter last name"
                   />
                   {getDescriptionForField('lastName', formData.lastName) && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('lastName', formData.lastName)}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
                   )}
-                  {errors.lastName && <p className="text-yellow-400 text-sm mt-1">{errors.lastName}</p>}
+                  {errors.lastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.lastName}</p>}
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Date of Birth <span className="text-red-400">*</span>
                   </label>
                   <div className="grid grid-cols-3 gap-4">
@@ -742,6 +802,7 @@ const CareAssessmentForm: React.FC = () => {
                       value={formData.dateOfBirth.day}
                       onChange={(e) => handleDateChange('dateOfBirth', 'day', e.target.value)}
                       className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <option value="" className="bg-slate-800">Day</option>
                       {dayOptions.map(day => (
@@ -752,6 +813,7 @@ const CareAssessmentForm: React.FC = () => {
                       value={formData.dateOfBirth.month}
                       onChange={(e) => handleDateChange('dateOfBirth', 'month', e.target.value)}
                       className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <option value="" className="bg-slate-800">Month</option>
                       {monthOptions.map(month => (
@@ -762,6 +824,7 @@ const CareAssessmentForm: React.FC = () => {
                       value={formData.dateOfBirth.year}
                       onChange={(e) => handleDateChange('dateOfBirth', 'year', e.target.value)}
                       className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <option value="" className="bg-slate-800">Year</option>
                       {yearOptions.map(year => (
@@ -770,13 +833,13 @@ const CareAssessmentForm: React.FC = () => {
                     </select>
                   </div>
                   {getDateOfBirthWarning() && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDateOfBirthWarning()}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDateOfBirthWarning()}</p>
                   )}
-                  {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1">{errors.dateOfBirth}</p>}
+                  {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.dateOfBirth}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     <Phone className="w-4 h-4 inline mr-1" />
                     Phone Number <span className="text-red-400">*</span>
                   </label>
@@ -787,33 +850,35 @@ const CareAssessmentForm: React.FC = () => {
                     onFocus={() => setFocusedField('phoneNumber')}
                     onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="01234567890"
                   />
                   {focusedField === 'phoneNumber' && getFieldDescription('phoneNumber') && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
                   )}
-                  {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1">{errors.phoneNumber}</p>}
+                  {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.phoneNumber}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Gender <span className="text-red-400">*</span>
                   </label>
                   <select
                     value={formData.gender}
                     onChange={(e) => handleInputChange('gender', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <option value="" className="bg-slate-800">Please Select</option>
                     {genderOptions.map(gender => (
                       <option key={gender} value={gender} className="bg-slate-800">{gender}</option>
                     ))}
                   </select>
-                  {errors.gender && <p className="text-yellow-400 text-sm mt-1">{errors.gender}</p>}
+                  {errors.gender && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.gender}</p>}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     <MapPin className="w-4 h-4 inline mr-1" />
                     First Line of Address <span className="text-red-400">*</span>
                   </label>
@@ -824,9 +889,10 @@ const CareAssessmentForm: React.FC = () => {
                     onFocus={() => formData.address && setShowAddressSuggestions(true)}
                     onBlur={() => setTimeout(() => setShowAddressSuggestions(false), 200)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Start typing your address..."
                   />
-                  {errors.address && <p className="text-yellow-400 text-sm mt-1">{errors.address}</p>}
+                  {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.address}</p>}
                   {showAddressSuggestions && addressSuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-slate-800/95 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
                       {addressSuggestions.map((suggestion) => (
@@ -835,8 +901,8 @@ const CareAssessmentForm: React.FC = () => {
                           onClick={() => selectAddress(suggestion, false)}
                           className="px-4 py-3 hover:bg-blue-500/30 cursor-pointer text-white border-b border-white/10 last:border-b-0"
                         >
-                          <div className="font-medium text-white">{suggestion.text}</div>
-                          <div className="text-sm text-slate-300">{suggestion.place_name}</div>
+                          <div className="font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
+                          <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
                         </div>
                       ))}
                     </div>
@@ -844,7 +910,7 @@ const CareAssessmentForm: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Region <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -852,13 +918,14 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.region}
                     onChange={(e) => handleInputChange('region', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="e.g., England, Scotland, Wales, Northern Ireland"
                   />
-                  {errors.region && <p className="text-yellow-400 text-sm mt-1">{errors.region}</p>}
+                  {errors.region && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.region}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     City <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -866,13 +933,14 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.city}
                     onChange={(e) => handleInputChange('city', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter city"
                   />
-                  {errors.city && <p className="text-yellow-400 text-sm mt-1">{errors.city}</p>}
+                  {errors.city && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.city}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Postcode <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -880,21 +948,23 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.postcode}
                     onChange={(e) => handleInputChange('postcode', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter postcode"
                   />
-                  {errors.postcode && <p className="text-yellow-400 text-sm mt-1">{errors.postcode}</p>}
+                  {errors.postcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.postcode}</p>}
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     <Calendar className="w-4 h-4 inline mr-1" />
-                    Client Start Date
+                    Client Start Date <span className="text-slate-400">(Optional)</span>
                   </label>
                   <div className="grid grid-cols-3 gap-4">
                     <select
                       value={formData.clientStartDate.day}
                       onChange={(e) => handleDateChange('clientStartDate', 'day', e.target.value)}
                       className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <option value="" className="bg-slate-800">Day</option>
                       {dayOptions.map(day => (
@@ -905,6 +975,7 @@ const CareAssessmentForm: React.FC = () => {
                       value={formData.clientStartDate.month}
                       onChange={(e) => handleDateChange('clientStartDate', 'month', e.target.value)}
                       className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <option value="" className="bg-slate-800">Month</option>
                       {monthOptions.map(month => (
@@ -915,6 +986,7 @@ const CareAssessmentForm: React.FC = () => {
                       value={formData.clientStartDate.year}
                       onChange={(e) => handleDateChange('clientStartDate', 'year', e.target.value)}
                       className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
                     >
                       <option value="" className="bg-slate-800">Year</option>
                       {Array.from({ length: 10 }, (_, i) => String(currentYear + i)).map(year => (
@@ -923,13 +995,13 @@ const CareAssessmentForm: React.FC = () => {
                     </select>
                   </div>
                   {getClientStartDateWarning() && (
-                    <p className="text-yellow-400 text-sm mt-1">{getClientStartDateWarning()}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getClientStartDateWarning()}</p>
                   )}
-                  {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1">{errors.clientStartDate}</p>}
+                  {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.clientStartDate}</p>}
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Allergies <span className="text-red-400">*</span>
                   </label>
                   
@@ -938,15 +1010,14 @@ const CareAssessmentForm: React.FC = () => {
                     <CircularCheckbox
                       id="no-allergy"
                       label="No Allergy"
-                      checked={naOptions.noAllergy}
-                      onChange={(checked) => handleNAOptionChange('noAllergy', checked)}
+                      checked={noAllergyChecked}
+                      onChange={handleNoAllergyChange}
                       darkTheme={true}
-                      className="mb-3"
                     />
                   </div>
                   
                   {/* Allergy Checkboxes */}
-                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 transition-opacity duration-200 ${naOptions.noAllergy ? 'opacity-50' : ''}`}>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     {Object.keys(allergyOptions).map((option) => (
                       <CircularCheckbox
                         key={option}
@@ -954,7 +1025,7 @@ const CareAssessmentForm: React.FC = () => {
                         label={option}
                         checked={allergyOptions[option]}
                         onChange={(checked) => handleAllergyOptionChange(option, checked)}
-                        disabled={naOptions.noAllergy}
+                        disabled={noAllergyChecked}
                         darkTheme={true}
                       />
                     ))}
@@ -963,29 +1034,31 @@ const CareAssessmentForm: React.FC = () => {
                   <textarea
                     value={formData.allergies}
                     onChange={(e) => handleInputChange('allergies', e.target.value)}
-                    disabled={naOptions.noAllergy}
+                    disabled={noAllergyChecked}
                     rows={3}
-                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.noAllergy ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Select common allergies above or describe other allergies here. Write 'None' if no allergies"
                   />
-                  {errors.allergies && <p className="text-yellow-400 text-sm mt-1">{errors.allergies}</p>}
+                  {errors.allergies && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.allergies}</p>}
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     What service would you require? <span className="text-red-400">*</span>
                   </label>
                   <select
                     value={formData.serviceRequired}
                     onChange={(e) => handleInputChange('serviceRequired', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <option value="" className="bg-slate-800">Please Select</option>
                     {serviceOptions.map(service => (
                       <option key={service} value={service} className="bg-slate-800">{service}</option>
                     ))}
                   </select>
-                  {errors.serviceRequired && <p className="text-yellow-400 text-sm mt-1">{errors.serviceRequired}</p>}
+                  {errors.serviceRequired && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.serviceRequired}</p>}
                 </div>
               </div>
             </div>
@@ -994,12 +1067,12 @@ const CareAssessmentForm: React.FC = () => {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
               <div className="flex items-center mb-6">
                 <Heart className="w-6 h-6 text-pink-400 mr-3" />
-                <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
+                <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>Next of Kin Details</h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">  
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>  
                     First Name <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -1009,19 +1082,20 @@ const CareAssessmentForm: React.FC = () => {
                     onFocus={() => setFocusedField('nextOfKinFirstName')}
                     onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter first name"
                   />
                   {shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
-                    <p className="text-yellow-400 text-sm mt-1">Minimum 3 characters</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Minimum 3 characters</p>
                   )}
                   {focusedField === 'nextOfKinFirstName' && getFieldDescription('nextOfKinFirstName') && !shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName)}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName)}</p>
                   )}
-                  {errors.nextOfKinFirstName && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinFirstName}</p>}
+                  {errors.nextOfKinFirstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinFirstName}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Last Name <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -1031,36 +1105,38 @@ const CareAssessmentForm: React.FC = () => {
                     onFocus={() => setFocusedField('nextOfKinLastName')}
                     onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter last name"
                   />
                   {shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
-                    <p className="text-yellow-400 text-sm mt-1">Minimum 3 characters</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Minimum 3 characters</p>
                   )}
                   {focusedField === 'nextOfKinLastName' && getFieldDescription('nextOfKinLastName') && !shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName)}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName)}</p>
                   )}
-                  {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinLastName}</p>}
+                  {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinLastName}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Relationship to Client <span className="text-red-400">*</span>
                   </label>
                   <select
                     value={formData.relationshipToClient}
                     onChange={(e) => handleInputChange('relationshipToClient', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <option value="" className="bg-slate-800">Please Select</option>
                     {relationshipOptions.map(relationship => (
                       <option key={relationship} value={relationship} className="bg-slate-800">{relationship}</option>
                     ))}
                   </select>
-                  {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1">{errors.relationshipToClient}</p>}
+                  {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.relationshipToClient}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     <Phone className="w-4 h-4 inline mr-1" />
                     Phone Number <span className="text-red-400">*</span>
                   </label>
@@ -1071,16 +1147,17 @@ const CareAssessmentForm: React.FC = () => {
                     onFocus={() => setFocusedField('nextOfKinPhone')}
                     onBlur={() => setFocusedField('')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="01234567890"
                   />
                   {focusedField === 'nextOfKinPhone' && getFieldDescription('nextOfKinPhone') && (
-                    <p className="text-yellow-400 text-sm mt-1">{getFieldDescription('nextOfKinPhone')}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getFieldDescription('nextOfKinPhone')}</p>
                   )}
-                  {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinPhone}</p>}
+                  {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPhone}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     <Mail className="w-4 h-4 inline mr-1" />
                     Email Address <span className="text-red-400">*</span>
                   </label>
@@ -1089,16 +1166,17 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.nextOfKinEmail}
                     onChange={(e) => handleInputChange('nextOfKinEmail', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter email address"
                   />
                   {getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail) && (
-                    <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail)}</p>
+                    <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail)}</p>
                   )}
-                  {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinEmail}</p>}
+                  {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinEmail}</p>}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     <MapPin className="w-4 h-4 inline mr-1" />
                     First Line of Address <span className="text-red-400">*</span>
                   </label>
@@ -1109,6 +1187,7 @@ const CareAssessmentForm: React.FC = () => {
                     onFocus={() => formData.nextOfKinAddress && setShowNextOfKinAddressSuggestions(true)}
                     onBlur={() => setTimeout(() => setShowNextOfKinAddressSuggestions(false), 200)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Start typing your address..."
                   />
                   {showNextOfKinAddressSuggestions && nextOfKinAddressSuggestions.length > 0 && (
@@ -1119,17 +1198,17 @@ const CareAssessmentForm: React.FC = () => {
                           onClick={() => selectAddress(suggestion, true)}
                           className="px-4 py-3 hover:bg-blue-500/30 cursor-pointer text-white border-b border-white/10 last:border-b-0"
                         >
-                          <div className="font-medium text-white">{suggestion.text}</div>
-                          <div className="text-sm text-slate-300">{suggestion.place_name}</div>
+                          <div className="font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
+                          <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
                         </div>
                       ))}
                     </div>
                   )}
-                  {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinAddress}</p>}
+                  {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinAddress}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Region <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -1137,13 +1216,14 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.nextOfKinRegion}
                     onChange={(e) => handleInputChange('nextOfKinRegion', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="e.g., England, Scotland, Wales, Northern Ireland"
                   />
-                  {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinRegion}</p>}
+                  {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinRegion}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     City <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -1151,13 +1231,14 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.nextOfKinCity}
                     onChange={(e) => handleInputChange('nextOfKinCity', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter city"
                   />
-                  {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinCity}</p>}
+                  {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinCity}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Postcode <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -1165,9 +1246,10 @@ const CareAssessmentForm: React.FC = () => {
                     value={formData.nextOfKinPostcode}
                     onChange={(e) => handleInputChange('nextOfKinPostcode', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Enter postcode"
                   />
-                  {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1">{errors.nextOfKinPostcode}</p>}
+                  {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPostcode}</p>}
                 </div>
               </div>
             </div>
@@ -1176,83 +1258,95 @@ const CareAssessmentForm: React.FC = () => {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
               <div className="flex items-center mb-6">
                 <FileText className="w-6 h-6 text-green-400 mr-3" />
-                <h2 className="text-2xl font-semibold text-white">Client Medical Background</h2>
+                <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>Client Medical Background</h2>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
-                    Medical History
-                  </label>
-                  <div className="mb-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-bold text-slate-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      Medical History
+                    </label>
                     <CircularCheckbox
                       id="medical-history-na"
                       label="N/A"
-                      checked={naOptions.medicalHistoryNA}
-                      onChange={(checked) => handleNAOptionChange('medicalHistoryNA', checked)}
+                      checked={medicalHistoryNA}
+                      onChange={handleMedicalHistoryNA}
                       darkTheme={true}
                     />
                   </div>
                   <textarea
                     value={formData.medicalHistory}
                     onChange={(e) => handleInputChange('medicalHistory', e.target.value)}
-                    disabled={naOptions.medicalHistoryNA}
+                    disabled={medicalHistoryNA}
                     rows={4}
-                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.medicalHistoryNA ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Please provide details of medical history"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
-                    Current Diagnosis
-                  </label>
-                  <div className="mb-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-bold text-slate-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      Current Diagnosis
+                    </label>
                     <CircularCheckbox
                       id="current-diagnosis-na"
                       label="N/A"
-                      checked={naOptions.currentDiagnosisNA}
-                      onChange={(checked) => handleNAOptionChange('currentDiagnosisNA', checked)}
+                      checked={currentDiagnosisNA}
+                      onChange={handleCurrentDiagnosisNA}
                       darkTheme={true}
                     />
                   </div>
                   <textarea
                     value={formData.currentDiagnosis}
                     onChange={(e) => handleInputChange('currentDiagnosis', e.target.value)}
-                    disabled={naOptions.currentDiagnosisNA}
+                    disabled={currentDiagnosisNA}
                     rows={3}
-                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.currentDiagnosisNA ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Please provide current diagnosis details"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
-                    Hospital Admission History
-                  </label>
-                  <div className="mb-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-bold text-slate-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      Hospital Admission History
+                    </label>
                     <CircularCheckbox
-                      id="hospital-admission-na"
+                      id="hospital-admission-history-na"
                       label="N/A"
-                      checked={naOptions.hospitalAdmissionHistoryNA}
-                      onChange={(checked) => handleNAOptionChange('hospitalAdmissionHistoryNA', checked)}
+                      checked={hospitalAdmissionHistoryNA}
+                      onChange={handleHospitalAdmissionHistoryNA}
                       darkTheme={true}
                     />
                   </div>
                   <textarea
                     value={formData.hospitalAdmissionHistory}
                     onChange={(e) => handleInputChange('hospitalAdmissionHistory', e.target.value)}
-                    disabled={naOptions.hospitalAdmissionHistoryNA}
+                    disabled={hospitalAdmissionHistoryNA}
                     rows={3}
-                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.hospitalAdmissionHistoryNA ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Please provide hospital admission history"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
-                    Mobility Support
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-bold text-slate-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      Mobility Support
+                    </label>
+                    <CircularCheckbox
+                      id="mobility-support-na"
+                      label="N/A"
+                      checked={mobilitySupportNA}
+                      onChange={handleMobilitySupportNA}
+                      darkTheme={true}
+                    />
+                  </div>
                   
                   {/* Checkboxes for mobility options */}
                   <div className="mb-3 space-y-2">
@@ -1262,7 +1356,8 @@ const CareAssessmentForm: React.FC = () => {
                         id={`mobility-${option.replace(/\s+/g, '-').toLowerCase()}`}
                         label={option}
                         checked={checked}
-                        onChange={(checked) => handleMobilityOptionChange(option, checked)}
+                        onChange={(isChecked) => handleMobilityOptionChange(option, isChecked)}
+                        disabled={mobilitySupportNA}
                         darkTheme={true}
                       />
                     ))}
@@ -1272,16 +1367,27 @@ const CareAssessmentForm: React.FC = () => {
                   <textarea
                     value={formData.mobilitySupport}
                     onChange={(e) => handleInputChange('mobilitySupport', e.target.value)}
+                    disabled={mobilitySupportNA}
                     rows={3}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Select from options above or provide additional details about mobility support needs..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
-                    Skin Integrity Needs
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-bold text-slate-200" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      Skin Integrity Needs
+                    </label>
+                    <CircularCheckbox
+                      id="skin-integrity-needs-na"
+                      label="N/A"
+                      checked={skinIntegrityNeedsNA}
+                      onChange={handleSkinIntegrityNeedsNA}
+                      darkTheme={true}
+                    />
+                  </div>
                   <div className="space-y-3">
                     {Object.entries(skinIntegrityOptions).map(([option, checked]) => (
                       <CircularCheckbox
@@ -1289,104 +1395,111 @@ const CareAssessmentForm: React.FC = () => {
                         id={`skin-integrity-${option.replace(/\s+/g, '-').toLowerCase()}`}
                         label={option}
                         checked={checked}
-                        onChange={(checked) => handleSkinIntegrityOptionChange(option, checked)}
+                        onChange={(isChecked) => handleSkinIntegrityOptionChange(option, isChecked)}
+                        disabled={skinIntegrityNeedsNA}
                         darkTheme={true}
-                        className="items-start"
                       />
                     ))}
                   </div>
                   <textarea
                     value={formData.skinIntegrityNeeds}
                     onChange={(e) => handleInputChange('skinIntegrityNeeds', e.target.value)}
+                    disabled={skinIntegrityNeedsNA}
                     rows={4}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none mt-3"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none mt-3 disabled:opacity-50"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                     placeholder="Select options above or add additional details..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     DNAR in Place <span className="text-red-400">*</span>
                   </label>
                   <select
                     value={formData.dnarInPlace}
                     onChange={(e) => handleInputChange('dnarInPlace', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <option value="" className="bg-slate-800">Please Select</option>
                     {yesNoOptions.map(option => (
                       <option key={option} value={option} className="bg-slate-800">{option}</option>
                     ))}
                   </select>
-                  {errors.dnarInPlace && <p className="text-yellow-400 text-sm mt-1">{errors.dnarInPlace}</p>}
+                  {errors.dnarInPlace && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.dnarInPlace}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Care Visit Frequency
                   </label>
                   <select
                     value={formData.careVisitFrequency}
                     onChange={(e) => handleInputChange('careVisitFrequency', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
-                    <option value="" className="bg-slate-800">Please Select</option>
+                    <option value="" className="bg-slate-800">Optional</option>
                     {careVisitFrequencyOptions.map(frequency => (
                       <option key={frequency} value={frequency} className="bg-slate-800">{frequency}</option>
                     ))}
                   </select>
-                  {errors.careVisitFrequency && <p className="text-yellow-400 text-sm mt-1">{errors.careVisitFrequency}</p>}
+                  {errors.careVisitFrequency && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.careVisitFrequency}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Care Visit Duration
                   </label>
                   <select
                     value={formData.careVisitDuration}
                     onChange={(e) => handleInputChange('careVisitDuration', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
-                    <option value="" className="bg-slate-800">Please Select</option>
+                    <option value="" className="bg-slate-800">Optional</option>
                     {careVisitDurationOptions.map(duration => (
                       <option key={duration} value={duration} className="bg-slate-800">{duration}</option>
                     ))}
                   </select>
-                  {errors.careVisitDuration && <p className="text-yellow-400 text-sm mt-1">{errors.careVisitDuration}</p>}
+                  {errors.careVisitDuration && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.careVisitDuration}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Requires Help with Appointments <span className="text-red-400">*</span>
                   </label>
                   <select
                     value={formData.requiresHelpWithAppointments}
                     onChange={(e) => handleInputChange('requiresHelpWithAppointments', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <option value="" className="bg-slate-800">Please Select</option>
                     {yesNoOptions.map(option => (
                       <option key={option} value={option} className="bg-slate-800">{option}</option>
                     ))}
                   </select>
-                  {errors.requiresHelpWithAppointments && <p className="text-yellow-400 text-sm mt-1">{errors.requiresHelpWithAppointments}</p>}
+                  {errors.requiresHelpWithAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.requiresHelpWithAppointments}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-sm font-bold text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     Wants Company to Appointments <span className="text-red-400">*</span>
                   </label>
                   <select
                     value={formData.wantsCompanyToAppointments}
                     onChange={(e) => handleInputChange('wantsCompanyToAppointments', e.target.value)}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
                     <option value="" className="bg-slate-800">Please Select</option>
                     {yesNoOptions.map(option => (
                       <option key={option} value={option} className="bg-slate-800">{option}</option>
                     ))}
                   </select>
-                  {errors.wantsCompanyToAppointments && <p className="text-yellow-400 text-sm mt-1">{errors.wantsCompanyToAppointments}</p>}
+                  {errors.wantsCompanyToAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.wantsCompanyToAppointments}</p>}
                 </div>
               </div>
             </div>
@@ -1395,13 +1508,14 @@ const CareAssessmentForm: React.FC = () => {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
               <CircularCheckbox
                 id="consent"
-                label="I consent to the processing of my personal data for the purpose of this care assessment and service provision. *"
+                label="I consent to the processing of my personal data for the purpose of this care assessment and service provision."
                 checked={formData.consent}
                 onChange={(checked) => handleInputChange('consent', checked)}
                 darkTheme={true}
                 className="items-start"
               />
-              {errors.consent && <p className="text-yellow-400 text-sm mt-1">{errors.consent}</p>}
+              <span className="text-red-400 ml-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>*</span>
+              {errors.consent && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.consent}</p>}
             </div>
 
             {/* Submit Button */}
@@ -1409,7 +1523,8 @@ const CareAssessmentForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
+                style={{ fontFamily: 'Montserrat, sans-serif' }}
               >
                 {isSubmitting ? (
                   <>
