@@ -1,6 +1,12 @@
 import React from 'react';
 import { User, Phone, MapPin, Calendar } from 'lucide-react';
 import CircularCheckbox from './CircularCheckbox';
+import {
+  getDescriptionForField,
+  getDateOfBirthWarning,
+  getClientStartDateWarning,
+  shouldShowDescription
+} from '../utils/formValidationHelpers';
 
 interface ServiceUserDetailsProps {
   formData: any;
@@ -16,9 +22,6 @@ interface ServiceUserDetailsProps {
   serviceOptions: string[];
   allergyOptions: any;
   handleAllergyOptionChange: (option: string, checked: boolean) => void;
-  getDescriptionForField: (field: string, value: string) => string | null;
-  getDateOfBirthWarning: () => string;
-  getClientStartDateWarning: () => string;
   searchAddresses: (query: string, isNextOfKin?: boolean) => void;
   selectAddress: (suggestion: any, isNextOfKin?: boolean) => void;
   addressSuggestions: any[];
@@ -26,7 +29,6 @@ interface ServiceUserDetailsProps {
   focusedField: string;
   setShowAddressSuggestions: (show: boolean) => void;
   setFocusedField: (field: string) => void;
-  shouldShowDescription: (field: string, value: string) => boolean;
   currentYear: number;
   noAllergies: boolean;
   setNoAllergies: (value: boolean) => void;
@@ -46,9 +48,6 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
   serviceOptions,
   allergyOptions,
   handleAllergyOptionChange,
-  getDescriptionForField,
-  getDateOfBirthWarning,
-  getClientStartDateWarning,
   searchAddresses,
   selectAddress,
   addressSuggestions,
@@ -56,7 +55,6 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
   focusedField,
   setShowAddressSuggestions,
   setFocusedField,
-  shouldShowDescription,
   currentYear,
   noAllergies,
   setNoAllergies,
@@ -152,8 +150,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               ))}
             </select>
           </div>
-          {getDateOfBirthWarning() && (
-            <p className="text-yellow-400 text-sm mt-1">{getDateOfBirthWarning()}</p>
+          {getDateOfBirthWarning(formData.dateOfBirth) && (
+            <p className="text-yellow-400 text-sm mt-1">{getDateOfBirthWarning(formData.dateOfBirth)}</p>
           )}
           {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1">{errors.dateOfBirth}</p>}
         </div>
@@ -305,8 +303,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               ))}
             </select>
           </div>
-          {getClientStartDateWarning() && (
-            <p className="text-yellow-400 text-sm mt-1">{getClientStartDateWarning()}</p>
+          {getClientStartDateWarning(formData.clientStartDate) && (
+            <p className="text-yellow-400 text-sm mt-1">{getClientStartDateWarning(formData.clientStartDate)}</p>
           )}
           {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1">{errors.clientStartDate}</p>}
         </div>

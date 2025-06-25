@@ -1,5 +1,10 @@
 import React from 'react';
 import { Heart, Phone, Mail, MapPin } from 'lucide-react';
+import {
+  getDescriptionForField,
+  shouldShowWarning,
+  shouldShowDescription
+} from '../utils/formValidationHelpers';
 
 interface NextOfKinDetailsProps {
   formData: any;
@@ -8,7 +13,6 @@ interface NextOfKinDetailsProps {
   handleAddressChange: (field: string, value: string, isNextOfKin?: boolean) => void;
   errors: any;
   relationshipOptions: string[];
-  getDescriptionForField: (field: string, value: string) => string | null;
   searchAddresses: (query: string, isNextOfKin?: boolean) => void;
   selectAddress: (suggestion: any, isNextOfKin?: boolean) => void;
   nextOfKinAddressSuggestions: any[];
@@ -16,8 +20,6 @@ interface NextOfKinDetailsProps {
   focusedField: string;
   setShowNextOfKinAddressSuggestions: (show: boolean) => void;
   setFocusedField: (field: string) => void;
-  shouldShowWarning: (field: string, value: string) => boolean;
-  shouldShowDescription: (field: string, value: string) => boolean;
 }
 
 const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
@@ -27,7 +29,6 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   handleAddressChange,
   errors,
   relationshipOptions,
-  getDescriptionForField,
   searchAddresses,
   selectAddress,
   nextOfKinAddressSuggestions,
@@ -35,8 +36,6 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   focusedField,
   setShowNextOfKinAddressSuggestions,
   setFocusedField,
-  shouldShowWarning,
-  shouldShowDescription,
 }) => {
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
