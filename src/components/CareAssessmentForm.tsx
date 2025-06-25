@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Send } from 'lucide-react';
+import { Send, ChevronLeft } from 'lucide-react';
 import ServiceUserDetails from './ServiceUserDetails';
 import NextOfKinDetails from './NextOfKinDetails';
 import MedicalBackground from './MedicalBackground';
 import ConsentSection from './ConsentSection';
 import ProgressIndicator from './ProgressIndicator';
-import FormNavigation from './FormNavigation';
 import { isValidName, isValidNameInput, isValidEmail, isValidPhone } from '../utils/validation';
 import { getRequiredFieldsStatus } from '../utils/formValidationHelpers';
 
@@ -671,21 +670,32 @@ const CareAssessmentForm: React.FC = () => {
   // Get progress data and validation status
   const fieldsStatus = getRequiredFieldsStatus(formData, errors);
   
-  // Determine if user can proceed to next section
-  const canProceedToNext = () => {
-    switch (currentSectionIndex) {
-      case 0:
-        return fieldsStatus.isClientDetailsComplete;
-      case 1:
-        return fieldsStatus.isNextOfKinDetailsComplete;
-      case 2:
-        return fieldsStatus.isMedicalBackgroundComplete;
-      case 3:
-        return fieldsStatus.isConsentComplete;
-      default:
-        return false;
+  // Determine which sections should be visible based on completion
+  const getVisibleSections = () => {
+    const sections = [0]; // Always show first section
+    
+    if (fieldsStatus.isClientDetailsComplete) {
+      sections.push(1);
     }
+    if (fieldsStatus.isNextOfKinDetailsComplete && fieldsStatus.isClientDetailsComplete) {
+      sections.push(2);
+    }
+    if (fieldsStatus.isMedicalBackgroundComplete && fieldsStatus.isNextOfKinDetailsComplete && fieldsStatus.isClientDetailsComplete) {
+      sections.push(3);
+    }
+    
+    return sections;
   };
+
+  const visibleSections = getVisibleSections();
+  const maxVisibleSection = Math.max(...visibleSections);
+  
+  // Auto-advance to the highest available section when current becomes complete
+  React.useEffect(() => {
+    if (maxVisibleSection > currentSectionIndex) {
+      setCurrentSectionIndex(maxVisibleSection);
+    }
+  }, [maxVisibleSection, currentSectionIndex]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -709,8 +719,24 @@ const CareAssessmentForm: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Render only the current section */}
-          {currentSectionIndex === 0 && (
+          {/* Back button - only show when not on first section */}
+          {currentSectionIndex > 0 && (
+            <div className="mb-6">
+              <button
+                type="button"
+                onClick={() => setCurrentSectionIndex(currentSectionIndex - 1)}
+                disabled={isSubmitting}
+                className="inline-flex items-center px-4 py-2 text-white bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ fontFamily: 'Montserrat, sans-serif' }}
+              >
+                <ChevronLeft className="w-4 h-4 mr-2" />
+                Back to {sectionNames[currentSectionIndex - 1]}
+              </button>
+            </div>
+          )}
+
+          {/* Render sections based on visibility and current selection */}
+          {(currentSectionIndex === 0 || (currentSectionIndex > 0 && visibleSections.includes(0))) && currentSectionIndex === 0 && (
             <div className="animate-fade-in">
               <ServiceUserDetails
                 formData={formData}
@@ -744,7 +770,7 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex === 1 && (
+          {(currentSectionIndex === 1 || (currentSectionIndex > 1 && visibleSections.includes(1))) && currentSectionIndex === 1 && (
             <div className="animate-fade-in">
               <NextOfKinDetails
                 formData={formData}
@@ -767,7 +793,7 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex === 2 && (
+          {(currentSectionIndex === 2 || (currentSectionIndex > 2 && visibleSections.includes(2))) && currentSectionIndex === 2 && (
             <div className="animate-fade-in">
               <MedicalBackground
                 formData={formData}
@@ -786,7 +812,7 @@ const CareAssessmentForm: React.FC = () => {
             </div>
           )}
 
-          {currentSectionIndex === 3 && (
+          {currentSectionIndex === 3 && visibleSections.includes(3) && (
             <div className="animate-fade-in">
               <ConsentSection
                 formData={formData}
@@ -794,19 +820,6 @@ const CareAssessmentForm: React.FC = () => {
                 errors={errors}
               />
             </div>
-          )}
-
-          {/* Form Navigation - show on all sections except when submitting */}
-          {!isSubmitting && (
-            <FormNavigation
-              currentSectionIndex={currentSectionIndex}
-              totalSections={sectionNames.length}
-              sectionNames={sectionNames}
-              onNext={handleNext}
-              onBack={handleBack}
-              canProceed={canProceedToNext()}
-              isSubmitting={isSubmitting}
-            />
           )}
 
           {/* Submit Button - only visible on final section */}
