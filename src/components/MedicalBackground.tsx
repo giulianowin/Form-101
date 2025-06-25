@@ -57,7 +57,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-white backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <FileText className="w-6 h-6 text-green-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Client Medical Background</h2>
