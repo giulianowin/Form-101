@@ -1,0 +1,60 @@
+import React from 'react';
+import { Heart } from 'lucide-react';
+
+interface ProgressIndicatorProps {
+  currentSectionName: string;
+  completedFields: number;
+  totalFields: number;
+}
+
+const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
+  currentSectionName,
+  completedFields,
+  totalFields,
+}) => {
+  const percentage = Math.round((completedFields / totalFields) * 100);
+
+  return (
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-3">
+          <div className="relative">
+            <Heart 
+              className="w-6 h-6 text-green-400 animate-pulse" 
+              fill="currentColor"
+            />
+            <div className="absolute inset-0 w-6 h-6 text-green-400 animate-ping opacity-75">
+              <Heart fill="currentColor" />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-white">Currently Completing</h3>
+            <p className="text-slate-300 text-sm">{currentSectionName}</p>
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="text-2xl font-bold text-green-400">{percentage}%</div>
+          <p className="text-slate-300 text-sm">{completedFields} of {totalFields} fields</p>
+        </div>
+      </div>
+      
+      {/* Progress Bar */}
+      <div className="relative">
+        <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full transition-all duration-500 ease-out relative"
+            style={{ width: `${percentage}%` }}
+          >
+            <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full"></div>
+          </div>
+        </div>
+        <div className="flex justify-between mt-2 text-xs text-slate-400">
+          <span>Start</span>
+          <span>Complete</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProgressIndicator;

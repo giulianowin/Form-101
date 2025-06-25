@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send } from 'lucide-react';
 import ServiceUserDetails from './ServiceUserDetails';
 import NextOfKinDetails from './NextOfKinDetails';
 import MedicalBackground from './MedicalBackground';
 import ConsentSection from './ConsentSection';
+import ProgressIndicator from './ProgressIndicator';
 import { isValidName, isValidNameInput, isValidEmail, isValidPhone } from '../utils/validation';
+import { getRequiredFieldsStatus } from '../utils/formValidationHelpers';
 
 // Validation helpers - moved outside component to be accessible by shouldShowWarning
 interface FormData {
@@ -95,6 +97,9 @@ interface MapboxSuggestion {
 }
 
 const CareAssessmentForm: React.FC = () => {
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const sectionNames = ['Client Details', 'Next of Kin Details', 'Medical Background', 'Consent'];
+
   const [mobilityOptions, setMobilityOptions] = useState<MobilityOptions>({
     'Stairlift': false,
     'Walking Stick': false,
@@ -156,6 +161,20 @@ const CareAssessmentForm: React.FC = () => {
   const [showNextOfKinAddressSuggestions, setShowNextOfKinAddressSuggestions] = useState(false);
   const [focusedField, setFocusedField] = useState<string>('');
   const [noAllergies, setNoAllergies] = useState(false);
+
+  // Progressive form logic
+  useEffect(() => {
+    const fieldsStatus = getRequiredFieldsStatus(formData, errors);
+    
+    // Auto-advance to next section when current section is complete
+    if (currentSectionIndex === 0 && fieldsStatus.isClientDetailsComplete) {
+      setCurrentSectionIndex(1);
+    } else if (currentSectionIndex === 1 && fieldsStatus.isNextOfKinDetailsComplete) {
+      setCurrentSectionIndex(2);
+    } else if (currentSectionIndex === 2 && fieldsStatus.isMedicalBackgroundComplete) {
+      setCurrentSectionIndex(3);
+    }
+  }, [formData, errors, currentSectionIndex]);
 
   // Options
   const dayOptions = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -649,6 +668,9 @@ const CareAssessmentForm: React.FC = () => {
     return false;
   };
 
+  // Get progress data
+  const fieldsStatus = getRequiredFieldsStatus(formData, errors);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
@@ -657,6 +679,13 @@ const CareAssessmentForm: React.FC = () => {
           <p className="text-slate-300 text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>Please complete the required fields to help us provide the best care service for you</p>
         </div>
 
+        {/* Progress Indicator */}
+        <ProgressIndicator
+          currentSectionName={sectionNames[currentSectionIndex]}
+          completedFields={fieldsStatus.completedRequiredFields}
+          totalFields={fieldsStatus.totalRequiredFields}
+        />
+
         {submitSuccess && (
           <div className="mb-8 p-4 bg-green-500/20 border border-green-500/50 rounded-lg backdrop-blur-sm">
             <p className="text-green-300 text-center font-medium" style={{ fontFamily: 'Montserrat, sans-serif' }}>Form submitted successfully! We will be in touch soon.</p>
@@ -664,97 +693,116 @@ const CareAssessmentForm: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <ServiceUserDetails
-            formData={formData}
-            handleInputChange={handleInputChange}
-            handlePhoneChange={handlePhoneChange}
-            handleDateChange={handleDateChange}
-            handleAddressChange={handleAddressChange}
-            errors={errors}
-            dayOptions={dayOptions}
-            monthOptions={monthOptions}
-            yearOptions={yearOptions}
-            genderOptions={genderOptions}
-            serviceOptions={serviceOptions}
-            allergyOptions={allergyOptions}
-            handleAllergyOptionChange={handleAllergyOptionChange}
-            getDescriptionForField={getDescriptionForField}
-            getDateOfBirthWarning={getDateOfBirthWarning}
-            getClientStartDateWarning={getClientStartDateWarning}
-            searchAddresses={searchAddresses}
-            selectAddress={selectAddress}
-            addressSuggestions={addressSuggestions}
-            showAddressSuggestions={showAddressSuggestions}
-            focusedField={focusedField}
-            setShowAddressSuggestions={setShowAddressSuggestions}
-            setFocusedField={setFocusedField}
-            shouldShowDescription={shouldShowDescription}
-            currentYear={currentYear}
-            noAllergies={noAllergies}
-            setNoAllergies={setNoAllergies}
-          />
+          {/* Conditionally render sections based on current section index */}
+          {currentSectionIndex >= 0 && (
+            <div className={currentSectionIndex === 0 ? '' : 'opacity-0 h-0 overflow-hidden'}>
+              <ServiceUserDetails
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handlePhoneChange={handlePhoneChange}
+                handleDateChange={handleDateChange}
+                handleAddressChange={handleAddressChange}
+                errors={errors}
+                dayOptions={dayOptions}
+                monthOptions={monthOptions}
+                yearOptions={yearOptions}
+                genderOptions={genderOptions}
+                serviceOptions={serviceOptions}
+                allergyOptions={allergyOptions}
+                handleAllergyOptionChange={handleAllergyOptionChange}
+                getDescriptionForField={getDescriptionForField}
+                getDateOfBirthWarning={getDateOfBirthWarning}
+                getClientStartDateWarning={getClientStartDateWarning}
+                searchAddresses={searchAddresses}
+                selectAddress={selectAddress}
+                addressSuggestions={addressSuggestions}
+                showAddressSuggestions={showAddressSuggestions}
+                focusedField={focusedField}
+                setShowAddressSuggestions={setShowAddressSuggestions}
+                setFocusedField={setFocusedField}
+                shouldShowDescription={shouldShowDescription}
+                currentYear={currentYear}
+                noAllergies={noAllergies}
+                setNoAllergies={setNoAllergies}
+              />
+            </div>
+          )}
 
-          <NextOfKinDetails
-            formData={formData}
-            handleInputChange={handleInputChange}
-            handlePhoneChange={handlePhoneChange}
-            handleAddressChange={handleAddressChange}
-            errors={errors}
-            relationshipOptions={relationshipOptions}
-            getDescriptionForField={getDescriptionForField}
-            searchAddresses={searchAddresses}
-            selectAddress={selectAddress}
-            nextOfKinAddressSuggestions={nextOfKinAddressSuggestions}
-            showNextOfKinAddressSuggestions={showNextOfKinAddressSuggestions}
-            focusedField={focusedField}
-            setShowNextOfKinAddressSuggestions={setShowNextOfKinAddressSuggestions}
-            setFocusedField={setFocusedField}
-            shouldShowWarning={shouldShowWarning}
-            shouldShowDescription={shouldShowDescription}
-          />
+          {currentSectionIndex >= 1 && (
+            <div className={currentSectionIndex === 1 ? 'animate-fade-in' : currentSectionIndex > 1 ? '' : 'opacity-0 h-0 overflow-hidden'}>
+              <NextOfKinDetails
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handlePhoneChange={handlePhoneChange}
+                handleAddressChange={handleAddressChange}
+                errors={errors}
+                relationshipOptions={relationshipOptions}
+                getDescriptionForField={getDescriptionForField}
+                searchAddresses={searchAddresses}
+                selectAddress={selectAddress}
+                nextOfKinAddressSuggestions={nextOfKinAddressSuggestions}
+                showNextOfKinAddressSuggestions={showNextOfKinAddressSuggestions}
+                focusedField={focusedField}
+                setShowNextOfKinAddressSuggestions={setShowNextOfKinAddressSuggestions}
+                setFocusedField={setFocusedField}
+                shouldShowWarning={shouldShowWarning}
+                shouldShowDescription={shouldShowDescription}
+              />
+            </div>
+          )}
 
-          <MedicalBackground
-            formData={formData}
-            handleInputChange={handleInputChange}
-            errors={errors}
-            mobilityOptions={mobilityOptions}
-            setMobilityOptions={setMobilityOptions}
-            handleMobilityOptionChange={handleMobilityOptionChange}
-            skinIntegrityOptions={skinIntegrityOptions}
-            setSkinIntegrityOptions={setSkinIntegrityOptions}
-            handleSkinIntegrityOptionChange={handleSkinIntegrityOptionChange}
-            yesNoOptions={yesNoOptions}
-            careVisitDurationOptions={careVisitDurationOptions}
-            careVisitFrequencyOptions={careVisitFrequencyOptions}
-          />
+          {currentSectionIndex >= 2 && (
+            <div className={currentSectionIndex === 2 ? 'animate-fade-in' : currentSectionIndex > 2 ? '' : 'opacity-0 h-0 overflow-hidden'}>
+              <MedicalBackground
+                formData={formData}
+                handleInputChange={handleInputChange}
+                errors={errors}
+                mobilityOptions={mobilityOptions}
+                setMobilityOptions={setMobilityOptions}
+                handleMobilityOptionChange={handleMobilityOptionChange}
+                skinIntegrityOptions={skinIntegrityOptions}
+                setSkinIntegrityOptions={setSkinIntegrityOptions}
+                handleSkinIntegrityOptionChange={handleSkinIntegrityOptionChange}
+                yesNoOptions={yesNoOptions}
+                careVisitDurationOptions={careVisitDurationOptions}
+                careVisitFrequencyOptions={careVisitFrequencyOptions}
+              />
+            </div>
+          )}
 
-          <ConsentSection
-            formData={formData}
-            handleInputChange={handleInputChange}
-            errors={errors}
-          />
+          {currentSectionIndex >= 3 && (
+            <div className={currentSectionIndex === 3 ? 'animate-fade-in' : 'opacity-0 h-0 overflow-hidden'}>
+              <ConsentSection
+                formData={formData}
+                handleInputChange={handleInputChange}
+                errors={errors}
+              />
+            </div>
+          )}
 
-          {/* Submit Button */}
-          <div className="text-center">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                  Submitting...
-                </>
-              ) : (
-                <>
-                  <Send className="w-5 h-5 mr-2" />
-                  Submit Assessment
-                </>
-              )}
-            </button>
-          </div>
+          {/* Submit Button - only visible on final section */}
+          {currentSectionIndex === 3 && (
+            <div className="text-center animate-fade-in">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
+                style={{ fontFamily: 'Montserrat, sans-serif' }}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 mr-2" />
+                    Submit Assessment
+                  </>
+                )}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
