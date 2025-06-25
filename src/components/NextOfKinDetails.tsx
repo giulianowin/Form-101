@@ -38,7 +38,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   setFocusedField,
 }) => {
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <Heart className="w-6 h-6 text-pink-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
@@ -46,7 +46,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>  
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>  
             First Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -56,20 +56,20 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onFocus={() => setFocusedField('nextOfKinFirstName')}
             onBlur={() => setFocusedField('')}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter first name"
           />
           {shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>Minimum 3 characters</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Minimum 3 characters</p>
           )}
           {focusedField === 'nextOfKinFirstName' && getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName) && !shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName)}</p>
           )}
-          {errors.nextOfKinFirstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinFirstName}</p>}
+          {errors.nextOfKinFirstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinFirstName}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Last Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -79,38 +79,38 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onFocus={() => setFocusedField('nextOfKinLastName')}
             onBlur={() => setFocusedField('')}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter last name"
           />
           {shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>Minimum 3 characters</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Minimum 3 characters</p>
           )}
           {focusedField === 'nextOfKinLastName' && getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName) && !shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName)}</p>
           )}
-          {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinLastName}</p>}
+          {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinLastName}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Relationship to Client <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.relationshipToClient}
             onChange={(e) => handleInputChange('relationshipToClient', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
             {relationshipOptions.map(relationship => (
               <option key={relationship} value={relationship} className="bg-slate-800">{relationship}</option>
             ))}
           </select>
-          {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.relationshipToClient}</p>}
+          {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.relationshipToClient}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <Phone className="w-4 h-4 inline mr-1" />
             Phone Number <span className="text-red-400">*</span>
           </label>
@@ -121,17 +121,17 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onFocus={() => setFocusedField('nextOfKinPhone')}
             onBlur={() => setFocusedField('')}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="01234567890"
           />
           {focusedField === 'nextOfKinPhone' && getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone)}</p>
           )}
-          {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinPhone}</p>}
+          {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPhone}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <Mail className="w-4 h-4 inline mr-1" />
             Email Address <span className="text-red-400">*</span>
           </label>
@@ -140,17 +140,17 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             value={formData.nextOfKinEmail}
             onChange={(e) => handleInputChange('nextOfKinEmail', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter email address"
           />
           {getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail)}</p>
           )}
-          {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinEmail}</p>}
+          {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinEmail}</p>}
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <MapPin className="w-4 h-4 inline mr-1" />
             First Line of Address <span className="text-red-400">*</span>
           </label>
@@ -161,7 +161,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             onFocus={() => formData.nextOfKinAddress && setShowNextOfKinAddressSuggestions(true)}
             onBlur={() => setTimeout(() => setShowNextOfKinAddressSuggestions(false), 200)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Start typing your address..."
           />
           {showNextOfKinAddressSuggestions && nextOfKinAddressSuggestions.length > 0 && (
@@ -172,17 +172,17 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
                   onClick={() => selectAddress(suggestion, true)}
                   className="px-4 py-3 hover:bg-blue-500/30 cursor-pointer text-white border-b border-white/10 last:border-b-0"
                 >
-                  <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{suggestion.text}</div>
-                  <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{suggestion.place_name}</div>
+                  <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.text}</div>
+                  <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif' }}>{suggestion.place_name}</div>
                 </div>
               ))}
             </div>
           )}
-          {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinAddress}</p>}
+          {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinAddress}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Region <span className="text-red-400">*</span>
           </label>
           <input
@@ -190,14 +190,14 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             value={formData.nextOfKinRegion}
             onChange={(e) => handleInputChange('nextOfKinRegion', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="e.g., England, Scotland, Wales, Northern Ireland"
           />
-          {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinRegion}</p>}
+          {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinRegion}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             City <span className="text-red-400">*</span>
           </label>
           <input
@@ -205,14 +205,14 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             value={formData.nextOfKinCity}
             onChange={(e) => handleInputChange('nextOfKinCity', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter city"
           />
-          {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinCity}</p>}
+          {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinCity}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Postcode <span className="text-red-400">*</span>
           </label>
           <input
@@ -220,10 +220,10 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             value={formData.nextOfKinPostcode}
             onChange={(e) => handleInputChange('nextOfKinPostcode', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter postcode"
           />
-          {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.nextOfKinPostcode}</p>}
+          {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPostcode}</p>}
         </div>
       </div>
     </div>
