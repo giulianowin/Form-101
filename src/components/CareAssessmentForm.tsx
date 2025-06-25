@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, ChevronLeft } from 'lucide-react';
+import { Send, ChevronLeft, ChevronRight } from 'lucide-react';
 import ServiceUserDetails from './ServiceUserDetails';
 import NextOfKinDetails from './NextOfKinDetails';
 import MedicalBackground from './MedicalBackground';
@@ -99,6 +99,7 @@ interface MapboxSuggestion {
 const CareAssessmentForm: React.FC = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [lastManualNavigation, setLastManualNavigation] = useState<number | null>(null);
+  const [hasNavigatedBack, setHasNavigatedBack] = useState(false);
   const sectionNames = ['Client Details', 'Next of Kin Details', 'Medical Background', 'Consent'];
 
   const [mobilityOptions, setMobilityOptions] = useState<MobilityOptions>({
@@ -705,7 +706,14 @@ const CareAssessmentForm: React.FC = () => {
   // Handle manual back navigation
   const handleBackNavigation = () => {
     setLastManualNavigation(Date.now());
+    setHasNavigatedBack(true);
     setCurrentSectionIndex(currentSectionIndex - 1);
+  };
+
+  // Handle fast-forward navigation
+  const handleNextSectionNavigation = () => {
+    setCurrentSectionIndex(currentSectionIndex + 1);
+    setHasNavigatedBack(false);
   };
 
   return (
@@ -730,9 +738,10 @@ const CareAssessmentForm: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Back button - only show when not on first section */}
+          {/* Navigation buttons */}
           {currentSectionIndex > 0 && (
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
+              {/* Back button */}
               <button
                 type="button"
                 onClick={handleBackNavigation}
@@ -742,6 +751,36 @@ const CareAssessmentForm: React.FC = () => {
               >
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 Back to {sectionNames[currentSectionIndex - 1]}
+              </button>
+              
+              {/* Next Section button - only show when user has navigated back and there are sections ahead */}
+              {hasNavigatedBack && currentSectionIndex < maxVisibleSection && (
+                <button
+                  type="button"
+                  onClick={handleNextSectionNavigation}
+                  disabled={isSubmitting}
+                  className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  Next Section
+                  <ChevronRight className="w-4 h-4 ml-2" />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Special case: Next Section button for the first section when user has navigated back */}
+          {currentSectionIndex === 0 && hasNavigatedBack && maxVisibleSection > 0 && (
+            <div className="mb-6 flex justify-end">
+              <button
+                type="button"
+                onClick={handleNextSectionNavigation}
+                disabled={isSubmitting}
+                className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                style={{ fontFamily: 'Montserrat, sans-serif' }}
+              >
+                Next Section
+                <ChevronRight className="w-4 h-4 ml-2" />
               </button>
             </div>
           )}
