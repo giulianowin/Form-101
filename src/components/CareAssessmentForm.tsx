@@ -195,7 +195,7 @@ const CareAssessmentForm: React.FC = () => {
             type={type}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               showWarning 
                 ? 'border-yellow-400 bg-yellow-50' 
                 : 'border-gray-300 hover:border-gray-400'
@@ -240,7 +240,7 @@ const CareAssessmentForm: React.FC = () => {
             value={value}
             onChange={(e) => onChange(e.target.value)}
             rows={rows}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-vertical ${
               showWarning 
                 ? 'border-yellow-400 bg-yellow-50' 
                 : 'border-gray-300 hover:border-gray-400'
@@ -284,7 +284,7 @@ const CareAssessmentForm: React.FC = () => {
           <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               showWarning 
                 ? 'border-yellow-400 bg-yellow-50' 
                 : 'border-gray-300 hover:border-gray-400'
@@ -315,12 +315,12 @@ const CareAssessmentForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-black py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Care Assessment Form</h1>
-          <p className="text-lg text-purple-300">Please complete the following sections</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Care Assessment Form</h1>
+          <p className="text-lg text-gray-600">Please complete the following sections</p>
         </div>
 
         {/* Progress Indicator */}
@@ -329,22 +329,22 @@ const CareAssessmentForm: React.FC = () => {
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
-                  step < currentSection ? 'bg-purple-600 text-white' :
-                  step === currentSection ? 'bg-purple-700 text-white' :
-                  'bg-gray-700 text-gray-300'
+                  step < currentSection ? 'bg-green-500 text-white' :
+                  step === currentSection ? 'bg-blue-500 text-white' :
+                  'bg-gray-200 text-gray-600'
                 }`}>
                   {step < currentSection ? '✓' : step}
                 </div>
                 {step < 3 && (
                   <div className={`w-16 h-1 mx-2 transition-colors ${
-                    step < currentSection ? 'bg-purple-600' : 'bg-gray-700'
+                    step < currentSection ? 'bg-green-500' : 'bg-gray-200'
                   }`} />
                 )}
               </div>
             ))}
           </div>
           <div className="flex justify-center mt-2">
-            <span className="text-sm text-purple-300">
+            <span className="text-sm text-gray-600">
               {currentSection === 1 && 'Service User Details'}
               {currentSection === 2 && 'Next of Kin Details'}
               {currentSection === 3 && 'Medical Information'}
@@ -356,13 +356,13 @@ const CareAssessmentForm: React.FC = () => {
           {/* Section 1: Service User Details */}
           {currentSection >= 1 && (
             <div className={`bg-white rounded-lg shadow-lg p-8 transition-all duration-500 ${
-              currentSection === 1 ? 'ring-2 ring-purple-500' : ''
+              currentSection === 1 ? 'ring-2 ring-blue-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
-                <User className="w-6 h-6 text-purple-600" />
+                <User className="w-6 h-6 text-blue-600" />
                 <h2 className="text-2xl font-semibold text-gray-900">Service User Details</h2>
                 {isSectionComplete(1) && (
-                  <div className="ml-auto bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="ml-auto bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                     ✓ Complete
                   </div>
                 )}
@@ -409,13 +409,13 @@ const CareAssessmentForm: React.FC = () => {
           {/* Section 2: Next of Kin Details */}
           {currentSection >= 2 && (
             <div className={`bg-white rounded-lg shadow-lg p-8 transition-all duration-500 ${
-              currentSection === 2 ? 'ring-2 ring-purple-500' : ''
+              currentSection === 2 ? 'ring-2 ring-blue-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
-                <Users className="w-6 h-6 text-purple-600" />
+                <Users className="w-6 h-6 text-blue-600" />
                 <h2 className="text-2xl font-semibold text-gray-900">Next of Kin Details</h2>
                 {isSectionComplete(2) && (
-                  <div className="ml-auto bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="ml-auto bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                     ✓ Complete
                   </div>
                 )}
@@ -448,13 +448,13 @@ const CareAssessmentForm: React.FC = () => {
           {/* Section 3: Medical Background Information */}
           {currentSection >= 3 && (
             <div className={`bg-white rounded-lg shadow-lg p-8 transition-all duration-500 ${
-              currentSection === 3 ? 'ring-2 ring-purple-500' : ''
+              currentSection === 3 ? 'ring-2 ring-blue-500' : ''
             }`}>
               <div className="flex items-center gap-3 mb-6">
-                <Heart className="w-6 h-6 text-purple-600" />
+                <Heart className="w-6 h-6 text-blue-600" />
                 <h2 className="text-2xl font-semibold text-gray-900">Medical Background Information</h2>
                 {isSectionComplete(3) && (
-                  <div className="ml-auto bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="ml-auto bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                     ✓ Complete
                   </div>
                 )}
@@ -510,7 +510,7 @@ const CareAssessmentForm: React.FC = () => {
                     id="consent"
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-1 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                    className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     required
                   />
                   <label htmlFor="consent" className="text-sm text-gray-700">
@@ -522,7 +522,7 @@ const CareAssessmentForm: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!consent || isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg font-semibold"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg font-semibold"
                 >
                   <Send className="w-5 h-5" />
                   {isSubmitting ? 'Submitting Assessment...' : 'Submit Assessment'}
@@ -531,7 +531,7 @@ const CareAssessmentForm: React.FC = () => {
                 {submitMessage && (
                   <div className={`p-4 rounded-lg text-center font-medium ${
                     submitMessage.includes('successfully') 
-                      ? 'bg-purple-900 text-purple-200' 
+                      ? 'bg-green-100 text-green-800' 
                       : 'bg-red-100 text-red-800'
                   }`}>
                     {submitMessage}
