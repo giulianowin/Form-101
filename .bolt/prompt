@@ -3,3 +3,21 @@ For all designs I ask you to make, have them be beautiful, not cookie cutter. Ma
 By default, this template supports JSX syntax with Tailwind CSS classes, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
 
 Use icons from lucide-react for logos.
+
+# Never assume to change or update any existing code without discussing with me upfront & asking my permission to take action.
+
+## Always make sure there are no duplicates or contradictions within the hardcode, if such duplicates were to be found & they are identical delete one if its two variations rather then idential duplicate then discuss it wiht me so I can approve which of the dupliacate to dispose off! For the  contradictions always discuss with me to approve any changes.
+
+### be detailed in the description of your implimintations!
+
+#### Never delete any text box fields or buttons without my approval first.
+
+##### Never update the colour theme of any part of the web or mobile app unless I instract you to do so.
+
+###### All the Fonts used within the Web & Mobile apps must be always montserrat extra bold.
+
+####### When dealing with api calls or connections to external services unless instructed to do so never apply any updates without prior disucussing with me to be given approval.
+
+########  Never Hallucinate.
+
+######### For Each new topic create new Component file to keep the Component file management seamless, example current data are components file of Client details & details of next kin and medical history but if I need you to add a new feature or section or new structure to the entire base I want new file created for that feature or new structure
