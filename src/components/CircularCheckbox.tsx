@@ -8,6 +8,7 @@ interface CircularCheckboxProps {
   onChange: (checked: boolean) => void;
   disabled?: boolean;
   className?: string;
+  darkTheme?: boolean;
 }
 
 const CircularCheckbox: React.FC<CircularCheckboxProps> = ({
@@ -17,6 +18,7 @@ const CircularCheckbox: React.FC<CircularCheckboxProps> = ({
   onChange,
   disabled = false,
   className = '',
+  darkTheme = false,
 }) => {
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
@@ -33,12 +35,12 @@ const CircularCheckbox: React.FC<CircularCheckboxProps> = ({
         className={`
           w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
           ${disabled 
-            ? 'opacity-50 cursor-not-allowed border-gray-300' 
-            : 'cursor-pointer hover:border-blue-400'
+            ? `opacity-50 cursor-not-allowed ${darkTheme ? 'border-white/30' : 'border-gray-300'}` 
+            : `cursor-pointer ${darkTheme ? 'hover:border-blue-400' : 'hover:border-blue-400'}`
           }
           ${checked 
             ? 'bg-blue-500 border-blue-500' 
-            : 'border-gray-400 bg-white'
+            : `${darkTheme ? 'border-white/40 bg-white/10' : 'border-gray-400 bg-white'}`
           }
         `}
       >
@@ -52,11 +54,12 @@ const CircularCheckbox: React.FC<CircularCheckboxProps> = ({
       <label
         htmlFor={id}
         className={`
-          text-sm font-bold text-gray-700 select-none
+          text-sm font-bold select-none
           ${disabled 
             ? 'opacity-50 cursor-not-allowed' 
             : 'cursor-pointer'
           }
+          ${darkTheme ? 'text-slate-200' : 'text-gray-700'}
         `}
         style={{ fontFamily: 'Montserrat, sans-serif' }}
       >

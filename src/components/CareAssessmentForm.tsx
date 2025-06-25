@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Heart, FileText, Send, Calendar, Phone, MapPin, Mail } from 'lucide-react';
+import CircularCheckbox from './CircularCheckbox';
 
 // Validation helpers - moved outside component to be accessible by shouldShowWarning
 const isValidName = (name: string) => /^[A-Za-z\s]{3,}$/.test(name);
@@ -69,6 +70,13 @@ interface AllergyOptions {
   [key: string]: boolean;
 }
 
+interface NAOptions {
+  medicalHistoryNA: boolean;
+  currentDiagnosisNA: boolean;
+  hospitalAdmissionHistoryNA: boolean;
+  noAllergy: boolean;
+}
+
 interface FormErrors {
   [key: string]: string;
 }
@@ -110,6 +118,12 @@ const CareAssessmentForm: React.FC = () => {
     'Peanut Allergy': false,
     'Hay Fever allergy': false,
     'Bee Sting Allergy': false,
+  });
+  const [naOptions, setNAOptions] = useState<NAOptions>({
+    medicalHistoryNA: false,
+    currentDiagnosisNA: false,
+    hospitalAdmissionHistoryNA: false,
+    noAllergy: false,
   });
 
   const [formData, setFormData] = useState<FormData>({
@@ -210,6 +224,29 @@ const CareAssessmentForm: React.FC = () => {
     }
 
     handleInputChange('allergies', newText);
+  };
+
+  const handleNAOptionChange = (field: keyof NAOptions, checked: boolean) => {
+    setNAOptions(prev => ({ ...prev, [field]: checked }));
+    
+    // Clear the corresponding text field when N/A is checked
+    if (checked) {
+      if (field === 'medicalHistoryNA') {
+        handleInputChange('medicalHistory', '');
+      } else if (field === 'currentDiagnosisNA') {
+        handleInputChange('currentDiagnosis', '');
+      } else if (field === 'hospitalAdmissionHistoryNA') {
+        handleInputChange('hospitalAdmissionHistory', '');
+      } else if (field === 'noAllergy') {
+        // Clear allergies and uncheck all allergy options
+        handleInputChange('allergies', '');
+        setAllergyOptions({
+          'Peanut Allergy': false,
+          'Hay Fever allergy': false,
+          'Bee Sting Allergy': false,
+        });
+      }
+    }
   };
 
   const currentYear = new Date().getFullYear();
@@ -896,29 +933,39 @@ const CareAssessmentForm: React.FC = () => {
                     Allergies <span className="text-red-400">*</span>
                   </label>
                   
+                  {/* No Allergy Checkbox */}
+                  <div className="mb-4">
+                    <CircularCheckbox
+                      id="no-allergy"
+                      label="No Allergy"
+                      checked={naOptions.noAllergy}
+                      onChange={(checked) => handleNAOptionChange('noAllergy', checked)}
+                      darkTheme={true}
+                      className="mb-3"
+                    />
+                  </div>
+                  
                   {/* Allergy Checkboxes */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 transition-opacity duration-200 ${naOptions.noAllergy ? 'opacity-50' : ''}`}>
                     {Object.keys(allergyOptions).map((option) => (
-                      <div key={option} className="flex items-center space-x-3">
-                        <input
-                          type="checkbox"
-                          id={`allergy-${option}`}
-                          checked={allergyOptions[option]}
-                          onChange={(e) => handleAllergyOptionChange(option, e.target.checked)}
-                          className="w-4 h-4 text-blue-600 bg-white/10 border-white/20 rounded focus:ring-blue-500 focus:ring-2"
-                        />
-                        <label htmlFor={`allergy-${option}`} className="text-slate-200 text-sm">
-                          {option}
-                        </label>
-                      </div>
+                      <CircularCheckbox
+                        key={option}
+                        id={`allergy-${option}`}
+                        label={option}
+                        checked={allergyOptions[option]}
+                        onChange={(checked) => handleAllergyOptionChange(option, checked)}
+                        disabled={naOptions.noAllergy}
+                        darkTheme={true}
+                      />
                     ))}
                   </div>
                   
                   <textarea
                     value={formData.allergies}
                     onChange={(e) => handleInputChange('allergies', e.target.value)}
+                    disabled={naOptions.noAllergy}
                     rows={3}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none"
+                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.noAllergy ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder="Select common allergies above or describe other allergies here. Write 'None' if no allergies"
                   />
                   {errors.allergies && <p className="text-yellow-400 text-sm mt-1">{errors.allergies}</p>}
@@ -1137,11 +1184,21 @@ const CareAssessmentForm: React.FC = () => {
                   <label className="block text-sm font-medium text-slate-200 mb-2">
                     Medical History
                   </label>
+                  <div className="mb-3">
+                    <CircularCheckbox
+                      id="medical-history-na"
+                      label="N/A"
+                      checked={naOptions.medicalHistoryNA}
+                      onChange={(checked) => handleNAOptionChange('medicalHistoryNA', checked)}
+                      darkTheme={true}
+                    />
+                  </div>
                   <textarea
                     value={formData.medicalHistory}
                     onChange={(e) => handleInputChange('medicalHistory', e.target.value)}
+                    disabled={naOptions.medicalHistoryNA}
                     rows={4}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none"
+                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.medicalHistoryNA ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder="Please provide details of medical history"
                   />
                 </div>
@@ -1150,11 +1207,21 @@ const CareAssessmentForm: React.FC = () => {
                   <label className="block text-sm font-medium text-slate-200 mb-2">
                     Current Diagnosis
                   </label>
+                  <div className="mb-3">
+                    <CircularCheckbox
+                      id="current-diagnosis-na"
+                      label="N/A"
+                      checked={naOptions.currentDiagnosisNA}
+                      onChange={(checked) => handleNAOptionChange('currentDiagnosisNA', checked)}
+                      darkTheme={true}
+                    />
+                  </div>
                   <textarea
                     value={formData.currentDiagnosis}
                     onChange={(e) => handleInputChange('currentDiagnosis', e.target.value)}
+                    disabled={naOptions.currentDiagnosisNA}
                     rows={3}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none"
+                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.currentDiagnosisNA ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder="Please provide current diagnosis details"
                   />
                 </div>
@@ -1163,11 +1230,21 @@ const CareAssessmentForm: React.FC = () => {
                   <label className="block text-sm font-medium text-slate-200 mb-2">
                     Hospital Admission History
                   </label>
+                  <div className="mb-3">
+                    <CircularCheckbox
+                      id="hospital-admission-na"
+                      label="N/A"
+                      checked={naOptions.hospitalAdmissionHistoryNA}
+                      onChange={(checked) => handleNAOptionChange('hospitalAdmissionHistoryNA', checked)}
+                      darkTheme={true}
+                    />
+                  </div>
                   <textarea
                     value={formData.hospitalAdmissionHistory}
                     onChange={(e) => handleInputChange('hospitalAdmissionHistory', e.target.value)}
+                    disabled={naOptions.hospitalAdmissionHistoryNA}
                     rows={3}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none"
+                    className={`w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none ${naOptions.hospitalAdmissionHistoryNA ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder="Please provide hospital admission history"
                   />
                 </div>
@@ -1180,21 +1257,14 @@ const CareAssessmentForm: React.FC = () => {
                   {/* Checkboxes for mobility options */}
                   <div className="mb-3 space-y-2">
                     {Object.entries(mobilityOptions).map(([option, checked]) => (
-                      <div key={option} className="flex items-center space-x-3">
-                        <input
-                          type="checkbox"
-                          id={`mobility-${option.replace(/\s+/g, '-').toLowerCase()}`}
-                          checked={checked}
-                          onChange={(e) => handleMobilityOptionChange(option, e.target.checked)}
-                          className="w-4 h-4 text-blue-600 bg-white/10 border-white/20 rounded focus:ring-blue-500 focus:ring-2"
-                        />
-                        <label 
-                          htmlFor={`mobility-${option.replace(/\s+/g, '-').toLowerCase()}`}
-                          className="text-slate-200 text-sm cursor-pointer"
-                        >
-                          {option}
-                        </label>
-                      </div>
+                      <CircularCheckbox
+                        key={option}
+                        id={`mobility-${option.replace(/\s+/g, '-').toLowerCase()}`}
+                        label={option}
+                        checked={checked}
+                        onChange={(checked) => handleMobilityOptionChange(option, checked)}
+                        darkTheme={true}
+                      />
                     ))}
                   </div>
                   
@@ -1214,15 +1284,15 @@ const CareAssessmentForm: React.FC = () => {
                   </label>
                   <div className="space-y-3">
                     {Object.entries(skinIntegrityOptions).map(([option, checked]) => (
-                      <label key={option} className="flex items-start space-x-3 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={(e) => handleSkinIntegrityOptionChange(option, e.target.checked)}
-                          className="w-5 h-5 text-blue-600 bg-white/10 border-white/20 rounded focus:ring-blue-500 focus:ring-2 mt-0.5"
-                        />
-                        <span className="text-slate-200 text-sm">{option}</span>
-                      </label>
+                      <CircularCheckbox
+                        key={option}
+                        id={`skin-integrity-${option.replace(/\s+/g, '-').toLowerCase()}`}
+                        label={option}
+                        checked={checked}
+                        onChange={(checked) => handleSkinIntegrityOptionChange(option, checked)}
+                        darkTheme={true}
+                        className="items-start"
+                      />
                     ))}
                   </div>
                   <textarea
@@ -1323,18 +1393,14 @@ const CareAssessmentForm: React.FC = () => {
 
             {/* Consent */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl">
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  id="consent"
-                  checked={formData.consent}
-                  onChange={(e) => handleInputChange('consent', e.target.checked)}
-                  className="w-5 h-5 text-blue-600 bg-white/10 border-white/20 rounded focus:ring-blue-500 focus:ring-2"
-                />
-                <label htmlFor="consent" className="text-slate-200 text-sm">
-                  I consent to the processing of my personal data for the purpose of this care assessment and service provision. <span className="text-red-400">*</span>
-                </label>
-              </div>
+              <CircularCheckbox
+                id="consent"
+                label="I consent to the processing of my personal data for the purpose of this care assessment and service provision. *"
+                checked={formData.consent}
+                onChange={(checked) => handleInputChange('consent', checked)}
+                darkTheme={true}
+                className="items-start"
+              />
               {errors.consent && <p className="text-yellow-400 text-sm mt-1">{errors.consent}</p>}
             </div>
 
