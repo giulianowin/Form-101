@@ -57,7 +57,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <FileText className="w-6 h-6 text-green-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Client Medical Background</h2>
@@ -65,7 +65,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Medical History
           </label>
           <div className="mb-2">
@@ -83,13 +83,13 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             disabled={medicalHistoryNA}
             rows={4}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide details of medical history"
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Current Diagnosis
           </label>
           <div className="mb-2">
@@ -107,13 +107,13 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             disabled={currentDiagnosisNA}
             rows={3}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide current diagnosis details"
           />
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Hospital Admission History
           </label>
           <div className="mb-2">
@@ -131,13 +131,13 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             disabled={hospitalHistoryNA}
             rows={3}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide hospital admission history"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Mobility Support
           </label>
           
@@ -173,13 +173,13 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             disabled={mobilitySupportNA}
             rows={3}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select from options above or provide additional details about mobility support needs..."
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Skin Integrity Needs
           </label>
           
@@ -213,99 +213,99 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             disabled={skinIntegrityNA}
             rows={4}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select options above or add additional details..."
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             DNAR in Place <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.dnarInPlace}
             onChange={(e) => handleInputChange('dnarInPlace', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
             {yesNoOptions.map(option => (
               <option key={option} value={option} className="bg-slate-800">{option}</option>
             ))}
           </select>
-          {errors.dnarInPlace && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.dnarInPlace}</p>}
+          {errors.dnarInPlace && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.dnarInPlace}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Care Visit Frequency <span className="text-slate-400 text-xs">(Optional)</span>
           </label>
           <select
             value={formData.careVisitFrequency}
             onChange={(e) => handleInputChange('careVisitFrequency', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Optional</option>
             {careVisitFrequencyOptions.map(frequency => (
               <option key={frequency} value={frequency} className="bg-slate-800">{frequency}</option>
             ))}
           </select>
-          {errors.careVisitFrequency && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.careVisitFrequency}</p>}
+          {errors.careVisitFrequency && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.careVisitFrequency}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Care Visit Duration <span className="text-slate-400 text-xs">(Optional)</span>
           </label>
           <select
             value={formData.careVisitDuration}
             onChange={(e) => handleInputChange('careVisitDuration', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Optional</option>
             {careVisitDurationOptions.map(duration => (
               <option key={duration} value={duration} className="bg-slate-800">{duration}</option>
             ))}
           </select>
-          {errors.careVisitDuration && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.careVisitDuration}</p>}
+          {errors.careVisitDuration && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.careVisitDuration}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Requires Help with Appointments <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.requiresHelpWithAppointments}
             onChange={(e) => handleInputChange('requiresHelpWithAppointments', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
             {yesNoOptions.map(option => (
               <option key={option} value={option} className="bg-slate-800">{option}</option>
             ))}
           </select>
-          {errors.requiresHelpWithAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.requiresHelpWithAppointments}</p>}
+          {errors.requiresHelpWithAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.requiresHelpWithAppointments}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Wants Company to Appointments <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.wantsCompanyToAppointments}
             onChange={(e) => handleInputChange('wantsCompanyToAppointments', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
             {yesNoOptions.map(option => (
               <option key={option} value={option} className="bg-slate-800">{option}</option>
             ))}
           </select>
-          {errors.wantsCompanyToAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.wantsCompanyToAppointments}</p>}
+          {errors.wantsCompanyToAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.wantsCompanyToAppointments}</p>}
         </div>
       </div>
     </div>
