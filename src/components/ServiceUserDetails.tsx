@@ -73,7 +73,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
       <div className="flex items-center mb-6">
         <User className="w-6 h-6 text-blue-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Client Details</h2>
@@ -81,7 +81,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             First Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -89,16 +89,17 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             value={formData.firstName}
             onChange={(e) => handleInputChange('firstName', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="Enter first name"
           />
           {getDescriptionForField('firstName', formData.firstName) && (
-            <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('firstName', formData.firstName)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
           )}
-          {errors.firstName && <p className="text-yellow-400 text-sm mt-1">{errors.firstName}</p>}
+          {errors.firstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.firstName}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             Last Name <span className="text-red-400">*</span>
           </label>
           <input
@@ -106,16 +107,17 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             value={formData.lastName}
             onChange={(e) => handleInputChange('lastName', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="Enter last name"
           />
           {getDescriptionForField('lastName', formData.lastName) && (
-            <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('lastName', formData.lastName)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
           )}
-          {errors.lastName && <p className="text-yellow-400 text-sm mt-1">{errors.lastName}</p>}
+          {errors.lastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.lastName}</p>}
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             Date of Birth <span className="text-red-400">*</span>
           </label>
           <div className="grid grid-cols-3 gap-4">
@@ -123,6 +125,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               value={formData.dateOfBirth.day}
               onChange={(e) => handleDateChange('dateOfBirth', 'day', e.target.value)}
               className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               <option value="" className="bg-slate-800">Day</option>
               {dayOptions.map(day => (
@@ -133,6 +136,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               value={formData.dateOfBirth.month}
               onChange={(e) => handleDateChange('dateOfBirth', 'month', e.target.value)}
               className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               <option value="" className="bg-slate-800">Month</option>
               {monthOptions.map(month => (
@@ -143,6 +147,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               value={formData.dateOfBirth.year}
               onChange={(e) => handleDateChange('dateOfBirth', 'year', e.target.value)}
               className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               <option value="" className="bg-slate-800">Year</option>
               {yearOptions.map(year => (
@@ -151,13 +156,13 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             </select>
           </div>
           {getDateOfBirthWarning(formData.dateOfBirth) && (
-            <p className="text-yellow-400 text-sm mt-1">{getDateOfBirthWarning(formData.dateOfBirth)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDateOfBirthWarning(formData.dateOfBirth)}</p>
           )}
-          {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1">{errors.dateOfBirth}</p>}
+          {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.dateOfBirth}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             <Phone className="w-4 h-4 inline mr-1" />
             Phone Number <span className="text-red-400">*</span>
           </label>
@@ -168,33 +173,35 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             onFocus={() => setFocusedField('phoneNumber')}
             onBlur={() => setFocusedField('')}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="01234567890"
           />
           {focusedField === 'phoneNumber' && getDescriptionForField('phoneNumber', formData.phoneNumber) && (
-            <p className="text-yellow-400 text-sm mt-1">{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
           )}
-          {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1">{errors.phoneNumber}</p>}
+          {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.phoneNumber}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             Gender <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.gender}
             onChange={(e) => handleInputChange('gender', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
             {genderOptions.map(gender => (
               <option key={gender} value={gender} className="bg-slate-800">{gender}</option>
             ))}
           </select>
-          {errors.gender && <p className="text-yellow-400 text-sm mt-1">{errors.gender}</p>}
+          {errors.gender && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.gender}</p>}
         </div>
 
         <div className="relative">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             <MapPin className="w-4 h-4 inline mr-1" />
             First Line of Address <span className="text-red-400">*</span>
           </label>
@@ -205,9 +212,10 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             onFocus={() => formData.address && setShowAddressSuggestions(true)}
             onBlur={() => setTimeout(() => setShowAddressSuggestions(false), 200)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="Start typing your address..."
           />
-          {errors.address && <p className="text-yellow-400 text-sm mt-1">{errors.address}</p>}
+          {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.address}</p>}
           {showAddressSuggestions && addressSuggestions.length > 0 && (
             <div className="absolute z-50 w-full mt-1 bg-slate-800/95 backdrop-blur-sm rounded-lg border border-white/20 shadow-xl max-h-60 overflow-y-auto">
               {addressSuggestions.map((suggestion) => (
@@ -216,8 +224,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
                   onClick={() => selectAddress(suggestion, false)}
                   className="px-4 py-3 hover:bg-blue-500/30 cursor-pointer text-white border-b border-white/10 last:border-b-0"
                 >
-                  <div className="font-medium text-white">{suggestion.text}</div>
-                  <div className="text-sm text-slate-300">{suggestion.place_name}</div>
+                  <div className="font-medium text-white" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{suggestion.text}</div>
+                  <div className="text-sm text-slate-300" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{suggestion.place_name}</div>
                 </div>
               ))}
             </div>
@@ -225,7 +233,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             Region <span className="text-red-400">*</span>
           </label>
           <input
@@ -233,13 +241,14 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             value={formData.region}
             onChange={(e) => handleInputChange('region', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="e.g., England, Scotland, Wales, Northern Ireland"
           />
-          {errors.region && <p className="text-yellow-400 text-sm mt-1">{errors.region}</p>}
+          {errors.region && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.region}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             City <span className="text-red-400">*</span>
           </label>
           <input
@@ -247,13 +256,14 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             value={formData.city}
             onChange={(e) => handleInputChange('city', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="Enter city"
           />
-          {errors.city && <p className="text-yellow-400 text-sm mt-1">{errors.city}</p>}
+          {errors.city && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.city}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             Postcode <span className="text-red-400">*</span>
           </label>
           <input
@@ -261,13 +271,14 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             value={formData.postcode}
             onChange={(e) => handleInputChange('postcode', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="Enter postcode"
           />
-          {errors.postcode && <p className="text-yellow-400 text-sm mt-1">{errors.postcode}</p>}
+          {errors.postcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.postcode}</p>}
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             <Calendar className="w-4 h-4 inline mr-1" />
             Client Start Date <span className="text-slate-400 text-xs">(Optional)</span>
           </label>
@@ -276,6 +287,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               value={formData.clientStartDate.day}
               onChange={(e) => handleDateChange('clientStartDate', 'day', e.target.value)}
               className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               <option value="" className="bg-slate-800">Day</option>
               {dayOptions.map(day => (
@@ -286,6 +298,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               value={formData.clientStartDate.month}
               onChange={(e) => handleDateChange('clientStartDate', 'month', e.target.value)}
               className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               <option value="" className="bg-slate-800">Month</option>
               {monthOptions.map(month => (
@@ -296,6 +309,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
               value={formData.clientStartDate.year}
               onChange={(e) => handleDateChange('clientStartDate', 'year', e.target.value)}
               className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             >
               <option value="" className="bg-slate-800">Year</option>
               {Array.from({ length: 10 }, (_, i) => String(currentYear + i)).map(year => (
@@ -304,13 +318,13 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             </select>
           </div>
           {getClientStartDateWarning(formData.clientStartDate) && (
-            <p className="text-yellow-400 text-sm mt-1">{getClientStartDateWarning(formData.clientStartDate)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{getClientStartDateWarning(formData.clientStartDate)}</p>
           )}
-          {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1">{errors.clientStartDate}</p>}
+          {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.clientStartDate}</p>}
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             Allergies <span className="text-red-400">*</span>
           </label>
           
@@ -346,26 +360,28 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             disabled={noAllergies}
             rows={3}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
             placeholder="Select common allergies above or describe other allergies here. Write 'None' if no allergies"
           />
-          {errors.allergies && <p className="text-yellow-400 text-sm mt-1">{errors.allergies}</p>}
+          {errors.allergies && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.allergies}</p>}
         </div>
 
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-slate-200 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>
             What service would you require? <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.serviceRequired}
             onChange={(e) => handleInputChange('serviceRequired', e.target.value)}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
             {serviceOptions.map(service => (
               <option key={service} value={service} className="bg-slate-800">{service}</option>
             ))}
           </select>
-          {errors.serviceRequired && <p className="text-yellow-400 text-sm mt-1">{errors.serviceRequired}</p>}
+          {errors.serviceRequired && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '800' }}>{errors.serviceRequired}</p>}
         </div>
       </div>
     </div>
