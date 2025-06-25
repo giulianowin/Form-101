@@ -38,7 +38,7 @@ interface MedicalBackgroundInformation {
 
 // Define required fields for each section
 const REQUIRED_FIELDS = {
-  serviceUser: ['firstName', 'lastName', 'dateOfBirth', 'phoneNumber', 'address', 'postcode', 'clientStartDate', 'serviceRequired'] as (keyof ServiceUserDetails)[],
+  serviceUser: ['firstName', 'lastName', 'dateOfBirth', 'phoneNumber', 'gender', 'address', 'postcode', 'allergies', 'serviceRequired'] as (keyof ServiceUserDetails)[],
   nextOfKin: ['fullName', 'relationshipToClient', 'phoneNumber', 'address', 'postcode'] as (keyof NextOfKinDetails)[],
   medical: ['medicalHistory', 'currentDiagnosis', 'careVisitFrequency', 'careVisitDuration'] as (keyof MedicalBackgroundInformation)[]
 };
@@ -195,10 +195,10 @@ const CareAssessmentForm: React.FC = () => {
             type={type}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors text-white ${
               showWarning 
-                ? 'border-yellow-400 bg-yellow-50' 
-                : 'border-gray-300 hover:border-gray-400'
+                ? 'border-yellow-400 bg-yellow-900/20' 
+                : 'border-gray-600 bg-gray-800 hover:border-gray-500'
             }`}
             required={required}
           />
@@ -240,10 +240,10 @@ const CareAssessmentForm: React.FC = () => {
             value={value}
             onChange={(e) => onChange(e.target.value)}
             rows={rows}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical text-white ${
               showWarning 
-                ? 'border-yellow-400 bg-yellow-50' 
-                : 'border-gray-300 hover:border-gray-400'
+                ? 'border-yellow-400 bg-yellow-900/20' 
+                : 'border-gray-600 bg-gray-800 hover:border-gray-500'
             }`}
             required={required}
           />
@@ -284,10 +284,10 @@ const CareAssessmentForm: React.FC = () => {
           <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors text-white ${
               showWarning 
-                ? 'border-yellow-400 bg-yellow-50' 
-                : 'border-gray-300 hover:border-gray-400'
+                ? 'border-yellow-400 bg-yellow-900/20' 
+                : 'border-gray-600 bg-gray-800 hover:border-gray-500'
             }`}
             required={required}
           >
