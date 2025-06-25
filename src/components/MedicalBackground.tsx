@@ -57,14 +57,14 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="space-y-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <FileText className="w-6 h-6 text-green-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Client Medical Background</h2>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="md:col-span-2">
+      {/* Medical History Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Medical History
           </label>
@@ -86,9 +86,10 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide details of medical history"
           />
-        </div>
+      </div>
 
-        <div className="md:col-span-2">
+      {/* Current Diagnosis Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Current Diagnosis
           </label>
@@ -110,9 +111,10 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide current diagnosis details"
           />
-        </div>
+      </div>
 
-        <div className="md:col-span-2">
+      {/* Hospital Admission History Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Hospital Admission History
           </label>
@@ -134,8 +136,10 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide hospital admission history"
           />
-        </div>
+      </div>
 
+      {/* Mobility Support Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Mobility Support
@@ -177,7 +181,10 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             placeholder="Select from options above or provide additional details about mobility support needs..."
           />
         </div>
+      </div>
 
+      {/* Skin Integrity Needs Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Skin Integrity Needs
@@ -217,7 +224,10 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             placeholder="Select options above or add additional details..."
           />
         </div>
+      </div>
 
+      {/* DNAR in Place Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             DNAR in Place <span className="text-red-400">*</span>
@@ -235,7 +245,11 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           </select>
           {errors.dnarInPlace && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.dnarInPlace}</p>}
         </div>
+      </div>
 
+      {/* Care Visit Frequency and Duration Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Care Visit Frequency <span className="text-slate-400 text-xs">(Optional)</span>
@@ -271,7 +285,12 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           </select>
           {errors.careVisitDuration && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.careVisitDuration}</p>}
         </div>
+        </div>
+      </div>
 
+      {/* Appointment Assistance Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Requires Help with Appointments <span className="text-red-400">*</span>
@@ -306,6 +325,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             ))}
           </select>
           {errors.wantsCompanyToAppointments && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.wantsCompanyToAppointments}</p>}
+        </div>
         </div>
       </div>
     </div>

@@ -42,13 +42,15 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   const nextOfKinAddressInputRef = React.useRef<HTMLInputElement>(null);
 
   return (
-    <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="space-y-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <Heart className="w-6 h-6 text-pink-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Name Fields Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>  
             First Name <span className="text-red-400">*</span>
@@ -94,7 +96,11 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
           )}
           {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinLastName}</p>}
         </div>
+        </div>
+      </div>
 
+      {/* Relationship Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Relationship to Client <span className="text-red-400">*</span>
@@ -112,7 +118,11 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
           </select>
           {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.relationshipToClient}</p>}
         </div>
+      </div>
 
+      {/* Contact Information Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <Phone className="w-4 h-4 inline mr-1" />
@@ -134,7 +144,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
           {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPhone}</p>}
         </div>
 
-        <div>
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <Mail className="w-4 h-4 inline mr-1" />
             Email Address <span className="text-red-400">*</span>
@@ -152,8 +162,13 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
           )}
           {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinEmail}</p>}
         </div>
+        </div>
+      </div>
 
-        <div className="relative">
+      {/* Address Box */}
+      <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="relative md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <MapPin className="w-4 h-4 inline mr-1" />
             First Line of Address <span className="text-red-400">*</span>
@@ -208,7 +223,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
           {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinCity}</p>}
         </div>
 
-        <div>
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Postcode <span className="text-red-400">*</span> <span className="text-slate-400 text-xs">(Auto-filled)</span>
           </label>
@@ -220,6 +235,7 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPostcode}</p>}
+        </div>
         </div>
       </div>
     </div>
