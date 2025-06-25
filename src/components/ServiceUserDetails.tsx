@@ -77,7 +77,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
   const addressInputRef = React.useRef<HTMLInputElement>(null);
 
   return (
-    <div className="bg-white backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <div className="bg-gradient-to-br from-blue-600 to-purple-600 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <User className="w-6 h-6 text-blue-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Client Details</h2>
