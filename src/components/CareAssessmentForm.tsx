@@ -728,8 +728,8 @@ const CareAssessmentForm: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>Care Assessment Form</h1>
-          <p className="text-slate-300 text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>Please complete the required fields to help us provide the best care service for you</p>
+          <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Care Assessment Form</h1>
+          <p className="text-lg" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Please complete the required fields to help us provide the best care service for you</p>
         </div>
 
         {/* Progress Indicator */}
@@ -740,8 +740,8 @@ const CareAssessmentForm: React.FC = () => {
         />
 
         {submitSuccess && (
-          <div className="mb-8 p-4 bg-green-500/20 border border-green-500/50 rounded-lg backdrop-blur-sm">
-            <p className="text-green-300 text-center font-medium" style={{ fontFamily: 'Montserrat, sans-serif' }}>Form submitted successfully! We will be in touch soon.</p>
+          <div className="mb-8 p-4 bg-green-500/20 rounded-lg backdrop-blur-sm">
+            <p className="text-center font-medium" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Form submitted successfully! We will be in touch soon.</p>
           </div>
         )}
 
@@ -753,8 +753,8 @@ const CareAssessmentForm: React.FC = () => {
               type="button"
               onClick={handleBackNavigation}
               disabled={isSubmitting}
-              className="inline-flex items-center px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
               Back to {sectionNames[currentSectionIndex - 1]}
@@ -769,8 +769,8 @@ const CareAssessmentForm: React.FC = () => {
               type="button"
               onClick={handleNextSectionNavigation}
               disabled={isSubmitting}
-              className="inline-flex items-center px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
+              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             >
               Next Section
               <ChevronRight className="w-4 h-4 ml-2" />
@@ -785,8 +785,8 @@ const CareAssessmentForm: React.FC = () => {
               type="button"
               onClick={handleNextSectionNavigation}
               disabled={isSubmitting}
-              className="inline-flex items-center px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
+              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             >
               Next Section
               <ChevronRight className="w-4 h-4 ml-2" />
@@ -888,12 +888,12 @@ const CareAssessmentForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-gradient-to-r from-purple-800 to-purple-500 hover:from-purple-900 hover:to-purple-600 text-white font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
-                style={{ fontFamily: 'Montserrat, sans-serif' }}
+                className="bg-gradient-to-r from-purple-800 to-purple-500 hover:from-purple-900 hover:to-purple-600 font-semibold py-4 px-8 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
+                style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
               >
                 {isSubmitting ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 mr-3" style={{ borderColor: '#FFFFFF' }}></div>
                     Submitting...
                   </>
                 ) : (

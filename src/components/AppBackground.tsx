@@ -6,7 +6,7 @@ interface AppBackgroundProps {
 
 const AppBackground: React.FC<AppBackgroundProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-purple-950 relative">
+    <div className="min-h-screen bg-purple-950">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden opacity-30">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full"></div>
@@ -14,7 +14,7 @@ const AppBackground: React.FC<AppBackgroundProps> = ({ children }) => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div>
         {children}
       </div>
     </div>

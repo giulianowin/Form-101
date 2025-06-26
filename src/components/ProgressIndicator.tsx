@@ -28,13 +28,13 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
             </div>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">Currently Completing</h3>
-            <p className="text-slate-300 text-sm">{currentSectionName}</p>
+            <h3 className="text-lg font-semibold" style={{ color: '#FFFFFF' }}>Currently Completing</h3>
+            <p className="text-sm" style={{ color: '#FFFFFF' }}>{currentSectionName}</p>
           </div>
         </div>
         <div className="text-right">
           <div className="text-2xl font-bold text-green-400">{percentage}%</div>
-          <p className="text-slate-300 text-sm">{completedFields} of {totalFields} fields</p>
+          <p className="text-sm" style={{ color: '#FFFFFF' }}>{completedFields} of {totalFields} fields</p>
         </div>
       </div>
       
@@ -49,8 +49,9 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           </div>
         </div>
         <div className="flex justify-between mt-2 text-xs text-slate-400">
-          <span>Start</span>
-          <span>Complete</span>
+        <div className="flex justify-between mt-2 text-xs">
+          <span style={{ color: '#FFFFFF' }}>Start</span>
+          <span style={{ color: '#FFFFFF' }}>Complete</span>
         </div>
       </div>
     </div>

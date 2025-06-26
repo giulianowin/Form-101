@@ -81,45 +81,46 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       <div className="flex items-center mb-6">
         <User className="w-6 h-6 text-blue-400 mr-3" />
         <h2 className="text-2xl font-semibold text-white">Client Details</h2>
+        <h2 className="text-2xl font-semibold" style={{ color: '#FFFFFF' }}>Client Details</h2>
       </div>
       
       {/* Name Fields Box */}
       <div className="bg-purple-900/30 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <label className="block text-sm font-medium mb-2" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>
             First Name <span className="text-red-400">*</span>
           </label>
           <input
             type="text"
             value={formData.firstName}
             onChange={(e) => handleInputChange('firstName', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             placeholder="Enter first name"
           />
           {getDescriptionForField('firstName', formData.firstName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
+            <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
           )}
-          {errors.firstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.firstName}</p>}
+          {errors.firstName && <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{errors.firstName}</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <label className="block text-sm font-medium mb-2" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>
             Last Name <span className="text-red-400">*</span>
           </label>
           <input
             type="text"
             value={formData.lastName}
             onChange={(e) => handleInputChange('lastName', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             placeholder="Enter last name"
           />
           {getDescriptionForField('lastName', formData.lastName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
+            <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
           )}
-          {errors.lastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.lastName}</p>}
+          {errors.lastName && <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{errors.lastName}</p>}
         </div>
         </div>
       </div>
