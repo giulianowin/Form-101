@@ -48,7 +48,6 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
             <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full"></div>
           </div>
         </div>
-        <div className="flex justify-between mt-2 text-xs text-slate-400">
         <div className="flex justify-between mt-2 text-xs">
           <span style={{ color: '#FFFFFF' }}>Start</span>
           <span style={{ color: '#FFFFFF' }}>Complete</span>
@@ -59,5 +58,3 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 };
 
 export default ProgressIndicator;
-  )
-}
