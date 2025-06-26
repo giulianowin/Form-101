@@ -80,7 +80,6 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
     <div className="space-y-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
         <User className="w-6 h-6 text-blue-400 mr-3" />
-        <h2 className="text-2xl font-semibold text-white">Client Details</h2>
         <h2 className="text-2xl font-semibold" style={{ color: '#FFFFFF' }}>Client Details</h2>
       </div>
       
