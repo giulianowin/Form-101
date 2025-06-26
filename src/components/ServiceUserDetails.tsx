@@ -1,108 +1,77 @@
 import React from 'react';
-import { User, Phone, MapPin, Calendar } from 'lucide-react';
-import CircularCheckbox from './CircularCheckbox';
+import { Heart, Phone, Mail, MapPin } from 'lucide-react';
 import AddressDropdown from './AddressDropdown';
 import {
   getDescriptionForField,
-  getDateOfBirthWarning,
-  getClientStartDateWarning,
+  shouldShowWarning,
   shouldShowDescription
 } from '../utils/formValidationHelpers';
 
-interface ServiceUserDetailsProps {
+interface NextOfKinDetailsProps {
   formData: any;
   handleInputChange: (field: string, value: string | boolean) => void;
   handlePhoneChange: (field: string, value: string) => void;
-  handleDateChange: (dateType: 'dateOfBirth' | 'clientStartDate', field: 'day' | 'month' | 'year', value: string) => void;
   handleAddressChange: (field: string, value: string, isNextOfKin?: boolean) => void;
   errors: any;
-  dayOptions: string[];
-  monthOptions: { value: string; label: string }[];
-  yearOptions: string[];
-  genderOptions: string[];
-  serviceOptions: string[];
-  allergyOptions: any;
-  handleAllergyOptionChange: (option: string, checked: boolean) => void;
+  relationshipOptions: string[];
   searchAddresses: (query: string, isNextOfKin?: boolean) => void;
   selectAddress: (suggestion: any, isNextOfKin?: boolean) => void;
-  addressSuggestions: any[];
-  showAddressSuggestions: boolean;
+  nextOfKinAddressSuggestions: any[];
+  showNextOfKinAddressSuggestions: boolean;
   focusedField: string;
-  setShowAddressSuggestions: (show: boolean) => void;
+  setShowNextOfKinAddressSuggestions: (show: boolean) => void;
   setFocusedField: (field: string) => void;
-  currentYear: number;
-  noAllergies: boolean;
-  setNoAllergies: (value: boolean) => void;
 }
 
-const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
+const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   formData,
   handleInputChange,
   handlePhoneChange,
-  handleDateChange,
   handleAddressChange,
   errors,
-  dayOptions,
-  monthOptions,
-  yearOptions,
-  genderOptions,
-  serviceOptions,
-  allergyOptions,
-  handleAllergyOptionChange,
+  relationshipOptions,
   searchAddresses,
   selectAddress,
-  addressSuggestions,
-  showAddressSuggestions,
+  nextOfKinAddressSuggestions,
+  showNextOfKinAddressSuggestions,
   focusedField,
-  setShowAddressSuggestions,
+  setShowNextOfKinAddressSuggestions,
   setFocusedField,
-  currentYear,
-  noAllergies,
-  setNoAllergies,
 }) => {
-  const handleNoAllergiesChange = (checked: boolean) => {
-    setNoAllergies(checked);
-    if (checked) {
-      // Clear all other allergy options
-      Object.keys(allergyOptions).forEach(option => {
-        handleAllergyOptionChange(option, false);
-      });
-      handleInputChange('allergies', 'No allergies');
-    } else {
-      handleInputChange('allergies', '');
-    }
-  };
-
-  // Create ref for address input
-  const addressInputRef = React.useRef<HTMLInputElement>(null);
+  // Create ref for next of kin address input
+  const nextOfKinAddressInputRef = React.useRef<HTMLInputElement>(null);
 
   return (
     <div className="space-y-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="flex items-center mb-6">
-        <User className="w-6 h-6 text-blue-400 mr-3" />
-        <h2 className="text-2xl font-semibold text-white">Client Details</h2>
+        <Heart className="w-6 h-6 text-pink-400 mr-3" />
+        <h2 className="text-2xl font-semibold text-white">Next of Kin Details</h2>
       </div>
       
       {/* Name Fields Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
+      <div className="bg-purple-900/30 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>  
             First Name <span className="text-red-400">*</span>
           </label>
           <input
             type="text"
-            value={formData.firstName}
-            onChange={(e) => handleInputChange('firstName', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            value={formData.nextOfKinFirstName}
+            onChange={(e) => handleInputChange('nextOfKinFirstName', e.target.value)}
+            onFocus={() => setFocusedField('nextOfKinFirstName')}
+            onBlur={() => setFocusedField('')}
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter first name"
           />
-          {getDescriptionForField('firstName', formData.firstName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
+          {shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Minimum 3 characters</p>
           )}
-          {errors.firstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.firstName}</p>}
+          {focusedField === 'nextOfKinFirstName' && getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName) && !shouldShowWarning('nextOfKinFirstName', formData.nextOfKinFirstName) && (
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinFirstName', formData.nextOfKinFirstName)}</p>
+          )}
+          {errors.nextOfKinFirstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinFirstName}</p>}
         </div>
 
         <div>
@@ -111,72 +80,48 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           </label>
           <input
             type="text"
-            value={formData.lastName}
-            onChange={(e) => handleInputChange('lastName', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            value={formData.nextOfKinLastName}
+            onChange={(e) => handleInputChange('nextOfKinLastName', e.target.value)}
+            onFocus={() => setFocusedField('nextOfKinLastName')}
+            onBlur={() => setFocusedField('')}
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter last name"
           />
-          {getDescriptionForField('lastName', formData.lastName) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
+          {shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Minimum 3 characters</p>
           )}
-          {errors.lastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.lastName}</p>}
-        </div>
+          {focusedField === 'nextOfKinLastName' && getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName) && !shouldShowWarning('nextOfKinLastName', formData.nextOfKinLastName) && (
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinLastName', formData.nextOfKinLastName)}</p>
+          )}
+          {errors.nextOfKinLastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinLastName}</p>}
         </div>
         </div>
       </div>
 
-      {/* Date of Birth Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
+      {/* Relationship Box */}
+      <div className="bg-purple-900/30 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Date of Birth <span className="text-red-400">*</span>
+            Relationship to Client <span className="text-red-400">*</span>
           </label>
-          <div className="grid grid-cols-3 gap-4">
-            <select
-              value={formData.dateOfBirth.day}
-              onChange={(e) => handleDateChange('dateOfBirth', 'day', e.target.value)}
-              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <option value="" className="bg-slate-800">Day</option>
-              {dayOptions.map(day => (
-                <option key={day} value={day} className="bg-slate-800">{day}</option>
-              ))}
-            </select>
-            <select
-              value={formData.dateOfBirth.month}
-              onChange={(e) => handleDateChange('dateOfBirth', 'month', e.target.value)}
-              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <option value="" className="bg-slate-800">Month</option>
-              {monthOptions.map(month => (
-                <option key={month.value} value={month.value} className="bg-slate-800">{month.label}</option>
-              ))}
-            </select>
-            <select
-              value={formData.dateOfBirth.year}
-              onChange={(e) => handleDateChange('dateOfBirth', 'year', e.target.value)}
-              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <option value="" className="bg-slate-800">Year</option>
-              {yearOptions.map(year => (
-                <option key={year} value={year} className="bg-slate-800">{year}</option>
-              ))}
-            </select>
-          </div>
-          {getDateOfBirthWarning(formData.dateOfBirth) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDateOfBirthWarning(formData.dateOfBirth)}</p>
-          )}
-          {errors.dateOfBirth && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.dateOfBirth}</p>}
+          <select
+            value={formData.relationshipToClient}
+            onChange={(e) => handleInputChange('relationshipToClient', e.target.value)}
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
+            <option value="" className="bg-slate-800">Please Select</option>
+            {relationshipOptions.map(relationship => (
+              <option key={relationship} value={relationship} className="bg-slate-800">{relationship}</option>
+            ))}
+          </select>
+          {errors.relationshipToClient && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.relationshipToClient}</p>}
         </div>
       </div>
 
-      {/* Phone and Gender Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
+      {/* Contact Information Box */}
+      <div className="bg-purple-900/30 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -185,44 +130,43 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           </label>
           <input
             type="tel"
-            value={formData.phoneNumber}
-            onChange={(e) => handlePhoneChange('phoneNumber', e.target.value)}
-            onFocus={() => setFocusedField('phoneNumber')}
+            value={formData.nextOfKinPhone}
+            onChange={(e) => handlePhoneChange('nextOfKinPhone', e.target.value)}
+            onFocus={() => setFocusedField('nextOfKinPhone')}
             onBlur={() => setFocusedField('')}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="01234567890"
           />
-          {focusedField === 'phoneNumber' && getDescriptionForField('phoneNumber', formData.phoneNumber) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
+          {focusedField === 'nextOfKinPhone' && getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone) && (
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone)}</p>
           )}
-          {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.phoneNumber}</p>}
+          {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPhone}</p>}
         </div>
 
-        <div>
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Gender <span className="text-red-400">*</span>
+            <Mail className="w-4 h-4 inline mr-1" />
+            Email Address <span className="text-red-400">*</span>
           </label>
-          <select
-            value={formData.gender}
-            onChange={(e) => handleInputChange('gender', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+          <input
+            type="email"
+            value={formData.nextOfKinEmail}
+            onChange={(e) => handleInputChange('nextOfKinEmail', e.target.value)}
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
-            <option value="" className="bg-slate-800">Please Select</option>
-            {genderOptions.map(gender => (
-              <option key={gender} value={gender} className="bg-slate-800">{gender}</option>
-            ))}
-          </select>
-          {errors.gender && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.gender}</p>}
-        </div>
+            placeholder="Enter email address"
+          />
+          {getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail) && (
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinEmail', formData.nextOfKinEmail)}</p>
+          )}
+          {errors.nextOfKinEmail && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinEmail}</p>}
         </div>
         </div>
       </div>
 
       {/* Address Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
+      <div className="bg-purple-900/30 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -230,25 +174,25 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             First Line of Address <span className="text-red-400">*</span>
           </label>
           <input
-            ref={addressInputRef}
+            ref={nextOfKinAddressInputRef}
             type="text"
-            value={formData.address}
-            onChange={(e) => handleAddressChange('address', e.target.value, false)}
-            onFocus={() => formData.address && setShowAddressSuggestions(true)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            value={formData.nextOfKinAddress}
+            onChange={(e) => handleAddressChange('nextOfKinAddress', e.target.value, true)}
+            onFocus={() => formData.nextOfKinAddress && setShowNextOfKinAddressSuggestions(true)}
+            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Start typing your address..."
           />
-          {errors.address && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.address}</p>}
+          {errors.nextOfKinAddress && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinAddress}</p>}
         </div>
 
-        {/* Address Dropdown Portal */}
+        {/* Next of Kin Address Dropdown Portal */}
         <AddressDropdown
-          isVisible={showAddressSuggestions}
-          suggestions={addressSuggestions}
-          onSelectAddress={(suggestion) => selectAddress(suggestion, false)}
-          inputRef={addressInputRef}
-          onClose={() => setShowAddressSuggestions(false)}
+          isVisible={showNextOfKinAddressSuggestions}
+          suggestions={nextOfKinAddressSuggestions}
+          onSelectAddress={(suggestion) => selectAddress(suggestion, true)}
+          inputRef={nextOfKinAddressInputRef}
+          onClose={() => setShowNextOfKinAddressSuggestions(false)}
         />
 
         <div>
@@ -257,12 +201,12 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           </label>
           <input
             type="text"
-            value={formData.region}
+            value={formData.nextOfKinRegion}
             readOnly
-            className="w-full px-4 py-3 bg-purple-900/30 border-2 border-purple-800/50 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
-          {errors.region && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.region}</p>}
+          {errors.nextOfKinRegion && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinRegion}</p>}
         </div>
 
         <div>
@@ -271,12 +215,12 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           </label>
           <input
             type="text"
-            value={formData.city}
+            value={formData.nextOfKinCity}
             readOnly
-            className="w-full px-4 py-3 bg-purple-900/30 border-2 border-purple-800/50 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
-          {errors.city && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.city}</p>}
+          {errors.nextOfKinCity && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinCity}</p>}
         </div>
 
         <div className="md:col-span-2">
@@ -285,134 +229,17 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           </label>
           <input
             type="text"
-            value={formData.postcode}
+            value={formData.nextOfKinPostcode}
             readOnly
-            className="w-full px-4 py-3 bg-purple-900/30 border-2 border-purple-800/50 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
-          {errors.postcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.postcode}</p>}
+          {errors.nextOfKinPostcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPostcode}</p>}
         </div>
-        </div>
-        </div>
-      </div>
-
-      {/* Client Start Date Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            <Calendar className="w-4 h-4 inline mr-1" />
-            Client Start Date <span className="text-slate-400 text-xs">(Optional)</span>
-          </label>
-          <div className="grid grid-cols-3 gap-4">
-            <select
-              value={formData.clientStartDate.day}
-              onChange={(e) => handleDateChange('clientStartDate', 'day', e.target.value)}
-              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <option value="" className="bg-slate-800">Day</option>
-              {dayOptions.map(day => (
-                <option key={day} value={day} className="bg-slate-800">{day}</option>
-              ))}
-            </select>
-            <select
-              value={formData.clientStartDate.month}
-              onChange={(e) => handleDateChange('clientStartDate', 'month', e.target.value)}
-              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <option value="" className="bg-slate-800">Month</option>
-              {monthOptions.map(month => (
-                <option key={month.value} value={month.value} className="bg-slate-800">{month.label}</option>
-              ))}
-            </select>
-            <select
-              value={formData.clientStartDate.year}
-              onChange={(e) => handleDateChange('clientStartDate', 'year', e.target.value)}
-              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <option value="" className="bg-slate-800">Year</option>
-              {Array.from({ length: 10 }, (_, i) => String(currentYear + i)).map(year => (
-                <option key={year} value={year} className="bg-slate-800">{year}</option>
-              ))}
-            </select>
-          </div>
-          {getClientStartDateWarning(formData.clientStartDate) && (
-            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getClientStartDateWarning(formData.clientStartDate)}</p>
-          )}
-          {errors.clientStartDate && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.clientStartDate}</p>}
-        </div>
-      </div>
-
-      {/* Allergies Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            Allergies <span className="text-red-400">*</span>
-          </label>
-          
-          {/* No Allergies Checkbox */}
-          <div className="mb-4">
-            <CircularCheckbox
-              id="no-allergies"
-              label="No allergies"
-              checked={noAllergies}
-              onChange={handleNoAllergiesChange}
-              darkTheme={true}
-            />
-          </div>
-          
-          {/* Allergy Checkboxes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            {Object.keys(allergyOptions).map((option) => (
-              <CircularCheckbox
-                key={option}
-                id={`allergy-${option}`}
-                label={option}
-                checked={allergyOptions[option]}
-                onChange={(checked) => handleAllergyOptionChange(option, checked)}
-                disabled={noAllergies}
-                darkTheme={true}
-              />
-            ))}
-          </div>
-          
-          <textarea
-            value={formData.allergies}
-            onChange={(e) => handleInputChange('allergies', e.target.value)}
-            disabled={noAllergies}
-            rows={3}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
-            placeholder="Select common allergies above or describe other allergies here. Write 'None' if no allergies"
-          />
-          {errors.allergies && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.allergies}</p>}
-        </div>
-      </div>
-
-      {/* Service Required Box */}
-      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-900/30 rounded-2xl p-4">
-          <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-            What service would you require? <span className="text-red-400">*</span>
-          </label>
-          <select
-            value={formData.serviceRequired}
-            onChange={(e) => handleInputChange('serviceRequired', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
-            <option value="" className="bg-slate-800">Please Select</option>
-            {serviceOptions.map(service => (
-              <option key={service} value={service} className="bg-slate-800">{service}</option>
-            ))}
-          </select>
-          {errors.serviceRequired && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.serviceRequired}</p>}
         </div>
       </div>
     </div>
   );
 };
 
-export default ServiceUserDetails;
+export default NextOfKinDetails;
