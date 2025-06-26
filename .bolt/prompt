@@ -21,3 +21,12 @@ Use icons from lucide-react for logos.
 ########  Never Hallucinate.
 
 ######### For Each new topic create new Component file to keep the Component file management seamless, example current data are components file of Client details & details of next kin and medical history but if I need you to add a new feature or section or new structure to the entire base I want new file created for that feature or new structure
+########### Key Features are based on the following 6 rules:
+1. Existing conditional logic preserved
+2. Montserrat font family maintained
+3. Current color theme unchanged
+4. All button functionality preserved
+5. Responsive design maintained
+6. Accessibility features retained
+
+############ Remember to keep the Key Features Maintained never changed unless approved by me after you've clarified what changes are about to be made!
