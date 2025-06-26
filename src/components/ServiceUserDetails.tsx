@@ -84,8 +84,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
       
       {/* Name Fields Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -95,7 +95,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             type="text"
             value={formData.firstName}
             onChange={(e) => handleInputChange('firstName', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter first name"
           />
@@ -113,7 +113,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             type="text"
             value={formData.lastName}
             onChange={(e) => handleInputChange('lastName', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Enter last name"
           />
@@ -127,8 +127,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Date of Birth Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Date of Birth <span className="text-red-400">*</span>
           </label>
@@ -136,7 +136,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             <select
               value={formData.dateOfBirth.day}
               onChange={(e) => handleDateChange('dateOfBirth', 'day', e.target.value)}
-              className="px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <option value="" className="bg-slate-800">Day</option>
@@ -147,7 +147,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             <select
               value={formData.dateOfBirth.month}
               onChange={(e) => handleDateChange('dateOfBirth', 'month', e.target.value)}
-              className="px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <option value="" className="bg-slate-800">Month</option>
@@ -158,7 +158,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             <select
               value={formData.dateOfBirth.year}
               onChange={(e) => handleDateChange('dateOfBirth', 'year', e.target.value)}
-              className="px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <option value="" className="bg-slate-800">Year</option>
@@ -175,8 +175,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Phone and Gender Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -189,7 +189,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             onChange={(e) => handlePhoneChange('phoneNumber', e.target.value)}
             onFocus={() => setFocusedField('phoneNumber')}
             onBlur={() => setFocusedField('')}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="01234567890"
           />
@@ -206,7 +206,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
           <select
             value={formData.gender}
             onChange={(e) => handleInputChange('gender', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
@@ -221,8 +221,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Address Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative md:col-span-2">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -235,7 +235,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             value={formData.address}
             onChange={(e) => handleAddressChange('address', e.target.value, false)}
             onFocus={() => formData.address && setShowAddressSuggestions(true)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Start typing your address..."
           />
@@ -259,7 +259,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             type="text"
             value={formData.region}
             readOnly
-            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-900/30 border-2 border-purple-800/50 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.region && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.region}</p>}
@@ -273,7 +273,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             type="text"
             value={formData.city}
             readOnly
-            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-900/30 border-2 border-purple-800/50 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.city && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.city}</p>}
@@ -287,7 +287,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             type="text"
             value={formData.postcode}
             readOnly
-            className="w-full px-4 py-3 bg-purple-800/20 border-2 border-purple-700/40 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
+            className="w-full px-4 py-3 bg-purple-900/30 border-2 border-purple-800/50 rounded-2xl text-slate-300 placeholder-slate-400 cursor-not-allowed opacity-75"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           />
           {errors.postcode && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.postcode}</p>}
@@ -297,8 +297,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Client Start Date Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             <Calendar className="w-4 h-4 inline mr-1" />
             Client Start Date <span className="text-slate-400 text-xs">(Optional)</span>
@@ -307,7 +307,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             <select
               value={formData.clientStartDate.day}
               onChange={(e) => handleDateChange('clientStartDate', 'day', e.target.value)}
-              className="px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <option value="" className="bg-slate-800">Day</option>
@@ -318,7 +318,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             <select
               value={formData.clientStartDate.month}
               onChange={(e) => handleDateChange('clientStartDate', 'month', e.target.value)}
-              className="px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <option value="" className="bg-slate-800">Month</option>
@@ -329,7 +329,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             <select
               value={formData.clientStartDate.year}
               onChange={(e) => handleDateChange('clientStartDate', 'year', e.target.value)}
-              className="px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+              className="px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <option value="" className="bg-slate-800">Year</option>
@@ -346,8 +346,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Allergies Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Allergies <span className="text-red-400">*</span>
           </label>
@@ -383,7 +383,7 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             onChange={(e) => handleInputChange('allergies', e.target.value)}
             disabled={noAllergies}
             rows={3}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select common allergies above or describe other allergies here. Write 'None' if no allergies"
           />
@@ -392,15 +392,15 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
       </div>
 
       {/* Service Required Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-        <div className="bg-purple-800/20 rounded-2xl p-4">
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl overflow-hidden" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-purple-900/30 rounded-2xl p-4">
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             What service would you require? <span className="text-red-400">*</span>
           </label>
           <select
             value={formData.serviceRequired}
             onChange={(e) => handleInputChange('serviceRequired', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
