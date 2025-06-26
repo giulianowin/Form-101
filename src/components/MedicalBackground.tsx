@@ -64,7 +64,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
       
       {/* Medical History Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Medical History
           </label>
@@ -82,14 +82,14 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('medicalHistory', e.target.value)}
             disabled={medicalHistoryNA}
             rows={4}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide details of medical history"
           />
       </div>
 
       {/* Current Diagnosis Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Current Diagnosis
           </label>
@@ -107,14 +107,14 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('currentDiagnosis', e.target.value)}
             disabled={currentDiagnosisNA}
             rows={3}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide current diagnosis details"
           />
       </div>
 
       {/* Hospital Admission History Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Hospital Admission History
           </label>
@@ -132,14 +132,14 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('hospitalAdmissionHistory', e.target.value)}
             disabled={hospitalHistoryNA}
             rows={3}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Please provide hospital admission history"
           />
       </div>
 
       {/* Mobility Support Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Mobility Support
@@ -176,7 +176,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('mobilitySupport', e.target.value)}
             disabled={mobilitySupportNA}
             rows={3}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select from options above or provide additional details about mobility support needs..."
           />
@@ -184,7 +184,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Skin Integrity Needs Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Skin Integrity Needs
@@ -219,7 +219,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
             onChange={(e) => handleInputChange('skinIntegrityNeeds', e.target.value)}
             disabled={skinIntegrityNA}
             rows={4}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200 resize-none disabled:opacity-50"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="Select options above or add additional details..."
           />
@@ -227,7 +227,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* DNAR in Place Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             DNAR in Place <span className="text-red-400">*</span>
@@ -235,7 +235,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.dnarInPlace}
             onChange={(e) => handleInputChange('dnarInPlace', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
@@ -248,7 +248,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Care Visit Frequency and Duration Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -257,7 +257,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.careVisitFrequency}
             onChange={(e) => handleInputChange('careVisitFrequency', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Optional</option>
@@ -275,7 +275,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.careVisitDuration}
             onChange={(e) => handleInputChange('careVisitDuration', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Optional</option>
@@ -289,7 +289,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
       </div>
 
       {/* Appointment Assistance Box */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-500 backdrop-blur-sm rounded-2xl p-8 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      <div className="bg-gradient-to-br from-purple-950 to-purple-800 backdrop-blur-sm rounded-2xl p-6 shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-slate-200 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -298,7 +298,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.requiresHelpWithAppointments}
             onChange={(e) => handleInputChange('requiresHelpWithAppointments', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
@@ -316,7 +316,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <select
             value={formData.wantsCompanyToAppointments}
             onChange={(e) => handleInputChange('wantsCompanyToAppointments', e.target.value)}
-            className="w-full px-4 py-3 bg-purple-700/30 border-2 border-purple-600/40 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
+            className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             <option value="" className="bg-slate-800">Please Select</option>
