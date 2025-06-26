@@ -42,7 +42,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       <div className="relative">
         <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
           <div 
-            className="h-full bg-slate-700 rounded-full transition-all duration-500 ease-out relative"
+            className="h-full bg-purple-600 rounded-full transition-all duration-500 ease-out relative"
             style={{ width: `${percentage}%` }}
           >
           </div>
