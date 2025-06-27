@@ -28,7 +28,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
           type="button"
           onClick={onBackNavigation}
           disabled={isSubmitting}
-          className="fixed left-0 top-1/2 transform -translate-y-1/2 h-96 w-20 z-[9999] flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-purple-950 hover:from-gray-800 hover:to-purple-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-2xl"
+          className="fixed left-0 top-1/2 transform -translate-y-1/2 h-96 w-20 z-[9999] flex flex-col justify-center items-center bg-purple-950 hover:bg-purple-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-2xl"
           style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
         >
           <ChevronLeft className="w-6 h-6 mb-4" />
@@ -50,7 +50,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
           type="button"
           onClick={onNextSectionNavigation}
           disabled={isSubmitting}
-          className="fixed right-0 top-1/2 transform -translate-y-1/2 h-96 w-20 z-[9999] flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-purple-950 hover:from-gray-800 hover:to-purple-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-2xl"
+          className="fixed right-0 top-1/2 transform -translate-y-1/2 h-96 w-20 z-[9999] flex flex-col justify-center items-center bg-purple-950 hover:bg-purple-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-2xl"
           style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
         >
           <ChevronRight className="w-6 h-6 mb-4" />
@@ -69,7 +69,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
           type="button"
           onClick={onNextSectionNavigation}
           disabled={isSubmitting}
-          className="fixed right-0 top-1/2 transform -translate-y-1/2 h-96 w-20 z-[9999] flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-purple-950 hover:from-gray-800 hover:to-purple-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-2xl"
+          className="fixed right-0 top-1/2 transform -translate-y-1/2 h-96 w-20 z-[9999] flex flex-col justify-center items-center bg-purple-950 hover:bg-purple-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-2xl"
           style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
         >
           <ChevronRight className="w-6 h-6 mb-4" />
