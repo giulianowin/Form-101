@@ -697,7 +697,7 @@ const CareAssessmentForm: React.FC = () => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'instant'
     });
   }, [currentSectionIndex]);
 
