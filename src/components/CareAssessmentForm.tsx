@@ -164,6 +164,8 @@ const CareAssessmentForm: React.FC = () => {
   const [showNextOfKinAddressSuggestions, setShowNextOfKinAddressSuggestions] = useState(false);
   const [focusedField, setFocusedField] = useState<string>('');
   const [noAllergies, setNoAllergies] = useState(false);
+  const [phoneInteracted, setPhoneInteracted] = useState(false);
+  const [nextOfKinPhoneInteracted, setNextOfKinPhoneInteracted] = useState(false);
 
   // Options
   const dayOptions = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -778,6 +780,8 @@ const CareAssessmentForm: React.FC = () => {
                 currentYear={currentYear}
                 noAllergies={noAllergies}
                 setNoAllergies={setNoAllergies}
+                phoneInteracted={phoneInteracted}
+                setPhoneInteracted={setPhoneInteracted}
               />
             </div>
           )}
@@ -801,6 +805,8 @@ const CareAssessmentForm: React.FC = () => {
                 setFocusedField={setFocusedField}
                 shouldShowWarning={shouldShowWarning}
                 shouldShowDescription={shouldShowDescription}
+                nextOfKinPhoneInteracted={nextOfKinPhoneInteracted}
+                setNextOfKinPhoneInteracted={setNextOfKinPhoneInteracted}
               />
             </div>
           )}
