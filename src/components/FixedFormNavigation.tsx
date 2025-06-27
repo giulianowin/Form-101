@@ -86,3 +86,5 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
 };
 
 export default FixedFormNavigation;
+
+export default FixedFormNavigation
