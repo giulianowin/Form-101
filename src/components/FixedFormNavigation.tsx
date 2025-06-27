@@ -33,7 +33,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
             style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
-            Back to {sectionNames[currentSectionIndex - 1]}
+            Previous Section
           </button>
         </div>
       )}
