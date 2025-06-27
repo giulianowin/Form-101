@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Send, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Send } from 'lucide-react';
 import ServiceUserDetails from './ServiceUserDetails';
 import NextOfKinDetails from './NextOfKinDetails';
 import MedicalBackground from './MedicalBackground';
 import ConsentSection from './ConsentSection';
 import ProgressIndicator from './ProgressIndicator';
+import FixedFormNavigation from './FixedFormNavigation';
 import { isValidName, isValidNameInput, isValidEmail, isValidPhone } from '../utils/validation';
 import { getRequiredFieldsStatus } from '../utils/formValidationHelpers';
 
@@ -726,7 +727,7 @@ const CareAssessmentForm: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Care Assessment Form</h1>
           <p className="text-lg" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Please complete the required fields to help us provide the best care service for you</p>
@@ -742,55 +743,6 @@ const CareAssessmentForm: React.FC = () => {
         {submitSuccess && (
           <div className="mb-8 p-4 bg-green-500/20 rounded-lg backdrop-blur-sm">
             <p className="text-center font-medium" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Form submitted successfully! We will be in touch soon.</p>
-          </div>
-        )}
-
-        {/* Fixed Navigation Buttons */}
-        {/* Back button - fixed on left side, vertically centered */}
-        {currentSectionIndex > 0 && (
-          <div className="fixed left-0 top-1/2 transform -translate-y-1/2 z-50 p-2">
-            <button
-              type="button"
-              onClick={handleBackNavigation}
-              disabled={isSubmitting}
-              className="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
-              style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
-            >
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Back to {sectionNames[currentSectionIndex - 1]}
-            </button>
-          </div>
-        )}
-        
-        {/* Next Section button - fixed on right side, vertically centered */}
-        {hasNavigatedBack && currentSectionIndex < maxVisibleSection && (
-          <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-50 p-2">
-            <button
-              type="button"
-              onClick={handleNextSectionNavigation}
-              disabled={isSubmitting}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
-              style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
-            >
-              Next Section
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </button>
-          </div>
-        )}
-        
-        {/* Special case: Next Section button for the first section when user has navigated back */}
-        {currentSectionIndex === 0 && hasNavigatedBack && maxVisibleSection > 0 && (
-          <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-50 p-2">
-            <button
-              type="button"
-              onClick={handleNextSectionNavigation}
-              disabled={isSubmitting}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
-              style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
-            >
-              Next Section
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </button>
           </div>
         )}
 
@@ -907,6 +859,17 @@ const CareAssessmentForm: React.FC = () => {
           )}
         </form>
       </div>
+
+      {/* Fixed Navigation Buttons - Rendered outside the main form container */}
+      <FixedFormNavigation
+        currentSectionIndex={currentSectionIndex}
+        maxVisibleSection={maxVisibleSection}
+        hasNavigatedBack={hasNavigatedBack}
+        isSubmitting={isSubmitting}
+        sectionNames={sectionNames}
+        onBackNavigation={handleBackNavigation}
+        onNextSectionNavigation={handleNextSectionNavigation}
+      />
     </div>
   );
 };
