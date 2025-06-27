@@ -748,7 +748,7 @@ const CareAssessmentForm: React.FC = () => {
         {/* Fixed Navigation Buttons */}
         {/* Back button - fixed on left side, vertically centered */}
         {currentSectionIndex > 0 && (
-          <div className="fixed left-8 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="fixed left-2 top-1/2 transform -translate-y-1/2 z-50">
             <button
               type="button"
               onClick={handleBackNavigation}
@@ -764,7 +764,7 @@ const CareAssessmentForm: React.FC = () => {
         
         {/* Next Section button - fixed on right side, vertically centered */}
         {hasNavigatedBack && currentSectionIndex < maxVisibleSection && (
-          <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 z-50">
             <button
               type="button"
               onClick={handleNextSectionNavigation}
@@ -780,7 +780,7 @@ const CareAssessmentForm: React.FC = () => {
         
         {/* Special case: Next Section button for the first section when user has navigated back */}
         {currentSectionIndex === 0 && hasNavigatedBack && maxVisibleSection > 0 && (
-          <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 z-50">
             <button
               type="button"
               onClick={handleNextSectionNavigation}
