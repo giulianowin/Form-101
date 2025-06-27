@@ -6,19 +6,15 @@ interface AppBackgroundProps {
 
 const AppBackground: React.FC<AppBackgroundProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 relative">
-      {/* Modern gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/50 via-transparent to-purple-700/30"></div>
-      
+    <div className="min-h-screen bg-purple-950">
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-20">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-500 to-purple-700 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-600/30 to-purple-400/30 rounded-full blur-2xl"></div>
+      <div className="absolute inset-0 overflow-hidden opacity-30">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div>
         {children}
       </div>
     </div>
