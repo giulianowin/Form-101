@@ -748,12 +748,12 @@ const CareAssessmentForm: React.FC = () => {
         {/* Fixed Navigation Buttons */}
         {/* Back button - fixed on left side, vertically centered */}
         {currentSectionIndex > 0 && (
-          <div className="fixed left-2 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="fixed left-0 top-1/2 transform -translate-y-1/2 z-50 p-2">
             <button
               type="button"
               onClick={handleBackNavigation}
               disabled={isSubmitting}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              className="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
               style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
@@ -764,12 +764,12 @@ const CareAssessmentForm: React.FC = () => {
         
         {/* Next Section button - fixed on right side, vertically centered */}
         {hasNavigatedBack && currentSectionIndex < maxVisibleSection && (
-          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-50 p-2">
             <button
               type="button"
               onClick={handleNextSectionNavigation}
               disabled={isSubmitting}
-              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
               style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             >
               Next Section
@@ -780,12 +780,12 @@ const CareAssessmentForm: React.FC = () => {
         
         {/* Special case: Next Section button for the first section when user has navigated back */}
         {currentSectionIndex === 0 && hasNavigatedBack && maxVisibleSection > 0 && (
-          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="fixed right-0 top-1/2 transform -translate-y-1/2 z-50 p-2">
             <button
               type="button"
               onClick={handleNextSectionNavigation}
               disabled={isSubmitting}
-              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
               style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
             >
               Next Section
