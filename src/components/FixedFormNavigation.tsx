@@ -55,6 +55,9 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
         >
           <ChevronRight className="w-6 h-6 mb-4" />
           <div className="flex flex-col items-center text-xl font-bold">
+            <span>G</span>
+            <span>O</span>
+            <span className="h-2"></span>
             <span>N</span>
             <span>E</span>
             <span>X</span>
@@ -74,6 +77,9 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
         >
           <ChevronRight className="w-6 h-6 mb-4" />
           <div className="flex flex-col items-center text-xl font-bold">
+            <span>G</span>
+            <span>O</span>
+            <span className="h-2"></span>
             <span>N</span>
             <span>E</span>
             <span>X</span>
