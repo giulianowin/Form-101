@@ -21,6 +21,8 @@ interface NextOfKinDetailsProps {
   focusedField: string;
   setShowNextOfKinAddressSuggestions: (show: boolean) => void;
   setFocusedField: (field: string) => void;
+  nextOfKinPhoneInteracted: boolean;
+  setNextOfKinPhoneInteracted: (value: boolean) => void;
 }
 
 const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
@@ -37,6 +39,8 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
   focusedField,
   setShowNextOfKinAddressSuggestions,
   setFocusedField,
+  nextOfKinPhoneInteracted,
+  setNextOfKinPhoneInteracted,
 }) => {
   // Create ref for next of kin address input
   const nextOfKinAddressInputRef = React.useRef<HTMLInputElement>(null);
@@ -132,13 +136,16 @@ const NextOfKinDetails: React.FC<NextOfKinDetailsProps> = ({
             type="tel"
             value={formData.nextOfKinPhone}
             onChange={(e) => handlePhoneChange('nextOfKinPhone', e.target.value)}
-            onFocus={() => setFocusedField('nextOfKinPhone')}
+            onFocus={() => {
+              setFocusedField('nextOfKinPhone');
+              setNextOfKinPhoneInteracted(true);
+            }}
             onBlur={() => setFocusedField('')}
             className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="01234567890"
           />
-          {focusedField === 'nextOfKinPhone' && getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone) && (
+          {nextOfKinPhoneInteracted && getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone) && (
             <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('nextOfKinPhone', formData.nextOfKinPhone)}</p>
           )}
           {errors.nextOfKinPhone && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.nextOfKinPhone}</p>}

@@ -33,6 +33,8 @@ interface ServiceUserDetailsProps {
   currentYear: number;
   noAllergies: boolean;
   setNoAllergies: (value: boolean) => void;
+  phoneInteracted: boolean;
+  setPhoneInteracted: (value: boolean) => void;
 }
 
 const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
@@ -59,6 +61,8 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
   currentYear,
   noAllergies,
   setNoAllergies,
+  phoneInteracted,
+  setPhoneInteracted,
 }) => {
   const handleNoAllergiesChange = (checked: boolean) => {
     setNoAllergies(checked);
@@ -99,9 +103,9 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             placeholder="Enter first name"
           />
           {getDescriptionForField('firstName', formData.firstName) && (
-            <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('firstName', formData.firstName)}</p>
           )}
-          {errors.firstName && <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{errors.firstName}</p>}
+          {errors.firstName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.firstName}</p>}
         </div>
 
         <div>
@@ -117,9 +121,9 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             placeholder="Enter last name"
           />
           {getDescriptionForField('lastName', formData.lastName) && (
-            <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
+            <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('lastName', formData.lastName)}</p>
           )}
-          {errors.lastName && <p className="text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>{errors.lastName}</p>}
+          {errors.lastName && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.lastName}</p>}
         </div>
         </div>
       </div>
@@ -182,13 +186,16 @@ const ServiceUserDetails: React.FC<ServiceUserDetailsProps> = ({
             type="tel"
             value={formData.phoneNumber}
             onChange={(e) => handlePhoneChange('phoneNumber', e.target.value)}
-            onFocus={() => setFocusedField('phoneNumber')}
+            onFocus={() => {
+              setFocusedField('phoneNumber');
+              setPhoneInteracted(true);
+            }}
             onBlur={() => setFocusedField('')}
             className="w-full px-4 py-3 bg-purple-800/40 border-2 border-purple-700/50 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-colours duration-200"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
             placeholder="01234567890"
           />
-          {focusedField === 'phoneNumber' && getDescriptionForField('phoneNumber', formData.phoneNumber) && (
+          {phoneInteracted && getDescriptionForField('phoneNumber', formData.phoneNumber) && (
             <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{getDescriptionForField('phoneNumber', formData.phoneNumber)}</p>
           )}
           {errors.phoneNumber && <p className="text-yellow-400 text-sm mt-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>{errors.phoneNumber}</p>}
