@@ -727,7 +727,7 @@ const CareAssessmentForm: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Care Assessment Form</h1>
           <p className="text-lg" style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}>Please complete the required fields to help us provide the best care service for you</p>
