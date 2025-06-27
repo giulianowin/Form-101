@@ -33,7 +33,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
             style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
-            Previous Section
+            Back
           </button>
         </div>
       )}
@@ -48,7 +48,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
             className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
             style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
           >
-            Next Section
+            Next
             <ChevronRight className="w-4 h-4 ml-2" />
           </button>
         </div>
@@ -64,7 +64,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
             className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 text-sm"
             style={{ fontFamily: 'Montserrat, sans-serif', color: '#FFFFFF' }}
           >
-            Next Section
+            Next
             <ChevronRight className="w-4 h-4 ml-2" />
           </button>
         </div>
