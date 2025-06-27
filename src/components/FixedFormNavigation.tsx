@@ -24,7 +24,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
     <>
       {/* Back button - fixed on left side, vertically centered */}
       {currentSectionIndex > 0 && (
-        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-[9999]">
+        <div className="sticky left-8 top-1/2 transform -translate-y-1/2 z-[9999] float-left ml-8">
           <button
             type="button"
             onClick={onBackNavigation}
@@ -40,7 +40,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
       
       {/* Next Section button - fixed on right side, vertically centered */}
       {hasNavigatedBack && currentSectionIndex < maxVisibleSection && (
-        <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-[9999]">
+        <div className="sticky right-8 top-1/2 transform -translate-y-1/2 z-[9999] float-right mr-8">
           <button
             type="button"
             onClick={onNextSectionNavigation}
@@ -56,7 +56,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
       
       {/* Special case: Next Section button for the first section when user has navigated back */}
       {currentSectionIndex === 0 && hasNavigatedBack && maxVisibleSection > 0 && (
-        <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-[9999]">
+        <div className="sticky right-8 top-1/2 transform -translate-y-1/2 z-[9999] float-right mr-8">
           <button
             type="button"
             onClick={onNextSectionNavigation}
