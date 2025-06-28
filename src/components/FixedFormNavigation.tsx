@@ -33,6 +33,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
         >
           <ChevronLeft className="w-6 h-6 mb-4" />
           <div className="flex flex-col items-center space-y-1 text-2xl font-bold">
+          <div className="flex flex-col items-center text-xl font-bold">
             <span>G</span>
             <span>O</span>
             <span className="h-2"></span>
@@ -40,6 +41,7 @@ const FixedFormNavigation: React.FC<FixedFormNavigationProps> = ({
             <span>A</span>
             <span>C</span>
             <span>K</span>
+          </div>
           </div>
         </button>
       )}

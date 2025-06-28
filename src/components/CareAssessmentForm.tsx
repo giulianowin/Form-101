@@ -166,6 +166,13 @@ const CareAssessmentForm: React.FC = () => {
   const [noAllergies, setNoAllergies] = useState(false);
   const [phoneInteracted, setPhoneInteracted] = useState(false);
   const [nextOfKinPhoneInteracted, setNextOfKinPhoneInteracted] = useState(false);
+  
+  // Medical Background N/A states - lifted to parent for persistence
+  const [medicalHistoryNA, setMedicalHistoryNA] = useState(false);
+  const [currentDiagnosisNA, setCurrentDiagnosisNA] = useState(false);
+  const [hospitalHistoryNA, setHospitalHistoryNA] = useState(false);
+  const [mobilitySupportNA, setMobilitySupportNA] = useState(false);
+  const [skinIntegrityNA, setSkinIntegrityNA] = useState(false);
 
   // Options
   const dayOptions = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -826,6 +833,16 @@ const CareAssessmentForm: React.FC = () => {
                 yesNoOptions={yesNoOptions}
                 careVisitDurationOptions={careVisitDurationOptions}
                 careVisitFrequencyOptions={careVisitFrequencyOptions}
+                medicalHistoryNA={medicalHistoryNA}
+                setMedicalHistoryNA={setMedicalHistoryNA}
+                currentDiagnosisNA={currentDiagnosisNA}
+                setCurrentDiagnosisNA={setCurrentDiagnosisNA}
+                hospitalHistoryNA={hospitalHistoryNA}
+                setHospitalHistoryNA={setHospitalHistoryNA}
+                mobilitySupportNA={mobilitySupportNA}
+                setMobilitySupportNA={setMobilitySupportNA}
+                skinIntegrityNA={skinIntegrityNA}
+                setSkinIntegrityNA={setSkinIntegrityNA}
               />
             </div>
           )}

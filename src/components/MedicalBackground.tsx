@@ -15,6 +15,16 @@ interface MedicalBackgroundProps {
   yesNoOptions: string[];
   careVisitDurationOptions: string[];
   careVisitFrequencyOptions: string[];
+  medicalHistoryNA: boolean;
+  setMedicalHistoryNA: (value: boolean) => void;
+  currentDiagnosisNA: boolean;
+  setCurrentDiagnosisNA: (value: boolean) => void;
+  hospitalHistoryNA: boolean;
+  setHospitalHistoryNA: (value: boolean) => void;
+  mobilitySupportNA: boolean;
+  setMobilitySupportNA: (value: boolean) => void;
+  skinIntegrityNA: boolean;
+  setSkinIntegrityNA: (value: boolean) => void;
 }
 
 const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
@@ -30,13 +40,17 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
   yesNoOptions,
   careVisitDurationOptions,
   careVisitFrequencyOptions,
+  medicalHistoryNA,
+  setMedicalHistoryNA,
+  currentDiagnosisNA,
+  setCurrentDiagnosisNA,
+  hospitalHistoryNA,
+  setHospitalHistoryNA,
+  mobilitySupportNA,
+  setMobilitySupportNA,
+  skinIntegrityNA,
+  setSkinIntegrityNA,
 }) => {
-  const [medicalHistoryNA, setMedicalHistoryNA] = useState(false);
-  const [currentDiagnosisNA, setCurrentDiagnosisNA] = useState(false);
-  const [hospitalHistoryNA, setHospitalHistoryNA] = useState(false);
-  const [mobilitySupportNA, setMobilitySupportNA] = useState(false);
-  const [skinIntegrityNA, setSkinIntegrityNA] = useState(false);
-
   const handleNAChange = (field: string, naState: boolean, setNAState: (value: boolean) => void) => {
     setNAState(naState);
     if (naState) {
@@ -96,7 +110,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <div className="mb-2">
             <CircularCheckbox
               id="current-diagnosis-na"
-              label="N/A"
+              label="Not Applicable"
               checked={currentDiagnosisNA}
               onChange={(checked) => handleNAChange('currentDiagnosis', checked, setCurrentDiagnosisNA)}
               darkTheme={true}
@@ -121,7 +135,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <div className="mb-2">
             <CircularCheckbox
               id="hospital-history-na"
-              label="N/A"
+              label="Not Applicable"
               checked={hospitalHistoryNA}
               onChange={(checked) => handleNAChange('hospitalAdmissionHistory', checked, setHospitalHistoryNA)}
               darkTheme={true}
@@ -148,7 +162,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <div className="mb-2">
             <CircularCheckbox
               id="mobility-support-na"
-              label="N/A"
+              label="Not Applicable"
               checked={mobilitySupportNA}
               onChange={(checked) => handleNAChange('mobilitySupport', checked, setMobilitySupportNA)}
               darkTheme={true}
@@ -193,7 +207,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <div className="mb-2">
             <CircularCheckbox
               id="skin-integrity-na"
-              label="N/A"
+              label="Not Applicable"
               checked={skinIntegrityNA}
               onChange={(checked) => handleNAChange('skinIntegrityNeeds', checked, setSkinIntegrityNA)}
               darkTheme={true}
