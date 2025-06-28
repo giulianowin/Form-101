@@ -85,7 +85,7 @@ const MedicalBackground: React.FC<MedicalBackgroundProps> = ({
           <div className="mb-2">
             <CircularCheckbox
               id="medical-history-na"
-              label="N/A"
+              label="Not Applicable"
               checked={medicalHistoryNA}
               onChange={(checked) => handleNAChange('medicalHistory', checked, setMedicalHistoryNA)}
               darkTheme={true}
