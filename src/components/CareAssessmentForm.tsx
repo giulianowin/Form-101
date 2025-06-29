@@ -124,7 +124,7 @@ const CareAssessmentForm: React.FC = () => {
     firstName: '',
     lastName: '',
     dateOfBirth: { day: '', month: '', year: '' },
-    phoneNumber: '0',
+    phoneNumber: '07',
     gender: '',
     address: '',
     region: '',
@@ -136,7 +136,7 @@ const CareAssessmentForm: React.FC = () => {
     nextOfKinFirstName: '',
     nextOfKinLastName: '',
     relationshipToClient: '',
-    nextOfKinPhone: '0',
+    nextOfKinPhone: '07',
     nextOfKinEmail: '',
     nextOfKinAddress: '',
     nextOfKinRegion: '',
@@ -379,7 +379,7 @@ const CareAssessmentForm: React.FC = () => {
 
     if (formData.phoneNumber && !isValidPhone(formData.phoneNumber)) {
       newErrors.phoneNumber = 'Enter a valid 11-digit UK phone number';
-    } else if (!formData.phoneNumber.trim() || formData.phoneNumber === '0') {
+    } else if (!formData.phoneNumber.trim() || formData.phoneNumber === '07') {
       newErrors.phoneNumber = 'Phone number is required';
     }
 
@@ -396,7 +396,7 @@ const CareAssessmentForm: React.FC = () => {
 
     if (formData.nextOfKinPhone && !isValidPhone(formData.nextOfKinPhone)) {
       newErrors.nextOfKinPhone = 'Enter a valid 11-digit UK phone number';
-    } else if (!formData.nextOfKinPhone.trim() || formData.nextOfKinPhone === '0') {
+    } else if (!formData.nextOfKinPhone.trim() || formData.nextOfKinPhone === '07') {
       newErrors.nextOfKinPhone = 'Next of kin phone number is required';
     }
 
@@ -445,8 +445,8 @@ const CareAssessmentForm: React.FC = () => {
   };
 
   const handlePhoneChange = (field: string, value: string) => {
-    if (value === '' || !value.startsWith('0')) {
-      value = '0' + value.replace(/^0*/, '');
+    if (value === '' || !value.startsWith('07')) {
+      value = '07' + value.replace(/^0*7*/, '');
     }
     const digitsOnly = value.replace(/\D/g, '');
     if (digitsOnly.length <= 11) {

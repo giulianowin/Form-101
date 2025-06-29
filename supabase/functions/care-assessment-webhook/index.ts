@@ -72,15 +72,15 @@ Deno.serve(async (req: Request) => {
     }
 
     // Get webhook URL from environment variable
-    const webhookUrl = Deno.env.get("WEBHOOK_URL");
+    const webhookUrl = Deno.env.get("Submit_Form_Webhook");
     
     if (!webhookUrl) {
-      console.error("❌ Missing WEBHOOK_URL environment variable");
+      console.error("❌ Missing Submit_Form_Webhook environment variable");
       return new Response(
         JSON.stringify({ 
           error: "Service configuration error",
           message: "Webhook URL is not configured",
-          details: "The WEBHOOK_URL environment variable is not set. Please configure it in your Supabase project settings.",
+          details: "The Submit_Form_Webhook environment variable is not set. Please configure it in your Supabase project settings.",
         }),
         {
           status: 500,
