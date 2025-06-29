@@ -71,45 +71,11 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Check if webhook URL is configured
-    const webhookUrl = Deno.env.get("N8N_WORKFLOW_FORM_SUBMIT");
+    // Use the specific webhook URL
+    const webhookUrl = "https://d425-185-69-145-41.ngrok-free.app/workflow/1mvoqi0SwBKYdpGt/426131";
     
-    console.log("=== Environment Variable Check ===");
-    console.log("N8N_WORKFLOW_FORM_SUBMIT exists:", !!webhookUrl);
-    console.log("N8N_WORKFLOW_FORM_SUBMIT length:", webhookUrl?.length || 0);
-    console.log("N8N_WORKFLOW_FORM_SUBMIT starts with http:", webhookUrl?.startsWith('http') || false);
-    
-    // List all available environment variables (for debugging)
-    console.log("=== Available Environment Variables ===");
-    for (const [key, value] of Object.entries(Deno.env.toObject())) {
-      if (key.includes('N8N') || key.includes('WORKFLOW') || key.includes('FORM')) {
-        console.log(`${key}: ${value ? 'SET' : 'NOT SET'} (length: ${value?.length || 0})`);
-      }
-    }
-    
-    if (!webhookUrl) {
-      console.error("❌ Webhook URL not found in environment variables");
-      return new Response(
-        JSON.stringify({ 
-          error: "Service configuration error",
-          message: "Webhook endpoint not configured",
-          details: "The N8N_WORKFLOW_FORM_SUBMIT environment variable is missing. Please check your Supabase secrets configuration.",
-          debugInfo: {
-            environmentVariablesChecked: ["N8N_WORKFLOW_FORM_SUBMIT"],
-            foundVariables: Object.keys(Deno.env.toObject()).filter(key => 
-              key.includes('N8N') || key.includes('WORKFLOW') || key.includes('FORM')
-            )
-          }
-        }),
-        {
-          status: 500,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+    console.log("=== Webhook Configuration ===");
+    console.log("Using webhook URL:", webhookUrl);
 
     // Validate webhook URL format
     let validatedUrl: URL;
