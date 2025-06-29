@@ -71,8 +71,26 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Use the specific webhook URL
-    const webhookUrl = "https://d425-185-69-145-41.ngrok-free.app/workflow/1mvoqi0SwBKYdpGt/426131";
+    // Get webhook URL from environment variable
+    const webhookUrl = Deno.env.get("WEBHOOK_URL");
+    
+    if (!webhookUrl) {
+      console.error("❌ Missing WEBHOOK_URL environment variable");
+      return new Response(
+        JSON.stringify({ 
+          error: "Service configuration error",
+          message: "Webhook URL is not configured",
+          details: "The WEBHOOK_URL environment variable is not set. Please configure it in your Supabase project settings.",
+        }),
+        {
+          status: 500,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
     
     console.log("=== Webhook Configuration ===");
     console.log("Using webhook URL:", webhookUrl);
